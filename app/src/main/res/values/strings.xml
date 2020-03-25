@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GiaySnaker6789</string>
+    <string name="trang_chu">trang chủ</string>
+    <string name="danh_muc">danh mục</string>
+    <string name="gio_hang">giỏ hàng</string>
+    <string name="ca_nhan">cá nhân</string>
+</resources>
