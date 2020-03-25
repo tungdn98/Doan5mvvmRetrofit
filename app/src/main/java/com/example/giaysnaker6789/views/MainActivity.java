@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "test nè", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_user:
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
