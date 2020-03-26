@@ -18,7 +18,13 @@
             <include layout="@layout/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"/>
-<!--            content-->
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+            <!--            content-->
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

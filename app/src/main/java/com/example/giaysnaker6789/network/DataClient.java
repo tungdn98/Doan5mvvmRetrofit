@@ -12,5 +12,9 @@ import retrofit2.http.Query;
 public interface DataClient {
     @FormUrlEncoded
     @POST("api/login")
-    Call<List<test>> login(@Field("tk") String tk, @Field("mk") String mk);
+     Call<List<test>> login(@Field("tk") String tk, @Field("mk") String mk);
+
+    @FormUrlEncoded
+    @POST("api/insert")
+    Call<Integer> insert(@Field("tk") String tk, @Field("mk") String mk);
 }

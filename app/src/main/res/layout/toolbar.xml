@@ -13,7 +13,7 @@
         android:src="@drawable/ic_menu" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txttile"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
