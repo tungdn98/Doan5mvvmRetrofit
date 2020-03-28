@@ -23,7 +23,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        app:defaultQueryHint="@string/gio_hang"
+        app:defaultQueryHint="tìm kiếm"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 

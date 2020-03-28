@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.giaysnaker6789.R;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
     @Override

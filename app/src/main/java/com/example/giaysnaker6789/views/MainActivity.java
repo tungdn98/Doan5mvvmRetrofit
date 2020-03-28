@@ -9,8 +9,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,16 +25,25 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.viewModels.testViewmodel;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
@@ -40,54 +52,59 @@ public class MainActivity extends BaseActivity {
     SearchView searchView;
     TextView txtbadge,txttitle;
     ImageView imgMenu;
+    SwipeRefreshLayout pullToRefresh;
     int i = 0;
 
     testViewmodel newsViewModel;
     private static final String TAG = "tungtung";
 
     ProgressDialog progressDialog;
+    ImageSlider imgslider;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
-        txttitle.setText("tugn");
         newsViewModel = ViewModelProviders.of(this).get(testViewmodel.class);
+        initView();
+       setupBanner();
+       setupListProduct();
 
-        Button btn=findViewById(R.id.button);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void setupListProduct() {
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                progressDialog = new ProgressDialog(MainActivity.this);
-
-                progressDialog.setMessage("đang load nè");
-                progressDialog.show();
-                newsViewModel.loginHandle("tung","tung").observe(MainActivity.this, new Observer<List<test>>() {
-                    @Override
-                    public void onChanged(List<test> tests) {
-                        Log.d(TAG, "login: "+tests.get(0).getUser());
-                        if(tests.size()>0){
-                            Toast.makeText(MainActivity.this, "tài khoản "+tests.get(0).getUser(), Toast.LENGTH_SHORT).show();
-                            EventBus.getDefault().postSticky(new test(tests.get(0).getId(),tests.get(0).getUser(),tests.get(0).getPass()));
-                            progressDialog.dismiss();
-                        }
-
-                    }
-                });
-
-                newsViewModel.insertHandle("is","is").observe(MainActivity.this, new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer integer) {
-                        Log.d(TAG, "onChanged: "+integer);
-                    }
-                });
-
+            public void onRefresh() {
+                Toast.makeText(MainActivity.this, "ddax theem", Toast.LENGTH_SHORT).show();
+                pullToRefresh.setRefreshing(false);
             }
         });
 
+    }
+
+    private void setupBanner() {
+        List<SlideModel> imageList=new ArrayList<>();
+        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
+        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
+        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
+        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
+        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
+        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
+        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
+        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
+        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
+
+        imgslider.setImageList(imageList,false);
+        imgslider.startSliding(9000);
+        imgslider.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemSelected(int i) {
+                Toast.makeText(MainActivity.this, ""+imageList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initView() {
@@ -97,6 +114,8 @@ public class MainActivity extends BaseActivity {
         txtbadge = findViewById(R.id.text);
         txttitle=findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
+        imgslider=findViewById(R.id.image_slider);
+        pullToRefresh=findViewById(R.id.pullToRefresh);
         navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -111,6 +130,7 @@ public class MainActivity extends BaseActivity {
                     case R.id.nav_user:
                         EventBus.getDefault().postSticky(new test(1,"tungtung2","núi1"));
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         break;
                     case R.id.nav_cart:
                         Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();

@@ -8,5 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">#fff</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">#3373E3</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
 
 </resources>
