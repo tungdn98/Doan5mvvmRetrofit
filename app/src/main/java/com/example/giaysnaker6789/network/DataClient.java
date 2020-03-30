@@ -1,4 +1,5 @@
 package com.example.giaysnaker6789.network;
+import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.test;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface DataClient {
     @FormUrlEncoded
     @POST("api/insert")
     Call<Integer> insert(@Field("tk") String tk, @Field("mk") String mk);
+
+
+    @GET("api/getBanner")
+    Call<List<banners>> getBanner();
 }

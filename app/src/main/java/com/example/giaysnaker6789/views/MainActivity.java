@@ -25,12 +25,17 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;
+
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.TestActivity;
+import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.test;
+import com.example.giaysnaker6789.network.RetrofitService;
+import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.testViewmodel;
+import com.example.tungnuislider.ImageSlider;
+import com.example.tungnuislider.interfaces.ItemClickListener;
+import com.example.tungnuislider.models.SlideModel;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -48,61 +53,51 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
-    Toolbar toolbar;
     SearchView searchView;
     TextView txtbadge,txttitle;
     ImageView imgMenu;
-    SwipeRefreshLayout pullToRefresh;
+    ImageSlider imgslider;
     int i = 0;
 
-    testViewmodel newsViewModel;
+   // testViewmodel newsViewModel=ViewModelProviders.of(this).get(testViewmodel.class);
+    BannerViewModel bannerViewModel;
     private static final String TAG = "tungtung";
 
     ProgressDialog progressDialog;
-    ImageSlider imgslider;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        newsViewModel = ViewModelProviders.of(this).get(testViewmodel.class);
+        bannerViewModel=ViewModelProviders.of(this).get(BannerViewModel.class);
         initView();
        setupBanner();
-       setupListProduct();
-
 
     }
 
-    private void setupListProduct() {
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(MainActivity.this, "ddax theem", Toast.LENGTH_SHORT).show();
-                pullToRefresh.setRefreshing(false);
-            }
-        });
 
-    }
 
     private void setupBanner() {
-        List<SlideModel> imageList=new ArrayList<>();
-        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
-        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
-        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
-        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
-        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
-        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
-        imageList.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
-        imageList.add(new SlideModel("https://2.bp.blogspot.com/-CyLH9NnPoAo/XJUWK2UHiMI/AAAAAAAABUk/D8XMUIGhDbwEhC29dQb-7gfYb16GysaQgCLcBGAs/s1600/tiger.jpg"));
-        imageList.add(new SlideModel("https://3.bp.blogspot.com/-uJtCbNrBzEc/XJUWQPOSrfI/AAAAAAAABUs/ZlReSwpfI3Ack60629Rv0N8hSrPFHb3TACLcBGAs/s1600/elephant.jpg", "The population of elephants is decreasing in the world."));
-
-        imgslider.setImageList(imageList,false);
-        imgslider.startSliding(9000);
-        imgslider.setItemClickListener(new ItemClickListener() {
+        bannerViewModel.getBanners().observe(this, new Observer<List<banners>>() {
             @Override
-            public void onItemSelected(int i) {
-                Toast.makeText(MainActivity.this, ""+imageList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+            public void onChanged(List<banners> banners) {
+                List<SlideModel> imageList = new ArrayList<>();
+                if(banners!=null){
+                    for (int i=0;i<banners.size();i++){
+                        Log.d(TAG, "onChanged: "+RetrofitService.basePath+banners.get(i).getImage());
+                        imageList.add(new SlideModel(RetrofitService.basePath+banners.get(i).getImage(),banners.get(i).getIdProduct() ));
+                    }
+                    imgslider.setImageList(imageList,false);
+
+                    imgslider.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onItemSelected(int position) {
+                            Toast.makeText(MainActivity.this, ""+imageList.get(position).getImageUrl(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
     }
@@ -115,7 +110,6 @@ public class MainActivity extends BaseActivity {
         txttitle=findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
         imgslider=findViewById(R.id.image_slider);
-        pullToRefresh=findViewById(R.id.pullToRefresh);
         navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -133,6 +127,7 @@ public class MainActivity extends BaseActivity {
                         startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         break;
                     case R.id.nav_cart:
+                        startActivity(new Intent(MainActivity.this, TestActivity.class));
                         Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_cateroly:

@@ -49,5 +49,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'org.jetbrains:annotations:15.0'
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
+    implementation project(path: ':tungnuislider')
 }

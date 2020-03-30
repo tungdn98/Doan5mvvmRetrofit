@@ -4,8 +4,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
+    public static String basePath="http://192.168.1.26:81/snaker6789/public/";
     private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.106:81/snaker6789/public/")
+            .baseUrl(basePath)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

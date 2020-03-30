@@ -1,2 +1,3 @@
 include ':app'
 rootProject.name='GiaySnaker6789'
+include ':tungnuislider'
