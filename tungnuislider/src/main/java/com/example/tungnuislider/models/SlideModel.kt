@@ -49,6 +49,11 @@ class SlideModel {
         this.title = title
         this.centerCrop = centerCrop
     }
+    constructor (imageUrl: String, imagePath: Int,title: String?) {
+        this.imageUrl = imageUrl
+        this.title = title
+        this.centerCrop = centerCrop
+    }
     constructor (imageUrl: String, imagePath: Int) {
         this.imageUrl = imageUrl
         this.title = title

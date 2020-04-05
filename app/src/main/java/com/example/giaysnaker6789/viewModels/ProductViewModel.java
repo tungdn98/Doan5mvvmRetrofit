@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
+import com.example.giaysnaker6789.network.APIProduct;
 import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
 
@@ -19,12 +20,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductViewModel extends ViewModel {
-    private DataClient dataClient;
+    private APIProduct dataClient;
     private MutableLiveData<products> mutableLiveData;
 
     public MutableLiveData<ProductBaseResponse> LoadProduct(int page){
         MutableLiveData<ProductBaseResponse>  newsData = new MutableLiveData<>();
-        dataClient = RetrofitService.cteateService(DataClient.class);
+        dataClient = RetrofitService.cteateService(APIProduct.class);
         dataClient.getListProduct(page).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
@@ -41,7 +42,7 @@ public class ProductViewModel extends ViewModel {
 
     public MutableLiveData<String> getCount(){
         MutableLiveData<String>  newsData = new MutableLiveData<>();
-        dataClient = RetrofitService.cteateService(DataClient.class);
+        dataClient = RetrofitService.cteateService(APIProduct.class);
         dataClient.getCount().enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -50,6 +51,23 @@ public class ProductViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
+    public MutableLiveData<ProductBaseResponse> LoadProductwithType(int id){
+        MutableLiveData<ProductBaseResponse>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIProduct.class);
+        dataClient.getproType(id).enqueue(new Callback<ProductBaseResponse>() {
+            @Override
+            public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProductBaseResponse> call, Throwable t) {
 
             }
         });

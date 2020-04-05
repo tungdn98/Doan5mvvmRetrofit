@@ -33,17 +33,21 @@ import android.widget.Toast;
 
 
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.TestActivity;
+import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
 import com.example.giaysnaker6789.models.banners;
+import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
+import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
+import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
-import com.example.giaysnaker6789.viewModels.testViewmodel;
 import com.example.tungnuislider.ImageSlider;
 import com.example.tungnuislider.interfaces.ItemClickListener;
 import com.example.tungnuislider.models.SlideModel;
@@ -72,6 +76,9 @@ public class MainActivity extends BaseActivity {
     SearchView searchView;
     TextView txtbadge, txttitle;
     ImageView imgMenu;
+    View headerview;
+    TextView txtname;
+
     ImageSlider imgslider;
     Button btnloadmore;
     int page = 1;
@@ -79,6 +86,7 @@ public class MainActivity extends BaseActivity {
     // testViewmodel newsViewModel=ViewModelProviders.of(this).get(testViewmodel.class);
     BannerViewModel bannerViewModel;
     ProductViewModel productViewModel;
+    ProductTypeViewModel productTypeViewModel;
     private static final String TAG = "tungtung";
 
     ProgressDialog progressDialog;
@@ -86,8 +94,12 @@ public class MainActivity extends BaseActivity {
     RecyclerView recyclerView;
     SpTrangchuAdapter recyclerViewAdapter;
     StaggeredGridLayoutManager layoutManager;
-    ArrayList<products> rowsArrayList = new ArrayList<>();
 
+    RecyclerView recyclerView2;
+    ProductTypeAdapter productTypeAdapter;
+    LinearLayoutManager layoutManager2;
+    ArrayList<products> rowsArrayList = new ArrayList<>();
+    ArrayList<product_types> listproducttype = new ArrayList<>();
 
 
     @Override
@@ -96,11 +108,12 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-
+        productTypeViewModel=ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         initView();
         setCountButton();
         setupBanner();
         setupListSp();
+        setuplistLoaiSp();
         btnloadmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +121,29 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void setuplistLoaiSp() {
+        recyclerView2.setHasFixedSize(true);
+        layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        productTypeViewModel.LoadProductType().observe(this, new Observer<List<product_types>>() {
+            @Override
+            public void onChanged(List<product_types> product_types) {
+                listproducttype.addAll(product_types);
+                productTypeAdapter = new ProductTypeAdapter(listproducttype, MainActivity.this);
+                recyclerView2.setAdapter(productTypeAdapter);
+            }
+        });
+
+        ItemClickSupport.addTo(recyclerView2).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                product_types pro=listproducttype.get(position);
+                EventBus.getDefault().postSticky(pro);
+                startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
+            }
+        });
     }
 
     private void setCountButton() {
@@ -122,7 +158,7 @@ public class MainActivity extends BaseActivity {
 
     private void setupListSp() {
         recyclerView.setHasFixedSize(true);
-        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         // Khai báo Adapter (mn xem tiếp ví dụ dưới nhé)
         productViewModel.LoadProduct(1).observe(this, new Observer<ProductBaseResponse>() {
@@ -131,6 +167,14 @@ public class MainActivity extends BaseActivity {
                 rowsArrayList = (ArrayList<products>) productBaseResponse.getData();
                 recyclerViewAdapter = new SpTrangchuAdapter(rowsArrayList, MainActivity.this);
                 recyclerView.setAdapter(recyclerViewAdapter);
+            }
+        });
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                products pro=rowsArrayList.get(position);
+                EventBus.getDefault().postSticky(pro);
+                startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
             }
         });
 
@@ -151,7 +195,8 @@ public class MainActivity extends BaseActivity {
                     imgslider.setItemClickListener(new ItemClickListener() {
                         @Override
                         public void onItemSelected(int position) {
-                            Toast.makeText(MainActivity.this, "" + imageList.get(position).getImageUrl(), Toast.LENGTH_SHORT).show();
+                            EventBus.getDefault().postSticky(banners.get(position));
+                            startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
                         }
                     });
                 }
@@ -167,8 +212,11 @@ public class MainActivity extends BaseActivity {
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
+        headerview=navigationView.getHeaderView(0);
+         txtname=headerview.findViewById(R.id.txtname);
         imgslider = findViewById(R.id.image_slider);
         recyclerView = findViewById(R.id.rcmain);
+        recyclerView2=findViewById(R.id.rclistloaisp);
         btnloadmore=findViewById(R.id.btnloadmore);
 
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -179,11 +227,11 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        EventBus.getDefault().postSticky(new test(1, "tungtung", "núi"));
+                       // EventBus.getDefault().postSticky(new test(1, "tungtung", "núi"));
                         Toast.makeText(MainActivity.this, "test nè", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_user:
-                        EventBus.getDefault().postSticky(new test(1, "tungtung2", "núi1"));
+
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
@@ -208,13 +256,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(test event) { // get model test
-        if (event != null) {
-            txttitle.setText(event.getUser());
-            // getListPersonData(event.getUnitSelected().getId()); // gọi hàm xử lý với dữ liệu
-        } else {
-            txttitle.setText("nun");
-        }
+    public void onMessageEvent(user1s event) { // get model test
+        txtname.setText(""+event.getName());
     }
 
 }

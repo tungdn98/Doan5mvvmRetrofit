@@ -3,6 +3,7 @@ import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
+import com.example.giaysnaker6789.models.user1s;
 
 import java.util.List;
 
@@ -15,24 +16,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 public interface DataClient {
-    @FormUrlEncoded
-    @POST("api/login")
-     Call<List<test>> login(@Field("tk") String tk, @Field("mk") String mk);
-
-    @FormUrlEncoded
-    @POST("api/insert")
-    Call<Integer> insert(@Field("tk") String tk, @Field("mk") String mk);
 
 
     @GET("api/getBanner")
     Call<List<banners>> getBanner();
 
 
-    @POST("api/getProduct")
-    Call<List<products>> getProduct();
 
-    @GET("api/getAll1")
-    Call<ProductBaseResponse> getListProduct(@Query("page") int page);
-    @GET("api/getCount")
-    Call<String> getCount();
 }
