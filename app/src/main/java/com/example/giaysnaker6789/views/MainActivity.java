@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
-import com.example.giaysnaker6789.TestActivity;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
 import com.example.giaysnaker6789.models.banners;
@@ -236,7 +235,6 @@ public class MainActivity extends BaseActivity {
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     case R.id.nav_cart:
-                        startActivity(new Intent(MainActivity.this, TestActivity.class));
                         Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_cateroly:

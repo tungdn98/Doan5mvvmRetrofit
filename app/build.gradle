@@ -51,5 +51,9 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
     implementation project(path: ':tungnuislider')
     implementation 'com.facebook.android:facebook-login:[5,6)'
-    implementation 'com.github.AppIntro:AppIntro:5.1.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.karumi:dexter:4.2.0'
+    implementation 'com.github.paolorotolo:appintro:4.1.0'
+    def lottieVersion = "3.0.7"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

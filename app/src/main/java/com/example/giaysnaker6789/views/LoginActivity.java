@@ -45,7 +45,9 @@ public class LoginActivity extends BaseActivity {
          btndangky.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 SharedPref.remove(SharedPref.USER);
+                 SharedPref.remove(SharedPref.LOGIN);
+                 SharedPref.remove(SharedPref.PASS);
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
              }
          });
     }
@@ -66,6 +68,7 @@ public class LoginActivity extends BaseActivity {
                             EventBus.getDefault().postSticky(user1s);
                             SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
                             SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
+                            SharedPref.write(SharedPref.LOGIN,true);
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             progressDialog.dismiss();
                         }else{
