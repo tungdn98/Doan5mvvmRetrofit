@@ -40,7 +40,7 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
         holder.txtdescription.setText(currentpro.getName());
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
-                .resize(150, 150)
+                //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
     }

@@ -45,7 +45,7 @@ public class SpTrangchuAdapterHoz extends RecyclerView.Adapter<SpTrangchuAdapter
         holder.txtgiagiam.setText(format(currentpro.getPromotion()));
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
-                .resize(150, 150)
+                //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
     }

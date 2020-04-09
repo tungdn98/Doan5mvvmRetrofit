@@ -35,18 +35,16 @@
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="300dp"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
                     app:expandedTitleTextAppearance="@android:color/transparent"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
                     <com.example.tungnuislider.ImageSlider
                         android:id="@+id/image_slider"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
                         app:auto_cycle="true"
                         app:corner_radius="20"
                         app:delay="0"

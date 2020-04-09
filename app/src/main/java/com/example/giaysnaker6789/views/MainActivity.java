@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity {
     TextView txtname;
 
     ImageSlider imgslider;
+    ImageView btnscan;
     Button btnloadmore;
     int page = 1;
 
@@ -99,6 +100,8 @@ public class MainActivity extends BaseActivity {
     LinearLayoutManager layoutManager2;
     ArrayList<products> rowsArrayList = new ArrayList<>();
     ArrayList<product_types> listproducttype = new ArrayList<>();
+
+
 
 
     @Override
@@ -211,6 +214,7 @@ public class MainActivity extends BaseActivity {
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
+        btnscan=findViewById(R.id.btnscan);
         headerview=navigationView.getHeaderView(0);
          txtname=headerview.findViewById(R.id.txtname);
         imgslider = findViewById(R.id.image_slider);
@@ -251,11 +255,53 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                EventBus.getDefault().postSticky(query);
+                startActivity(new Intent(MainActivity.this,ResultSearchActivity.class));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
+        btnscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this,QRcodeActivity.class));
+            }
+        });
     }
+
+
+
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         txtname.setText(""+event.getName());
+    }
+
+    @Override
+    public void onBackPressed() {
+        count++;
+        if (count >1) {
+            finishAffinity();
+        } else {
+            Toast.makeText(this, "chạm lại để thoát khỏi ứng dụng", Toast.LENGTH_SHORT).show();
+            // resetting the counter in 2s
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    count = 0;
+                }
+            }, 2000);
+        }
+        //super.onBackPressed();
     }
 
 }

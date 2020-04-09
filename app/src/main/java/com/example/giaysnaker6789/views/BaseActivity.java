@@ -1,7 +1,9 @@
 package com.example.giaysnaker6789.views;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class BaseActivity extends AppCompatActivity {
+     int count = 0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -43,5 +46,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onMessageEvent(String init){
 
     }
+
+
 
 }

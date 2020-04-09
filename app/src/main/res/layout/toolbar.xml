@@ -27,6 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/btnscan"
+        android:src="@drawable/ic_scan"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"/>
+
 
 
     <RelativeLayout

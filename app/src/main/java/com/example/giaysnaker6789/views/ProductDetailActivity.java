@@ -12,6 +12,8 @@ import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
 import com.example.giaysnaker6789.models.image_products;
 import com.example.giaysnaker6789.models.product_types;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.tungnuislider.ImageSlider;
 import com.example.tungnuislider.models.SlideModel;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -50,6 +53,7 @@ public class ProductDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         initview();
+
     }
 
     private void initview() {
@@ -73,12 +77,31 @@ public class ProductDetailActivity extends BaseActivity {
         txtdescription.setText(""+event.getDescribe());
         txtgiagiam.setText(""+event.getPromotion());
         txtgiachinh.setText(""+event.getPrice());
-        loadDetail(event.getIdProductType(),event.getId());
+        loadDetail(event.getIdProductType());
+        loadImage(event.getId());
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(banners event) { // get model test
 
+    }
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(String event) { // get model test
+        loadbyid(event);
+    }
+
+    private void loadbyid(String event) {
+        productViewModel.searchByid(event).observe(this, new Observer<products>() {
+            @Override
+            public void onChanged(products products) {
+                txttitle.setText(""+products.getName());
+                txtdescription.setText(""+products.getDescribe());
+                txtgiagiam.setText(""+products.getPromotion());
+                txtgiachinh.setText(""+products.getPrice());
+                loadDetail(products.getIdProductType());
+                loadImage(products.getId());
+            }
+        });
     }
 
 
@@ -88,7 +111,7 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
 
-    private void loadDetail(int idtype,int id) {
+    private void loadDetail(int idtype) {
         productViewModel.LoadProductwithType(idtype).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
@@ -99,6 +122,10 @@ public class ProductDetailActivity extends BaseActivity {
                 rcsplienquan.setAdapter(recyclerViewAdapter);
             }
         });
+
+    }
+
+    public void loadImage(int id){
         imageProductViewModel.getproImage(id).observe(this, new Observer<List<image_products>>() {
             @Override
             public void onChanged(List<image_products> image_products) {
@@ -109,8 +136,6 @@ public class ProductDetailActivity extends BaseActivity {
                 imgslider.setImageList(imageList, false);
             }
         });
-
-
     }
 
 }

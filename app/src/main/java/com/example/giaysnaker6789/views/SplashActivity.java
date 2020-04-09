@@ -33,7 +33,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     LoginViewModel loginViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,10 @@ public class SplashActivity extends AppCompatActivity {
 
                         if (SharedPref.read(SharedPref.LOGIN, false)) { // kiểm tra đã login chưa
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
                         } else {
                             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                            finish();
                         }
                     }
 

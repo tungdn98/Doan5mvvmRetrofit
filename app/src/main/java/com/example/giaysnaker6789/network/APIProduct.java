@@ -23,4 +23,12 @@ public interface APIProduct {
 
     @GET("api/getCount")
     Call<String> getCount();
+
+    @FormUrlEncoded // seảch sản phẩm theo tên hoặc theo description
+    @POST("api/searchProduct")
+    Call<List<products>> searchProduct(@Field("name") String name);
+
+    @FormUrlEncoded //
+    @POST("api/searchByid")
+    Call<products> searchByid(@Field("id") String id);
 }

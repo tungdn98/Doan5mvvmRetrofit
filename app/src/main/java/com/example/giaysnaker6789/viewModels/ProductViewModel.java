@@ -65,9 +65,42 @@ public class ProductViewModel extends ViewModel {
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
                 newsData.setValue(response.body());
             }
-
             @Override
             public void onFailure(Call<ProductBaseResponse> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
+
+    public MutableLiveData<List<products>> searchProduct(String name){
+        MutableLiveData<List<products>>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIProduct.class);
+        dataClient.searchProduct(name).enqueue(new Callback<List<products>>() {
+            @Override
+            public void onResponse(Call<List<products>> call, Response<List<products>> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<products>> call, Throwable t) {
+            }
+        });
+        return newsData;
+    }
+
+    public MutableLiveData<products> searchByid(String id){
+        MutableLiveData<products>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIProduct.class);
+        dataClient.searchByid(id).enqueue(new Callback<products>() {
+            @Override
+            public void onResponse(Call<products> call, Response<products> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<products> call, Throwable t) {
 
             }
         });

@@ -37,10 +37,11 @@
         <TextView
             android:id="@+id/txtdescription"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="40dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:ellipsize="end"
+            android:singleLine="false"
             android:maxLines="3"
             android:text="mặt hàng mặt hàng mặt hàngmặt hàng mặt hàng "
             android:textColor="@color/xanhduong"

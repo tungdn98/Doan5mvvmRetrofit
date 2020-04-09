@@ -113,7 +113,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.txtgiagiam.setText(format(currentpro.getPromotion()));
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
-                .resize(150, 150)
+                //.resize(150, 150)
                // .centerCrop()
                 .into(viewHolder.imagesp);
 
