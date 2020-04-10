@@ -38,6 +38,9 @@ public class products {
     @Expose
     private Integer amount;
 
+    public products() {
+    }
+
     public products(Integer id, Integer idProductType, String name, String origin, String color, String weight, String describe, Integer price, Integer promotion, String image, Integer amount) {
         this.id = id;
         this.idProductType = idProductType;
