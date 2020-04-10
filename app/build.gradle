@@ -58,5 +58,8 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
 
 }

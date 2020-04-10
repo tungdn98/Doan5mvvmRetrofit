@@ -18,11 +18,13 @@ import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.LoadMoreAdapter;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class LoadMoreActivity extends BaseActivity {
     RecyclerView recyclerView;
+    FloatingActionButton btnscrolltop;
     LoadMoreAdapter loadMoreAdapter;
     ArrayList<products> rowsArrayList = new ArrayList<>();
     GridLayoutManager layoutManager;
@@ -44,6 +46,14 @@ public class LoadMoreActivity extends BaseActivity {
         populateData();
         initScrollListener();
         imgbackEvent();
+        btnscrolltop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView
+                        .getLayoutManager();
+                layoutManager.scrollToPositionWithOffset(0, 0);
+            }
+        });
     }
 
     private void imgbackEvent() {
@@ -57,7 +67,7 @@ public class LoadMoreActivity extends BaseActivity {
 
     private void initview() {
         recyclerView = findViewById(R.id.recyclerView);
-
+        btnscrolltop=findViewById(R.id.btnscrolltop);
         imgMenu = findViewById(R.id.imgback);
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);

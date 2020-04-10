@@ -115,11 +115,17 @@ public class ProductDetailActivity extends BaseActivity {
         productViewModel.LoadProductwithType(idtype).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
-                listproduct.addAll((ArrayList<products>) productBaseResponse.getData());
-                layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-                rcsplienquan.setLayoutManager(layoutManager);
-                recyclerViewAdapter = new SpTrangchuAdapterHoz(listproduct, ProductDetailActivity.this);
-                rcsplienquan.setAdapter(recyclerViewAdapter);
+
+                if(productBaseResponse.getData().size()>0){
+                    listproduct.addAll((ArrayList<products>) productBaseResponse.getData());
+                    layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+                    rcsplienquan.setLayoutManager(layoutManager);
+                    recyclerViewAdapter = new SpTrangchuAdapterHoz(listproduct, ProductDetailActivity.this);
+                    rcsplienquan.setAdapter(recyclerViewAdapter);
+                }else{
+                    Toast.makeText(ProductDetailActivity.this, "không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -129,11 +135,16 @@ public class ProductDetailActivity extends BaseActivity {
         imageProductViewModel.getproImage(id).observe(this, new Observer<List<image_products>>() {
             @Override
             public void onChanged(List<image_products> image_products) {
-                List<SlideModel> imageList = new ArrayList<>();
-                for (int i = 0; i < image_products.size(); i++) {
-                    imageList.add(new SlideModel(RetrofitService.basePath + image_products.get(i).getImage(), image_products.get(i).getIdProduct()));
+                if(image_products.size()>0){
+                    List<SlideModel> imageList = new ArrayList<>();
+                    for (int i = 0; i < image_products.size(); i++) {
+                        imageList.add(new SlideModel(RetrofitService.basePath + image_products.get(i).getImage(), image_products.get(i).getIdProduct()));
+                    }
+                    imgslider.setImageList(imageList, false);
+                }else{
+                    Toast.makeText(ProductDetailActivity.this, "ko tifm thaasy sarn phaarm", Toast.LENGTH_SHORT).show();
                 }
-                imgslider.setImageList(imageList, false);
+
             }
         });
     }

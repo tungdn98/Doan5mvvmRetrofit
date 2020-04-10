@@ -12,13 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -40,14 +36,37 @@
 
             </LinearLayout>
 
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@+id/spgia"
+                android:layout_weight="0.6"
+                android:orientation="vertical"
+                android:stateListAnimator="@null">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnscrolltop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="16dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_scan"
+                    app:rippleColor="@color/white" />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:padding="10dp"
+                    android:scrollbarStyle="outsideOverlay"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
 
         </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>

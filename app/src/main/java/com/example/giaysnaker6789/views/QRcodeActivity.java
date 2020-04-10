@@ -76,6 +76,12 @@ public class QRcodeActivity extends BaseActivity implements ZXingScannerView.Res
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        scannerView.setResultHandler(QRcodeActivity.this);
+        scannerView.startCamera();
+        super.onResume();
+    }
 
     @Override
     public void handleResult(Result rawResult) {
