@@ -28,12 +28,13 @@ public class LoginViewModel extends ViewModel {
         dataClient.login(tk,mk).enqueue(new Callback<user1s>() {
             @Override
             public void onResponse(Call<user1s> call, Response<user1s> response) {
-                newsData.setValue(response.body());
+               if(response.isSuccessful()){
+                   newsData.setValue(response.body());
+               }
             }
 
             @Override
             public void onFailure(Call<user1s> call, Throwable t) {
-                newsData.setValue(null);
             }
         });
 

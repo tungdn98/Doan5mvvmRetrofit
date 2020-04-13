@@ -62,10 +62,10 @@ dependencies {
     def lottieVersion = "3.0.7"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
-
 
 
 }

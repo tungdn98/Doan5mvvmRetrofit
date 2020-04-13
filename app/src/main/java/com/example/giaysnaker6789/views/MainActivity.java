@@ -64,6 +64,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,8 +77,11 @@ public class MainActivity extends BaseActivity {
     SearchView searchView;
     TextView txtbadge, txttitle;
     ImageView imgMenu;
+
     View headerview;
     TextView txtname;
+    CircleImageView profile_image;
+
 
     ImageSlider imgslider;
     ImageView btnscan;
@@ -208,7 +212,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
     private void initView() {
         imgMenu = findViewById(R.id.imgMenu);
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -219,6 +222,7 @@ public class MainActivity extends BaseActivity {
         btnscan=findViewById(R.id.btnscan);
         headerview=navigationView.getHeaderView(0);
          txtname=headerview.findViewById(R.id.txtname);
+        profile_image=headerview.findViewById(R.id.profile_image);
         imgslider = findViewById(R.id.image_slider);
         recyclerView = findViewById(R.id.rcmain);
         recyclerView2=findViewById(R.id.rclistloaisp);
@@ -285,6 +289,12 @@ public class MainActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         txtname.setText(""+event.getName());
+        Log.d(TAG, "onMessageEvent: "+RetrofitService.basePath+event.getImagefb());
+        Picasso.get()
+                .load(""+RetrofitService.basePath+event.getImagefb())
+                .resize(100, 100)
+                // .centerCrop()
+                .into(profile_image);
     }
 
     @Override

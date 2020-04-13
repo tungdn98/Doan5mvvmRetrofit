@@ -93,6 +93,10 @@ public class ProductDetailActivity extends BaseActivity {
         btncheckvoucher=findViewById(R.id.checkvoucher);
         edtvou=findViewById(R.id.edtvoucher);
         imgslider=findViewById(R.id.imgslide);
+        String id=getIntent().getStringExtra("noti");
+        if(id!=null){
+        loadbyid(id);
+        }
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

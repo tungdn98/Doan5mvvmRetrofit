@@ -1,5 +1,6 @@
 package com.example.giaysnaker6789.views;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +19,11 @@ import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.viewModels.LoginViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -39,15 +44,15 @@ public class LoginActivity extends BaseActivity {
         initView();
         String us = SharedPref.read(SharedPref.USER, "");//read string in shared preference.
         String pass = SharedPref.read(SharedPref.PASS, "");//read int in shared preference.
-        edttk.setText(""+us);
-        edtmk.setText(""+pass);
+        edttk.setText(us);
+        edtmk.setText(pass);
          dangnhap();
          btndangky.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 SharedPref.remove(SharedPref.LOGIN);
-                 SharedPref.remove(SharedPref.PASS);
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                 SharedPref.remove(SharedPref.LOGIN);
+//                 SharedPref.remove(SharedPref.PASS);
+                startActivity(new Intent(LoginActivity.this,RegActivity.class));
              }
          });
     }
@@ -64,7 +69,8 @@ public class LoginActivity extends BaseActivity {
                 loginViewModel.loginHandle(tk,mk).observe(LoginActivity.this, new Observer<user1s>() {
                     @Override
                     public void onChanged(user1s user1s) {
-                        if(user1s!=null){
+                        if(user1s.getAccount()!=null){
+                            RegNotifi(user1s.getAccount());
                             EventBus.getDefault().postSticky(user1s);
                             SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
                             SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
@@ -72,7 +78,7 @@ public class LoginActivity extends BaseActivity {
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             progressDialog.dismiss();
                         }else{
-                            Toast.makeText(LoginActivity.this, "tai khoarn matj khau", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "tai khoarn mật khẩu ", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }
@@ -87,7 +93,25 @@ public class LoginActivity extends BaseActivity {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
             btndangnhp=findViewById(R.id.btndangnhap);
             btndangky=findViewById(R.id.btndangky);
-            edttk=findViewById(R.id.edttk);
-            edtmk=findViewById(R.id.edtmk);
+            edttk=findViewById(R.id.edttklg);
+            edtmk=findViewById(R.id.edtmklg);
+    }
+
+    private void RegNotifi(String topic) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic) // ở trên firebase sẽ gửi theo topic hihi
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "sub ok";
+                        if (!task.isSuccessful()) {
+                            msg = "sub phêu";
+                        }
+                        Log.d("TAG", msg);
+                        // Toast.makeText(Main2Activity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
     }
 }

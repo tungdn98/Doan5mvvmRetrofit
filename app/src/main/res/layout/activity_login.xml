@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edttk"
+                    android:id="@+id/edttklg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="tài khoản"
@@ -74,7 +74,7 @@
                 app:passwordToggleTint="@color/colorAccent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtmk"
+                    android:id="@+id/edtmklg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="mật khẩu"

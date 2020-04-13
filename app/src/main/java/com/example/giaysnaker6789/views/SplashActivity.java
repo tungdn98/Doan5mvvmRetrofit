@@ -59,7 +59,8 @@ public class SplashActivity extends BaseActivity {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     } finally {
-                        if (SharedPref.read(SharedPref.LOGIN, false)) { // kiểm tra đã login chưa
+                        boolean check=SharedPref.read(SharedPref.LOGIN, false);
+                        if (check==true) { // kiểm tra đã login chưa
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -93,7 +94,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void init() {
-        SharedPref.init(getApplicationContext());
+        SharedPref.init(SplashActivity.this);
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
@@ -104,13 +105,13 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onChanged(user1s user1s) {
                 if(user1s!=null){
-                    EventBus.getDefault().postSticky(user1s);
-                    SharedPref.write(SharedPref.LOGIN,true);
-                    RegNotifi(user1s.getAccount());
-                   // startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                }else{
-                    SharedPref.write(SharedPref.LOGIN,false);
-                   // startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+                    if(user1s.getAccount()!=null){
+                        EventBus.getDefault().postSticky(user1s);
+                        SharedPref.write(SharedPref.LOGIN,true);
+                        RegNotifi(user1s.getAccount());
+                    }else{
+                        SharedPref.write(SharedPref.LOGIN,false);
+                    }
                 }
             }
         });

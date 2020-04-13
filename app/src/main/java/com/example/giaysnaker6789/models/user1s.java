@@ -41,6 +41,9 @@ public class user1s {
     @Expose
     private String idfb;
 
+    public user1s() {
+    }
+
     public user1s(Integer id, String account, String password, String email, String address, String phone, String name, String sex, String fbName, String linkfb, String imagefb, String idfb) {
         this.id = id;
         this.account = account;
