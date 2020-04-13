@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity {
                 loginViewModel.loginHandle(tk,mk).observe(LoginActivity.this, new Observer<user1s>() {
                     @Override
                     public void onChanged(user1s user1s) {
-                        if(user1s.getAccount()!=null){
+                        if(user1s!=null){
                             EventBus.getDefault().postSticky(user1s);
                             SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
                             SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.

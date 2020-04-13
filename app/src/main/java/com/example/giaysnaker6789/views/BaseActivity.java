@@ -1,5 +1,6 @@
 package com.example.giaysnaker6789.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -7,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.giaysnaker6789.service.CheckConnectService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,6 +29,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        startService(new Intent(getBaseContext(), CheckConnectService.class));
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }

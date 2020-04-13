@@ -39,6 +39,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        RegNotifi("all");
         init();
         checkAccount();
         final Thread thread = new Thread(new Runnable() {
@@ -58,7 +59,6 @@ public class SplashActivity extends BaseActivity {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     } finally {
-
                         if (SharedPref.read(SharedPref.LOGIN, false)) { // kiểm tra đã login chưa
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             finish();
@@ -74,6 +74,24 @@ public class SplashActivity extends BaseActivity {
         thread.start();
     }
 
+    private void RegNotifi(String topic) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic) // ở trên firebase sẽ gửi theo topic hihi
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "sub ok";
+                        if (!task.isSuccessful()) {
+                            msg = "sub phêu";
+                        }
+                        Log.d("TAG", msg);
+                        // Toast.makeText(Main2Activity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+    }
+
     private void init() {
         SharedPref.init(getApplicationContext());
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
@@ -85,11 +103,10 @@ public class SplashActivity extends BaseActivity {
         loginViewModel.loginHandle(tk,mk).observe(SplashActivity.this, new Observer<user1s>() {
             @Override
             public void onChanged(user1s user1s) {
-                if(user1s.getAccount()!=null){
+                if(user1s!=null){
                     EventBus.getDefault().postSticky(user1s);
-                    SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
-                    SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
                     SharedPref.write(SharedPref.LOGIN,true);
+                    RegNotifi(user1s.getAccount());
                    // startActivity(new Intent(SplashActivity.this,MainActivity.class));
                 }else{
                     SharedPref.write(SharedPref.LOGIN,false);
@@ -130,19 +147,4 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    private void registerMess(){
-        FirebaseMessaging.getInstance().subscribeToTopic("weather") // ở trên firebase sẽ gửi theo topic hihi
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "sub ok";
-                        if (!task.isSuccessful()) {
-                            msg = "sub phêu";
-                        }
-                        Log.d("TAG", msg);
-                        Toast.makeText(SplashActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
 }

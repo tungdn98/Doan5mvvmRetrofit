@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "594669665489",
+    "firebase_url": "https://notifisnaker.firebaseio.com",
+    "project_id": "notifisnaker",
+    "storage_bucket": "notifisnaker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594669665489:android:2a40536ef156d134ac59f0",
+        "android_client_info": {
+          "package_name": "com.example.giaysnaker6789"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594669665489-mdt4puauflpbk55c1lvhq986ic1qeie0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbwv6YLVYIZA7Y7D5e3Ok_DK0GTctpxIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594669665489-mdt4puauflpbk55c1lvhq986ic1qeie0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
