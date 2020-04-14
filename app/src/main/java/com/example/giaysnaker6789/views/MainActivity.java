@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
@@ -76,7 +77,7 @@ public class MainActivity extends BaseActivity {
     NavigationView navigationView;
     SearchView searchView;
     TextView txtbadge, txttitle;
-    ImageView imgMenu;
+    ImageView imgMenu,imgcart;
 
     View headerview;
     TextView txtname;
@@ -126,6 +127,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,LoadMoreActivity.class));
+            }
+        });
+        imgcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CartActivity.class));
+                Animatoo.animateZoom(MainActivity.this);
             }
         });
 
@@ -214,6 +222,7 @@ public class MainActivity extends BaseActivity {
     }
     private void initView() {
         imgMenu = findViewById(R.id.imgMenu);
+        imgcart=findViewById(R.id.imgcart);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         txtbadge = findViewById(R.id.text);

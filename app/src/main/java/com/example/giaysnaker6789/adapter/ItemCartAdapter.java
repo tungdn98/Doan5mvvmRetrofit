@@ -11,24 +11,25 @@ import android.widget.TextView;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.RetrofitService;
+import com.example.tungnuinumberone.TungNuiButton;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class searchAdapter extends BaseAdapter {
-    ArrayList<products> listproduct;
+public class ItemCartAdapter extends BaseAdapter {
+    ArrayList<products> list;
     Context context;
 
-    public searchAdapter(ArrayList<products> listproduct, Context context) {
-        this.listproduct = listproduct;
+    public ItemCartAdapter(ArrayList<products> list, Context context) {
+        this.list = list;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return listproduct.size();
+        return list.size();
     }
 
     @Override
@@ -42,12 +43,15 @@ public class searchAdapter extends BaseAdapter {
     }
 
     private class viewholder{  // tạo 1 class viewholder đầy đủ các thuộc tính của file dongkhach.xml
-        TextView txtdescription;
-        TextView txttitle;
-        TextView txtgiachinh;
-        TextView txtgiagiam;
+        TextView txttensp;
+        TextView txtorigin;
+        TextView txtprice;
+        TextView txtpromotion;
+        TextView txtamount;
         ImageView imagesp;
+        TungNuiButton tungNuiButton;
     }
+
 
     @Override
     public View getView(int position, View itemView, ViewGroup parent) {
@@ -57,21 +61,26 @@ public class searchAdapter extends BaseAdapter {
             holder=new viewholder();
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             itemView=inflater.inflate(R.layout.item_product,null);
-            holder.txttitle = itemView.findViewById(R.id.txttitle);
-            holder.txtdescription = itemView.findViewById(R.id.txtdescription);
-            holder.txtgiachinh = itemView.findViewById(R.id.txtgiachinh);
-            holder.txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
+            holder.txttensp = itemView.findViewById(R.id.txttensp);
+            holder.txtorigin = itemView.findViewById(R.id.txtorigin);
+            holder.txtprice = itemView.findViewById(R.id.txtprice);
+            holder.txtpromotion = itemView.findViewById(R.id.txtpromotion);
+            holder.txtamount = itemView.findViewById(R.id.txtamount);
+
             holder.imagesp = itemView.findViewById(R.id.imghinhsp);
+            holder.tungNuiButton = itemView.findViewById(R.id.number_button);
+
             itemView.setTag(holder);
         }else{
             holder = (viewholder) itemView.getTag();
         }
 
-        products currentpro=listproduct.get(position);
-        holder.txttitle.setText(currentpro.getName());
-        holder.txtdescription.setText(currentpro.getDescribe());
-        holder.txtgiachinh.setText(format(currentpro.getPrice()));
-        holder.txtgiagiam.setText(format(currentpro.getPromotion()));
+        products currentpro=list.get(position);
+        holder.txttensp.setText(currentpro.getName());
+        holder.txtorigin.setText(currentpro.getDescribe());
+        holder.txtprice.setText(format(currentpro.getPrice()));
+        holder.txtpromotion.setText(format(currentpro.getPromotion()));
+        holder.txtamount.setText(currentpro.getDescribe());
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
                 //.resize(150, 150)
@@ -79,6 +88,7 @@ public class searchAdapter extends BaseAdapter {
                 .into(holder.imagesp);
         return itemView;
     }
+
     public String format(double number){
         NumberFormat formatter = new DecimalFormat("#,###,###");
         return formatter.format(number);

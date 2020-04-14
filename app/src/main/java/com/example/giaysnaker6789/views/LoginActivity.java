@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.test;
@@ -76,6 +77,7 @@ public class LoginActivity extends BaseActivity {
                             SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
                             SharedPref.write(SharedPref.LOGIN,true);
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            Animatoo.animateZoom(LoginActivity.this);
                             progressDialog.dismiss();
                         }else{
                             Toast.makeText(LoginActivity.this, "tai khoarn mật khẩu ", Toast.LENGTH_SHORT).show();

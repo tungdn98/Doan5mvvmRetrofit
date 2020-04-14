@@ -18,4 +18,5 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/shipping1" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

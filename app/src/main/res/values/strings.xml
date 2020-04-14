@@ -4,4 +4,5 @@
     <string name="danh_muc">danh mục</string>
     <string name="gio_hang">giỏ hàng</string>
     <string name="ca_nhan">cá nhân</string>
+    <string name="emtyview">bạn hiện tại đéo có sản phẩm nào trong giỏ hàng đm</string>
 </resources>

@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
 import com.example.giaysnaker6789.models.image_products;
 import com.example.giaysnaker6789.models.product_types;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,7 +77,12 @@ public class ProductDetailActivity extends BaseActivity {
                 }
             }
         });
-
+        btnchonmua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initview() {

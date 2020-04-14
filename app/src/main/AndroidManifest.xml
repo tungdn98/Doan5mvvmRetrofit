@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".views.RegActivity"></activity>
+        <activity android:name=".views.CartActivity"></activity>
+        <activity android:name=".views.RegActivity" />
 
         <service
             android:name=".service.CheckConnectService"

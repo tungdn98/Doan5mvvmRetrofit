@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.user1s;
@@ -35,10 +36,13 @@ import static java.lang.Thread.sleep;
 
 public class SplashActivity extends BaseActivity {
     LoginViewModel loginViewModel;
+
+    LottieAnimationView lottieAnimationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         RegNotifi("all");
         init();
         checkAccount();
@@ -50,6 +54,7 @@ public class SplashActivity extends BaseActivity {
                 if (isfirtstart) {
                     // RequirePermistion(); // xin quyeefn
                     startActivity(new Intent(SplashActivity.this, myintro.class));
+                    Animatoo.animateFade(SplashActivity.this);
                     SharedPreferences.Editor e = getpre.edit();
                     e.putBoolean("firststart", false);
                     e.apply();
@@ -62,9 +67,11 @@ public class SplashActivity extends BaseActivity {
                         boolean check=SharedPref.read(SharedPref.LOGIN, false);
                         if (check==true) { // kiểm tra đã login chưa
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            Animatoo.animateZoom(SplashActivity.this);
                             finish();
                         } else {
                             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                            Animatoo.animateFade(SplashActivity.this);
                             finish();
                         }
                     }
