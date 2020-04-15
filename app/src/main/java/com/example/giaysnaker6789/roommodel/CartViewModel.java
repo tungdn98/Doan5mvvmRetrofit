@@ -22,6 +22,7 @@ public class CartViewModel extends AndroidViewModel {
         LiveData<Integer> data=repository.getCount();
         return data;
     }
+
     public void insert(Cart cart) {
        repository.insert(cart);
     }

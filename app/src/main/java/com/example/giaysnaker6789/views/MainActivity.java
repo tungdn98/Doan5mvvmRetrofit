@@ -45,6 +45,7 @@ import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
+import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.service.CheckConnectService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivity {
     BannerViewModel bannerViewModel;
     ProductViewModel productViewModel;
     ProductTypeViewModel productTypeViewModel;
+    private CartViewModel cartViewModel;
     private static final String TAG = "tungtung";
 
     ProgressDialog progressDialog;
@@ -115,6 +117,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         productTypeViewModel=ViewModelProviders.of(this).get(ProductTypeViewModel.class);
@@ -249,7 +252,6 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(MainActivity.this, "test nè", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_user:
-
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
@@ -290,6 +292,12 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(MainActivity.this,QRcodeActivity.class));
             }
         });
+        cartViewModel.getcount().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+               txtbadge.setText(""+integer);
+            }
+        });
     }
 
 
@@ -298,7 +306,6 @@ public class MainActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         txtname.setText(""+event.getName());
-        Log.d(TAG, "onMessageEvent: "+RetrofitService.basePath+event.getImagefb());
         Picasso.get()
                 .load(""+RetrofitService.basePath+event.getImagefb())
                 .resize(100, 100)
@@ -312,7 +319,7 @@ public class MainActivity extends BaseActivity {
         if (count >1) {
             finishAffinity();
         } else {
-            Toast.makeText(this, "chạm lại để thoát khỏi ứng dụng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "quay lại nhát nữa để thoát khỏi ứng dụng", Toast.LENGTH_SHORT).show();
             // resetting the counter in 2s
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {

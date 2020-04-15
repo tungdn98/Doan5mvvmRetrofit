@@ -8,9 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.RetrofitService;
+import com.example.giaysnaker6789.roommodel.Cart;
+import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.views.CartActivity;
 import com.example.tungnuinumberone.TungNuiButton;
 import com.squareup.picasso.Picasso;
 
@@ -18,13 +24,17 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+
 public class ItemCartAdapter extends BaseAdapter {
-    ArrayList<products> list;
+    ArrayList<Cart> list;
     Context context;
 
-    public ItemCartAdapter(ArrayList<products> list, Context context) {
+    private CartViewModel cartViewModel;
+
+    public ItemCartAdapter(ArrayList<Cart> list, Context context) {
         this.list = list;
         this.context = context;
+        cartViewModel = ViewModelProviders.of((FragmentActivity) context).get(CartViewModel.class);
     }
 
     @Override
@@ -46,9 +56,9 @@ public class ItemCartAdapter extends BaseAdapter {
         TextView txttensp;
         TextView txtorigin;
         TextView txtprice;
-        TextView txtpromotion;
-        TextView txtamount;
-        ImageView imagesp;
+        TextView txtsoluong;
+        TextView txtthanhtien;
+        ImageView imagesp,imgdelete;
         TungNuiButton tungNuiButton;
     }
 
@@ -60,13 +70,13 @@ public class ItemCartAdapter extends BaseAdapter {
         if(itemView == null){
             holder=new viewholder();
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            itemView=inflater.inflate(R.layout.item_product,null);
+            itemView=inflater.inflate(R.layout.item_cart,null);
             holder.txttensp = itemView.findViewById(R.id.txttensp);
             holder.txtorigin = itemView.findViewById(R.id.txtorigin);
             holder.txtprice = itemView.findViewById(R.id.txtprice);
-            holder.txtpromotion = itemView.findViewById(R.id.txtpromotion);
-            holder.txtamount = itemView.findViewById(R.id.txtamount);
-
+            holder.txtsoluong = itemView.findViewById(R.id.txtsoluong);
+            holder.txtthanhtien = itemView.findViewById(R.id.txtthanhtien);
+            holder.imgdelete=itemView.findViewById(R.id.imgdelete);
             holder.imagesp = itemView.findViewById(R.id.imghinhsp);
             holder.tungNuiButton = itemView.findViewById(R.id.number_button);
 
@@ -75,18 +85,42 @@ public class ItemCartAdapter extends BaseAdapter {
             holder = (viewholder) itemView.getTag();
         }
 
-        products currentpro=list.get(position);
-        holder.txttensp.setText(currentpro.getName());
-        holder.txtorigin.setText(currentpro.getDescribe());
-        holder.txtprice.setText(format(currentpro.getPrice()));
-        holder.txtpromotion.setText(format(currentpro.getPromotion()));
-        holder.txtamount.setText(currentpro.getDescribe());
+        Cart currentpro=list.get(position);
+        holder.txttensp.setText(currentpro.getTensp());
+        holder.txtorigin.setText(currentpro.getXuatsu());
+        holder.txtprice.setText(""+format(currentpro.getGiadagiam()));
+        holder.txtthanhtien.setText(""+currentpro.getThanhtien());
+        holder.tungNuiButton.setNumber(""+currentpro.getSoluong());
         Picasso.get()
-                .load(""+ RetrofitService.basePath+currentpro.getImage())
+                .load(""+ RetrofitService.basePath+currentpro.getHinhanh())
                 //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
+
+        holder.imgdelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete(currentpro);
+            }
+        });
+
+        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int number=Integer.parseInt(holder.tungNuiButton.getNumber());
+                currentpro.setSoluong(number);
+                currentpro.setThanhtien(number*currentpro.getGiadagiam());
+                cartViewModel.update(currentpro);
+            }
+        });
+
+
         return itemView;
+    }
+
+    private void delete(Cart cart){
+    cartViewModel.delete(cart);
+    list.remove(cart);
     }
 
     public String format(double number){

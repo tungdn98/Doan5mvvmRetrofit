@@ -31,20 +31,26 @@ public abstract class CartDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-           // new PopulateDbAsyncTask(instance).execute();
+            new PopulateDbAsyncTask(instance).execute();
         }
     };
 
-//    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-//        private CartDao cartDao;
-//
-//        private PopulateDbAsyncTask(CartDatabase db) {
-//            cartDao = db.noteDao();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            return null;
-//        }
-//    }
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
+        private CartDao cartDao;
+
+        private PopulateDbAsyncTask(CartDatabase db) {
+            cartDao = db.noteDao();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) { // tạo dữ liệu gốc
+            Cart cart=new Cart(123,123,"123",123,"123",
+                    "123",123,123,123,
+                    "123","123");
+            cartDao.insert(cart);
+            cartDao.insert(cart);
+            cartDao.insert(cart);
+            return null;
+        }
+    }
 }

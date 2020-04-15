@@ -21,11 +21,12 @@ public class Cart implements Serializable {
     String hinhanh;
     String voucher;
 
+
     public Cart() {
     }
 
-    public Cart(int idsanpham, String tensp, int iduser, String tenuser, String xuatsu, int giadagiam, int soluong, int thanhtien, String hinhanh, String voucher) {
-
+    public Cart(int id, int idsanpham, String tensp, int iduser, String tenuser, String xuatsu, int giadagiam, int soluong, int thanhtien, String hinhanh, String voucher) {
+        this.id = id;
         this.idsanpham = idsanpham;
         this.tensp = tensp;
         this.iduser = iduser;

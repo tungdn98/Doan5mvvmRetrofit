@@ -19,16 +19,16 @@ public class CartRepository {
     }
 
     public void insert(Cart cart) {
-         cartDao.insert(cart);
+        new InsertNoteAsyncTask(cartDao).execute(cart);
     }
 
     public void update(Cart cart) {
-        cartDao.update(cart);
+      new UpdateCartAsynctask(cartDao).execute(cart);
 
     }
 
     public void delete(Cart cart) {
-        cartDao.delete(cart);
+        new DeleteCartAsynctask(cartDao).execute(cart);
     }
 
     public void deleteAllNotes() {
@@ -41,8 +41,56 @@ public class CartRepository {
         return count;
     }
 
+
     public LiveData<List<Cart>> getAllNotes() {
         return allNotes;
     }
+
+
+
+
+
+    private static class InsertNoteAsyncTask extends AsyncTask<Cart, Void, Void> {
+        private CartDao cartDao;
+
+        private InsertNoteAsyncTask(CartDao cartDao) {
+            this.cartDao = cartDao;
+        }
+
+        @Override
+        protected Void doInBackground(Cart... notes) {
+            cartDao.insert(notes[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateCartAsynctask extends AsyncTask<Cart,Void,Void>{
+        private CartDao cartDao;
+
+        public UpdateCartAsynctask(CartDao cartDao) {
+            this.cartDao = cartDao;
+        }
+
+        @Override
+        protected Void doInBackground(Cart... carts) {
+            cartDao.update(carts[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteCartAsynctask extends AsyncTask<Cart,Void,Void>{
+        private CartDao cartDao;
+
+        public DeleteCartAsynctask(CartDao cartDao) {
+            this.cartDao = cartDao;
+        }
+
+        @Override
+        protected Void doInBackground(Cart... carts) {
+            cartDao.delete(carts[0]);
+            return null;
+        }
+    }
+
 
 }

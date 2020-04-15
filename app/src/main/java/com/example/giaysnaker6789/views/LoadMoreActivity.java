@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.R;
@@ -102,7 +103,6 @@ public class LoadMoreActivity extends BaseActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 GridLayoutManager staggeredGridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-
                 if (!isLoading) {
                     if (staggeredGridLayoutManager != null && staggeredGridLayoutManager.findLastCompletelyVisibleItemPosition() == rowsArrayList.size() - 1) {
                         dialog = new ProgressDialog(LoadMoreActivity.this);
@@ -124,16 +124,22 @@ public class LoadMoreActivity extends BaseActivity {
         productViewModel.LoadProduct(page).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
-                rowsArrayList.remove(rowsArrayList.size() - 1);
-                int scrollPosition = rowsArrayList.size();
-                loadMoreAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 15;
+                if(productBaseResponse.getLastPage()>page){
+                    rowsArrayList.remove(rowsArrayList.size() - 1);
+                    int scrollPosition = rowsArrayList.size();
+                    loadMoreAdapter.notifyItemRemoved(scrollPosition);
+                    int currentSize = scrollPosition;
+                    int nextLimit = currentSize + 15;
 
-                rowsArrayList.addAll((ArrayList<products>) productBaseResponse.getData());
-                loadMoreAdapter.notifyDataSetChanged();
-                isLoading = false;
-                dialog.dismiss();
+                    rowsArrayList.addAll((ArrayList<products>) productBaseResponse.getData());
+                    loadMoreAdapter.notifyDataSetChanged();
+                    isLoading = false;
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(LoadMoreActivity.this, "đã hết mặt hàng ", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }
