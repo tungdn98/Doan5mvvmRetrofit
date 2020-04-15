@@ -128,18 +128,14 @@ public class LoadMoreActivity extends BaseActivity {
                     rowsArrayList.remove(rowsArrayList.size() - 1);
                     int scrollPosition = rowsArrayList.size();
                     loadMoreAdapter.notifyItemRemoved(scrollPosition);
-                    int currentSize = scrollPosition;
-                    int nextLimit = currentSize + 15;
-
                     rowsArrayList.addAll((ArrayList<products>) productBaseResponse.getData());
                     loadMoreAdapter.notifyDataSetChanged();
                     isLoading = false;
                     dialog.dismiss();
                 }else{
+                    dialog.dismiss();
                     Toast.makeText(LoadMoreActivity.this, "đã hết mặt hàng ", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
     }

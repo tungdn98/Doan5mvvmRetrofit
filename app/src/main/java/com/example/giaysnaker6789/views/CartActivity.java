@@ -77,11 +77,11 @@ public class CartActivity extends BaseActivity {
         cartViewModel.getAllNotes().observe(CartActivity.this, new Observer<List<Cart>>() {
             @Override
             public void onChanged(List<Cart> carts) {
-                listcac=new ArrayList<>(carts);
+                listcac.clear();
+                listcac.addAll(carts);
                 if(listcac.size()>0){
                     cardView.setVisibility(View.VISIBLE);
-                    adapterCart = new ItemCartAdapter(listcac,CartActivity.this);
-                    lv.setAdapter(adapterCart);
+                        adapterCart.notifyDataSetChanged();
                     tinhtongtien(listcac);
                 }
             }
@@ -102,6 +102,9 @@ public class CartActivity extends BaseActivity {
 
     private void initview() {
         lv = findViewById(R.id.lvcart);
+
+        adapterCart = new ItemCartAdapter(listcac,CartActivity.this);
+        lv.setAdapter(adapterCart);
 
         cardView = findViewById(R.id.carview);
         txttitle=findViewById(R.id.txtsoluong);
