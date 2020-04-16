@@ -42,6 +42,7 @@ import com.example.tungnuislider.ImageSlider;
 import com.example.tungnuislider.models.SlideModel;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -300,6 +301,7 @@ public class ProductDetailActivity extends BaseActivity {
         btnvietnhanxet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBus.getDefault().postSticky(pro);
                 startActivity(new Intent(ProductDetailActivity.this,CommentActivity.class));
                 Animatoo.animateSplit(ProductDetailActivity.this);
             }

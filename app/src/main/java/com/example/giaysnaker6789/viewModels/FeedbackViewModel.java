@@ -32,4 +32,22 @@ public class FeedbackViewModel extends ViewModel {
         });
         return newsData;
     }
+
+    public MutableLiveData<Integer> postFeedback(int idproduct,int idUser,String content,String feedate,float rate){
+        MutableLiveData<Integer>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIfeedback.class);
+        dataClient.pushFeedback(idproduct,idUser,content,feedate,rate).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
 }

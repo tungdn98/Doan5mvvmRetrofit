@@ -15,4 +15,12 @@ public interface APIfeedback {
     @FormUrlEncoded
     @POST("api/getfeedback")
     Call<BaseResponseFeedback> getfeedback(@Field("idProduct") int idproduct, @Query("page") int page);
+
+    @FormUrlEncoded
+    @POST("api/pushFeedback")
+    Call<Integer> pushFeedback(@Field("idproduct") int idproduct,
+                               @Field("idUser") int idUser,
+                               @Field("content") String content,
+                               @Field("feedDate") String feedDate,
+                               @Field("rate") float rate);
 }
