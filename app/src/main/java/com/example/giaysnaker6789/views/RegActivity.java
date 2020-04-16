@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -98,20 +99,27 @@ public class RegActivity extends BaseActivity {
             }
         });
     }
-
+    ProgressDialog progressDialog;
     private void dangkine(String path) {
         String tk=edttk.getText().toString();
         String mk=edtmk.getText().toString();
         String dc=edtaddress.getText().toString();
         String phone=edtphone.getText().toString();
         String name=edtname.getText().toString();
+
+        progressDialog = new ProgressDialog(RegActivity.this);
+        progressDialog.setMessage("đang login chờ tý...");
+        progressDialog.show();
+
         registerViewmodel.RegisterNomal(tk,mk,dc,phone,name,path).observe(RegActivity.this, new Observer<user1s>() {
             @Override
             public void onChanged(user1s user1s) {
                 if(user1s.getAccount()!=null){
                     Toast.makeText(RegActivity.this, "đăng kí thành công", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }else{
                     Toast.makeText(RegActivity.this, "tài khoản đã có người sử dụng ", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             }
         });

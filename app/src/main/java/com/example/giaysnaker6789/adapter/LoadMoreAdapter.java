@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView txtgiachinh;
         TextView txtgiagiam;
         ImageView imagesp;
+        RatingBar rateing;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +90,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             txtgiachinh = itemView.findViewById(R.id.txtgiachinh);
             txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
             imagesp = itemView.findViewById(R.id.imghinhsp);
+            rateing =itemView.findViewById(R.id.ratingBarproductp);
         }
     }
 
@@ -116,8 +119,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //.resize(150, 150)
                // .centerCrop()
                 .into(viewHolder.imagesp);
-
-
+        viewHolder.rateing.setRating(currentpro.getRate());
     }
 
     public String format(double number){

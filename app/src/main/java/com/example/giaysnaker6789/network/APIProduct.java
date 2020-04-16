@@ -21,6 +21,10 @@ public interface APIProduct {
     @POST("api/getproType")
     Call<ProductBaseResponse> getproType(@Field("idProductType") int id);
 
+    @FormUrlEncoded
+    @POST("api/getSPLQ")
+    Call<ProductBaseResponse> getSPLQ(@Field("idProductype") int id,@Query("page") int page);
+
     @GET("api/getCount")
     Call<String> getCount();
 

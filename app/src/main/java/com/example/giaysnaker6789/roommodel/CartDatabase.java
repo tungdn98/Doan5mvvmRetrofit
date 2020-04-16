@@ -44,12 +44,6 @@ public abstract class CartDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) { // tạo dữ liệu gốc
-            Cart cart=new Cart(123,123,"123",123,"123",
-                    "123",123,123,123,
-                    "123","123");
-            cartDao.insert(cart);
-            cartDao.insert(cart);
-            cartDao.insert(cart);
             return null;
         }
     }

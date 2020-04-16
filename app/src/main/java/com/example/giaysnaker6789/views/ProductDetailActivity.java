@@ -3,13 +3,17 @@ package com.example.giaysnaker6789.views;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.adapter.FeedbackAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
 import com.example.giaysnaker6789.config.SharedPref;
+import com.example.giaysnaker6789.models.feedback_products;
 import com.example.giaysnaker6789.models.image_products;
 import com.example.giaysnaker6789.models.product_types;
 
@@ -30,6 +34,7 @@ import com.example.giaysnaker6789.models.vouchers;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
 import com.example.giaysnaker6789.viewModels.ImageProductViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.giaysnaker6789.viewModels.VoucherViewModel;
@@ -51,13 +56,18 @@ public class ProductDetailActivity extends BaseActivity {
     ImageSlider imgslider;
 
     ArrayList<products> listproduct = new ArrayList<>();
+    ArrayList<feedback_products> listfeedback = new ArrayList<>();
     ProductViewModel productViewModel;
     ImageProductViewModel imageProductViewModel;
     VoucherViewModel voucherViewModel;
+    FeedbackViewModel feedbackViewModel;
     private CartViewModel cartViewModel;
 
     SpTrangchuAdapterHoz recyclerViewAdapter;
+    FeedbackAdapter feedbackAdapter;
+
     StaggeredGridLayoutManager layoutManager;
+    LinearLayoutManager layoutManagerfeedback;
     products pro;
     user1s user;
 
@@ -69,8 +79,6 @@ public class ProductDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         initview();
-
-
 
         btncheckvoucher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +116,8 @@ public class ProductDetailActivity extends BaseActivity {
 
             }
         });
+
+
     }
 
     private void themgiohang() {
@@ -159,6 +169,7 @@ public class ProductDetailActivity extends BaseActivity {
         imageProductViewModel = ViewModelProviders.of(this).get(ImageProductViewModel.class);
         voucherViewModel = ViewModelProviders.of(this).get(VoucherViewModel.class);
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+        feedbackViewModel = ViewModelProviders.of(this).get(FeedbackViewModel.class);
         txttitle = findViewById(R.id.txttitle);
         txtprice = findViewById(R.id.txtprice);
         txtpromotion = findViewById(R.id.txtprmotion);
@@ -193,6 +204,8 @@ public class ProductDetailActivity extends BaseActivity {
         txtprice.setText("" + event.getPrice());
         loadDetail(event.getIdProductType());
         loadImage(event.getId());
+        loadfeedback(event.getId(),1);
+
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -202,16 +215,15 @@ public class ProductDetailActivity extends BaseActivity {
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
-        pro = new products();
-        pro.setId(Integer.parseInt(event));
         loadbyid(event);
+
     }
 
     private void loadbyid(String event) {
         productViewModel.searchByid(event).observe(this, new Observer<products>() {
             @Override
             public void onChanged(products products) {
-                pro = products;
+
                 txttitle.setText("" + products.getName());
                 txtdescription.setText("" + products.getDescribe());
                 txtpromotion.setText("" + products.getPromotion());
@@ -263,6 +275,33 @@ public class ProductDetailActivity extends BaseActivity {
                     Toast.makeText(ProductDetailActivity.this, "ko tifm thaasy sarn phaarm", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+    }
+
+    public void loadfeedback(int idproduct,int page){
+        feedbackViewModel.LoadListProductType(idproduct,1).observe(this, new Observer<BaseResponseFeedback>() {
+            @Override
+            public void onChanged(BaseResponseFeedback baseResponseFeedback) {
+
+                if (baseResponseFeedback.getData().size() > 0) {
+                    listfeedback.addAll(baseResponseFeedback.getData());
+                    layoutManagerfeedback = new LinearLayoutManager(ProductDetailActivity.this);
+                    rclistfeedback.setLayoutManager(layoutManagerfeedback);
+                    feedbackAdapter = new FeedbackAdapter(listfeedback);
+                    rclistfeedback.setAdapter(feedbackAdapter);
+                } else {
+                    Toast.makeText(ProductDetailActivity.this, "không tìm thấy bình luận", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        btnvietnhanxet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductDetailActivity.this,CommentActivity.class));
+                Animatoo.animateSplit(ProductDetailActivity.this);
             }
         });
     }

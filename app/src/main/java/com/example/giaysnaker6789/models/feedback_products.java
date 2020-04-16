@@ -19,13 +19,31 @@ public class feedback_products {
     @SerializedName("feedDate")
     @Expose
     private String feedDate;
+    @SerializedName("rate")
+    @Expose
+    private Float rate;
 
-    public feedback_products(Integer id, Integer idProduct, Integer idUser, String content, String feedDate) {
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("imagefb")
+    @Expose
+    private String imagefb;
+
+
+    public feedback_products() {
+    }
+
+    public feedback_products(Integer id, Integer idProduct, Integer idUser, String content, String feedDate, Float rate, String name, String imagefb) {
         this.id = id;
         this.idProduct = idProduct;
         this.idUser = idUser;
         this.content = content;
         this.feedDate = feedDate;
+        this.rate = rate;
+        this.name = name;
+        this.imagefb = imagefb;
     }
 
     public Integer getId() {
@@ -68,5 +86,27 @@ public class feedback_products {
         this.feedDate = feedDate;
     }
 
+    public Float getRate() {
+        return rate;
+    }
 
+    public void setRate(Float rate) {
+        this.rate = rate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImagefb() {
+        return imagefb;
+    }
+
+    public void setImagefb(String imagefb) {
+        this.imagefb = imagefb;
+    }
 }

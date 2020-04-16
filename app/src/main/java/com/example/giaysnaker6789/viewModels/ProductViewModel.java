@@ -107,4 +107,6 @@ public class ProductViewModel extends ViewModel {
         return newsData;
     }
 
+
+
 }

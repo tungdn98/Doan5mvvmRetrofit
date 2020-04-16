@@ -16,6 +16,9 @@ public class product_types {
     @Expose
     private String image;
 
+    public product_types() {
+    }
+
     public product_types(Integer id, String name, String image) {
         this.id = id;
         this.name = name;

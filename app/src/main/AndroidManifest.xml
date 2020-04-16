@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".views.CartActivity"></activity>
+        <activity android:name=".views.CommentActivity"></activity>
+        <activity android:name=".views.LoadProductTypeActivity" />
+        <activity android:name=".views.CartActivity" />
         <activity android:name=".views.RegActivity" />
 
         <service

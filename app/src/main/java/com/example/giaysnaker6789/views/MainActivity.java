@@ -160,7 +160,8 @@ public class MainActivity extends BaseActivity {
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 product_types pro=listproducttype.get(position);
                 EventBus.getDefault().postSticky(pro);
-                startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
+                startActivity(new Intent(MainActivity.this,LoadProductTypeActivity.class));
+                Animatoo.animateShrink(MainActivity.this);
             }
         });
     }

@@ -38,10 +38,15 @@ public class products {
     @Expose
     private Integer amount;
 
+    @SerializedName("rate")
+    @Expose
+    private Float rate;
+
+
     public products() {
     }
 
-    public products(Integer id, Integer idProductType, String name, String origin, String color, String weight, String describe, Integer price, Integer promotion, String image, Integer amount) {
+    public products(Integer id, Integer idProductType, String name, String origin, String color, String weight, String describe, Integer price, Integer promotion, String image, Integer amount, Float rate) {
         this.id = id;
         this.idProductType = idProductType;
         this.name = name;
@@ -53,6 +58,7 @@ public class products {
         this.promotion = promotion;
         this.image = image;
         this.amount = amount;
+        this.rate = rate;
     }
 
     public Integer getId() {
@@ -143,6 +149,11 @@ public class products {
         this.amount = amount;
     }
 
+    public Float getRate() {
+        return rate;
+    }
 
-
+    public void setRate(Float rate) {
+        this.rate = rate;
+    }
 }

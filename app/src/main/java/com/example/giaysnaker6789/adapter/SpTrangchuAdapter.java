@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
                 //.resize(150, 150)
                // .centerCrop()
                 .into(holder.imagesp);
+        holder.RTbar.setRating(currentpro.getRate());
     }
 
     @Override
@@ -61,6 +63,7 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
          TextView txtgiachinh;
          TextView txtgiagiam;
          ImageView imagesp;
+         RatingBar RTbar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txttitle = itemView.findViewById(R.id.txttitle);
@@ -68,7 +71,7 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
             txtgiachinh = itemView.findViewById(R.id.txtgiachinh);
             txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
             imagesp = itemView.findViewById(R.id.imghinhsp);
-
+            RTbar=itemView.findViewById(R.id.ratingBarproductp);
 
         }
     }
