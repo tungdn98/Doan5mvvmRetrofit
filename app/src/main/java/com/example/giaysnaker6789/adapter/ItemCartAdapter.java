@@ -7,15 +7,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.config.Progressdialog;
+import com.example.giaysnaker6789.models.bills;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.views.CartActivity;
 import com.example.tungnuinumberone.TungNuiButton;
 import com.squareup.picasso.Picasso;
@@ -26,15 +33,17 @@ import java.util.ArrayList;
 
 
 public class ItemCartAdapter extends BaseAdapter {
-    ArrayList<Cart> list;
+    ArrayList<bills> list;
     Context context;
 
-    private CartViewModel cartViewModel;
+    Progressdialog progressdialog=new Progressdialog();
 
-    public ItemCartAdapter(ArrayList<Cart> list, Context context) {
+    private BillViewModel billViewModel;
+
+    public ItemCartAdapter(ArrayList<bills> list, Context context) {
         this.list = list;
         this.context = context;
-        cartViewModel = ViewModelProviders.of((FragmentActivity) context).get(CartViewModel.class);
+        billViewModel = ViewModelProviders.of((FragmentActivity) context).get(BillViewModel.class);
     }
 
     @Override
@@ -85,14 +94,14 @@ public class ItemCartAdapter extends BaseAdapter {
             holder = (viewholder) itemView.getTag();
         }
 
-        Cart currentpro=list.get(position);
-        holder.txttensp.setText(currentpro.getTensp());
-        holder.txtorigin.setText(currentpro.getXuatsu());
-        holder.txtprice.setText(""+format(currentpro.getGiadagiam()));
-        holder.txtthanhtien.setText(""+currentpro.getThanhtien());
-        holder.tungNuiButton.setNumber(""+currentpro.getSoluong());
+        bills currentpro=list.get(position);
+        holder.txttensp.setText(currentpro.getName());
+        holder.txtorigin.setText(currentpro.getOrigin());
+        holder.txtprice.setText(""+format(currentpro.getPrice()));
+        holder.txtthanhtien.setText(""+currentpro.getPrice()*currentpro.getCount());
+        holder.tungNuiButton.setNumber(""+currentpro.getCount());
         Picasso.get()
-                .load(""+ RetrofitService.basePath+currentpro.getHinhanh())
+                .load(""+ RetrofitService.basePath+currentpro.getImage())
                 //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
@@ -100,7 +109,8 @@ public class ItemCartAdapter extends BaseAdapter {
         holder.imgdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delete(currentpro);
+                progressdialog.showDialog("đang xóa",context);
+                delete(currentpro.getIdUser(),currentpro.getIdProduct(),currentpro);
             }
         });
 
@@ -108,19 +118,35 @@ public class ItemCartAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int number=Integer.parseInt(holder.tungNuiButton.getNumber());
-                currentpro.setSoluong(number);
-                currentpro.setThanhtien(number*currentpro.getGiadagiam());
-                cartViewModel.update(currentpro);
+                progressdialog.showDialog("đang update",context);
+              billViewModel.updateBill(currentpro.getIdUser(),currentpro.getIdProduct(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
+                  @Override
+                  public void onChanged(Billresponse billresponse) {
+                      currentpro.setCount(number);
+                      CartActivity.listcac.set(position,currentpro);
+                      CartActivity.adapterCart.notifyDataSetChanged();
+                      CartActivity.tinhtongtien(CartActivity.listcac);
+                      CartActivity.setcountcart(CartActivity.listcac);
+                      progressdialog.dismissDialog();
+                  }
+              });
             }
         });
-
-
         return itemView;
     }
 
-    private void delete(Cart cart){
-    cartViewModel.delete(cart);
-    list.remove(cart);
+    private void delete(int iduser,int idproduct,bills bill){
+   billViewModel.deleteBill(iduser,idproduct).observe((LifecycleOwner) context, new Observer<Integer>() {
+       @Override
+       public void onChanged(Integer integer) {
+           CartActivity.listcac.remove(bill);
+           CartActivity.adapterCart.notifyDataSetChanged();
+           CartActivity.tinhtongtien(CartActivity.listcac);
+           CartActivity.setcountcart(CartActivity.listcac);
+           progressdialog.dismissDialog();
+       }
+   });
+
     }
 
     public String format(double number){

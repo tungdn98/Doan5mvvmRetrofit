@@ -73,6 +73,7 @@ public class LoginActivity extends BaseActivity {
                         if(user1s.getAccount()!=null){
                             RegNotifi(user1s.getAccount());
                             EventBus.getDefault().postSticky(user1s);
+                            SharedPref.write(SharedPref.IDUSER,user1s.getId());
                             SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
                             SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
                             SharedPref.write(SharedPref.LOGIN,true);

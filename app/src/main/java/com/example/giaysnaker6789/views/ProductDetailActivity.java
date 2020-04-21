@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
+import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.adapter.FeedbackAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
 import com.example.giaysnaker6789.config.SharedPref;
+import com.example.giaysnaker6789.models.bills;
 import com.example.giaysnaker6789.models.feedback_products;
 import com.example.giaysnaker6789.models.image_products;
 import com.example.giaysnaker6789.models.product_types;
@@ -34,6 +36,7 @@ import com.example.giaysnaker6789.models.vouchers;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
 import com.example.giaysnaker6789.viewModels.ImageProductViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
@@ -46,7 +49,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ProductDetailActivity extends BaseActivity {
@@ -62,7 +68,7 @@ public class ProductDetailActivity extends BaseActivity {
     ImageProductViewModel imageProductViewModel;
     VoucherViewModel voucherViewModel;
     FeedbackViewModel feedbackViewModel;
-    private CartViewModel cartViewModel;
+    BillViewModel billViewModel;
 
     SpTrangchuAdapterHoz recyclerViewAdapter;
     FeedbackAdapter feedbackAdapter;
@@ -111,56 +117,33 @@ public class ProductDetailActivity extends BaseActivity {
                     startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
                     Animatoo.animateCard(ProductDetailActivity.this);
                 } else {
-                    themgiohang();
+                   Addtocart();
                 }
-
-
             }
         });
 
 
     }
 
-    private void themgiohang() {
-        cartViewModel.getAllNotes().observe(this, new Observer<List<Cart>>() {
+    private void Addtocart() {
+            int iduser=user.getId();
+            String nameuser=user.getName();
+            int idproduct=pro.getId();
+            int price= Integer.parseInt(txtpromotion.getText().toString());
+             DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd"); // Format date
+                String date = df1.format(Calendar.getInstance().getTime());
+                String vou=edtvou.getText().toString();
+
+        billViewModel.CreateBill(iduser,nameuser,idproduct,price,1,"b1",vou,date).observe(this, new Observer<Billresponse>() {
             @Override
-            public void onChanged(List<Cart> carts) {
-               if(carts!=null){
-                   huhu.addAll(carts);
-               }else{
-                   huhu.add(null);
-               }
-               xulythem();
+            public void onChanged(Billresponse billresponse) {
+                if(billresponse.getMess().equals("IN")){
+                    Toast.makeText(ProductDetailActivity.this, "đã thêm vào sản phẩm mới", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-    }
-    private void xulythem(){
-        boolean check = false;
-        for(int i=0;i<huhu.size();i++){
-            if (huhu.get(i).getIdsanpham() == pro.getId()) {
-                check = true;
-            }
-        }
-
-        if (!check) { // nếu sp chưa tồn tại trong giỏ hàng
-            Cart cart = new Cart();
-            int giatien = Integer.parseInt(txtpromotion.getText().toString());
-            cart.setTensp(pro.getName());
-            cart.setIduser(user.getId());
-            cart.setIdsanpham(pro.getId());
-            cart.setTenuser(user.getName());
-            cart.setXuatsu(pro.getOrigin());
-            cart.setGiadagiam(giatien);
-            cart.setSoluong(1);
-            cart.setThanhtien(giatien);
-            cart.setHinhanh(pro.getImage());
-            cart.setVoucher(edtvou.getText().toString());
-            cartViewModel.insert(cart);
-            Toast.makeText(ProductDetailActivity.this, "đã thêm sp mới", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(ProductDetailActivity.this, "đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
@@ -169,7 +152,7 @@ public class ProductDetailActivity extends BaseActivity {
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         imageProductViewModel = ViewModelProviders.of(this).get(ImageProductViewModel.class);
         voucherViewModel = ViewModelProviders.of(this).get(VoucherViewModel.class);
-        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+        billViewModel = ViewModelProviders.of(ProductDetailActivity.this).get(BillViewModel.class);
         feedbackViewModel = ViewModelProviders.of(this).get(FeedbackViewModel.class);
         txttitle = findViewById(R.id.txttitle);
         txtprice = findViewById(R.id.txtprice);

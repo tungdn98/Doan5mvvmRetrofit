@@ -117,6 +117,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
@@ -254,8 +255,8 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.nav_user:
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
-                       // startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        startActivity(new Intent(MainActivity.this,UserActivity.class));
+                        startActivity(new Intent(MainActivity.this, OrderDetailActivity.class));
+//                        startActivity(new Intent(MainActivity.this,UserActivity.class));
                         Animatoo.animateCard(MainActivity.this);
                         break;
                     case R.id.nav_cart:

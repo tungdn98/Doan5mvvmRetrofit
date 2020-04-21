@@ -69,6 +69,7 @@ dependencies {
 
     implementation 'com.github.mohammadatif:Animatoo:master'
     implementation project(path: ':tungnuinumberone')
+    implementation 'com.shuhart.stepview:stepview:1.5.1'
 
 
 }
