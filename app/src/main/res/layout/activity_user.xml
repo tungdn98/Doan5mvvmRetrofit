@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.giaysnaker6789.models.user1s" />
+        <variable
+            name="stick"
+            type="com.example.giaysnaker6789.models.banners" />
+    </data>
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -46,14 +58,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="\@appsnippuser"
+                    android:text="@{user.name}"
                     android:textSize="28dp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="developer@appsnipp.com"
+                    android:text="@{stick.id}"
                     android:textSize="12dp"
                     android:textStyle="bold"/>
 
@@ -93,3 +105,5 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

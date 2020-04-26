@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.ApiUser;
@@ -22,19 +23,18 @@ public class LoginViewModel extends ViewModel {
     private ApiUser dataClient;
     private MutableLiveData<user1s> mutableLiveData;
 
-    public MutableLiveData<user1s> loginHandle(String tk, String mk){
-        MutableLiveData<user1s>  newsData = new MutableLiveData<>();
+    public MutableLiveData<ResponseUser1s> loginHandle(String tk, String mk){
+        MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(ApiUser.class);
-        dataClient.login(tk,mk).enqueue(new Callback<user1s>() {
+        dataClient.login(tk,mk).enqueue(new Callback<ResponseUser1s>() {
             @Override
-            public void onResponse(Call<user1s> call, Response<user1s> response) {
-               if(response.isSuccessful()){
-                   newsData.setValue(response.body());
-               }
+            public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
+                newsData.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<user1s> call, Throwable t) {
+            public void onFailure(Call<ResponseUser1s> call, Throwable t) {
+
             }
         });
 

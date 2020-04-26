@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.user1s;
@@ -30,6 +31,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
@@ -108,21 +110,23 @@ public class SplashActivity extends BaseActivity {
     private void checkAccount(){
         String tk=SharedPref.read(SharedPref.USER,"");
         String mk=SharedPref.read(SharedPref.PASS,"");
-        loginViewModel.loginHandle(tk,mk).observe(SplashActivity.this, new Observer<user1s>() {
+        loginViewModel.loginHandle(tk,mk).observe(SplashActivity.this, new Observer<ResponseUser1s>() {
             @Override
-            public void onChanged(user1s user1s) {
-                if(user1s!=null){
-                    if(user1s.getAccount()!=null){
-                        EventBus.getDefault().postSticky(user1s);
-                        SharedPref.write(SharedPref.IDUSER,user1s.getId());
+            public void onChanged(ResponseUser1s responseUser1s) {
+                if(responseUser1s.getMess().equals("SUCCESS")){
+                    ArrayList<user1s> user= (ArrayList<user1s>) responseUser1s.getData();
+                    if(user.get(0).getAccount()!=null){
+                        EventBus.getDefault().postSticky(user);
+                        SharedPref.write(SharedPref.IDUSER,user.get(0).getId());
                         SharedPref.write(SharedPref.LOGIN,true);
-                        RegNotifi(user1s.getAccount());
+                        RegNotifi(user.get(0).getAccount());
                     }else{
                         SharedPref.write(SharedPref.LOGIN,false);
                     }
                 }
             }
         });
+
     }
 
     private void RequirePermistion() {

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.APIimage;
@@ -30,6 +31,7 @@ import com.example.giaysnaker6789.viewModels.RegisterViewmodel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
@@ -111,16 +113,24 @@ public class RegActivity extends BaseActivity {
         progressDialog.setMessage("đang login chờ tý...");
         progressDialog.show();
 
-        registerViewmodel.RegisterNomal(tk,mk,dc,phone,name,path).observe(RegActivity.this, new Observer<user1s>() {
+        registerViewmodel.RegisterNomal(tk,mk,dc,phone,name,path).observe(this, new Observer<ResponseUser1s>() {
             @Override
-            public void onChanged(user1s user1s) {
-                if(user1s.getAccount()!=null){
-                    Toast.makeText(RegActivity.this, "đăng kí thành công", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }else{
-                    Toast.makeText(RegActivity.this, "tài khoản đã có người sử dụng ", Toast.LENGTH_SHORT).show();
+            public void onChanged(ResponseUser1s responseUser1s) {
+                if(responseUser1s.getMess().equals("SUCCESS")){
+                    ArrayList<user1s> user= (ArrayList<user1s>) responseUser1s.getData();
+                        Toast.makeText(RegActivity.this, "đăng kí thành công", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                }
+                if(responseUser1s.getMess().equals("EXISTMAIL")){
+                    Toast.makeText(RegActivity.this, "Email đã có người sử dụng vui lòng chọn tài khoản khác", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
+                if(responseUser1s.getMess().equals("EXISTACC")){
+                    Toast.makeText(RegActivity.this, "Tài khoản đã có người sử dụng vui lòng chọn tài khoản khác", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+
+                }
+
             }
         });
     }

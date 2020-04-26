@@ -95,13 +95,13 @@ public class ItemCartAdapter extends BaseAdapter {
         }
 
         bills currentpro=list.get(position);
-        holder.txttensp.setText(currentpro.getName());
-        holder.txtorigin.setText(currentpro.getOrigin());
+        holder.txttensp.setText(currentpro.getNameproduct());
+        holder.txtorigin.setText(currentpro.getOriginproduct());
         holder.txtprice.setText(""+format(currentpro.getPrice()));
         holder.txtthanhtien.setText(""+currentpro.getPrice()*currentpro.getCount());
         holder.tungNuiButton.setNumber(""+currentpro.getCount());
         Picasso.get()
-                .load(""+ RetrofitService.basePath+currentpro.getImage())
+                .load(""+ RetrofitService.basePath+currentpro.getImageproduct())
                 //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
@@ -110,28 +110,28 @@ public class ItemCartAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 progressdialog.showDialog("đang xóa",context);
-                delete(currentpro.getIdUser(),currentpro.getIdProduct(),currentpro);
+               // delete(currentpro.getIdUser(),currentpro.getIdProduct(),currentpro);
             }
         });
 
-        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int number=Integer.parseInt(holder.tungNuiButton.getNumber());
-                progressdialog.showDialog("đang update",context);
-              billViewModel.updateBill(currentpro.getIdUser(),currentpro.getIdProduct(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
-                  @Override
-                  public void onChanged(Billresponse billresponse) {
-                      currentpro.setCount(number);
-                      CartActivity.listcac.set(position,currentpro);
-                      CartActivity.adapterCart.notifyDataSetChanged();
-                      CartActivity.tinhtongtien(CartActivity.listcac);
-                      CartActivity.setcountcart(CartActivity.listcac);
-                      progressdialog.dismissDialog();
-                  }
-              });
-            }
-        });
+//        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int number=Integer.parseInt(holder.tungNuiButton.getNumber());
+//                progressdialog.showDialog("đang update",context);
+//              billViewModel.updateBill(currentpro.getIdUser(),currentpro.getIdProduct(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
+//                  @Override
+//                  public void onChanged(Billresponse billresponse) {
+//                      currentpro.setCount(number);
+//                      CartActivity.listcac.set(position,currentpro);
+//                      CartActivity.adapterCart.notifyDataSetChanged();
+//                      CartActivity.tinhtongtien(CartActivity.listcac);
+//                      CartActivity.setcountcart(CartActivity.listcac);
+//                      progressdialog.dismissDialog();
+//                  }
+//              });
+//            }
+//        });
         return itemView;
     }
 

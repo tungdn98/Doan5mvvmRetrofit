@@ -1,4 +1,5 @@
 package com.example.giaysnaker6789.network;
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.models.user1s;
 
 import retrofit2.Call;
@@ -10,15 +11,15 @@ import retrofit2.http.Query;
 public interface ApiUser {
     @FormUrlEncoded
     @POST("api/loginNomal")
-    Call<user1s> login(@Field("account") String tk, @Field("password") String mk);
+    Call<ResponseUser1s> login(@Field("account") String tk, @Field("password") String mk);
 
     @FormUrlEncoded
     @POST("api/RegisterNomal")
-    Call<user1s> RegisternoMal(@Field("account") String tk,
-                               @Field("password") String password,
-                               @Field("address") String address,
-                               @Field("phone") String phone,
-                               @Field("name") String name,
-                               @Field("imagefb") String imagefb);
+    Call<ResponseUser1s> RegisternoMal(@Field("account") String tk,
+                                       @Field("password") String password,
+                                       @Field("address") String address,
+                                       @Field("phone") String phone,
+                                       @Field("name") String name,
+                                       @Field("imagefb") String imagefb);
 
 }

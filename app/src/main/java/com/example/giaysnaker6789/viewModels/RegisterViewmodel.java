@@ -3,6 +3,7 @@ package com.example.giaysnaker6789.viewModels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.APIimage;
 import com.example.giaysnaker6789.network.ApiUser;
@@ -17,21 +18,20 @@ public class RegisterViewmodel extends ViewModel {
     private ApiUser dataClient;
     private APIimage apiImage;
 
-    public MutableLiveData<user1s> RegisterNomal(String tk,String mk,String dc,String phone,String name,String path){
-        MutableLiveData<user1s>  newsData = new MutableLiveData<>();
+    public MutableLiveData<ResponseUser1s> RegisterNomal(String tk,String mk,String dc,String phone,String name,String path){
+        MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(ApiUser.class);
-        dataClient.RegisternoMal(tk,mk,dc,phone,name,path).enqueue(new Callback<user1s>() {
+        dataClient.RegisternoMal(tk,mk,dc,phone,name,path).enqueue(new Callback<ResponseUser1s>() {
             @Override
-            public void onResponse(Call<user1s> call, Response<user1s> response) {
+            public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
                 newsData.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<user1s> call, Throwable t) {
-                newsData.setValue(new user1s());
+            public void onFailure(Call<ResponseUser1s> call, Throwable t) {
+
             }
         });
-
         return newsData;
     }
 

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.test;
@@ -28,6 +29,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,23 +69,27 @@ public class LoginActivity extends BaseActivity {
                 progressDialog.show();
                 String tk=edttk.getText().toString();
                 String mk=edtmk.getText().toString();
-                loginViewModel.loginHandle(tk,mk).observe(LoginActivity.this, new Observer<user1s>() {
+                loginViewModel.loginHandle(tk,mk).observe(LoginActivity.this, new Observer<ResponseUser1s>() {
                     @Override
-                    public void onChanged(user1s user1s) {
-                        if(user1s.getAccount()!=null){
-                            RegNotifi(user1s.getAccount());
-                            EventBus.getDefault().postSticky(user1s);
-                            SharedPref.write(SharedPref.IDUSER,user1s.getId());
-                            SharedPref.write(SharedPref.USER,""+user1s.getAccount());//save string in shared preference.
-                            SharedPref.write(SharedPref.PASS,""+user1s.getPassword());//save int in shared preference.
-                            SharedPref.write(SharedPref.LOGIN,true);
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            Animatoo.animateZoom(LoginActivity.this);
-                            progressDialog.dismiss();
-                        }else{
-                            Toast.makeText(LoginActivity.this, "tai khoarn mật khẩu ", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+                    public void onChanged(ResponseUser1s responseUser1s) {
+                        if(responseUser1s.getMess().equals("SUCCESS")){
+                            ArrayList<user1s> user= (ArrayList<user1s>) responseUser1s.getData();
+                            if(user.get(0).getAccount()!=null){
+                                RegNotifi(user.get(0).getAccount());
+                                EventBus.getDefault().postSticky(user);
+                                SharedPref.write(SharedPref.IDUSER,user.get(0).getId());
+                                SharedPref.write(SharedPref.USER,""+user.get(0).getAccount());//save string in shared preference.
+                                SharedPref.write(SharedPref.PASS,""+user.get(0).getPassword());//save int in shared preference.
+                                SharedPref.write(SharedPref.LOGIN,true);
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                Animatoo.animateZoom(LoginActivity.this);
+                                progressDialog.dismiss();
+                            }else{
+                                Toast.makeText(LoginActivity.this, "tài khoản hoặc mật khẩu không chính xác ", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
                         }
+
                     }
                 });
             }
