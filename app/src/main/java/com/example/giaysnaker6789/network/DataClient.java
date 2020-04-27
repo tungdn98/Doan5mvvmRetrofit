@@ -17,7 +17,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 public interface DataClient {
 
-
     @GET("api/getBanner")
     Call<List<banners>> getBanner();
 

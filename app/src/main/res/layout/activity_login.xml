@@ -7,12 +7,20 @@
     android:orientation="vertical"
     tools:context=".views.LoginActivity" >
 
+<TextView
+    android:textColor="@color/cam"
+    android:text="skip >>"
+    android:gravity="right"
+    android:textSize="20sp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        app:srcCompat="@drawable/badge_background" />
+        app:srcCompat="@mipmap/giay" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

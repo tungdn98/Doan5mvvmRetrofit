@@ -116,7 +116,7 @@ public class SplashActivity extends BaseActivity {
                 if(responseUser1s.getMess().equals("SUCCESS")){
                     ArrayList<user1s> user= (ArrayList<user1s>) responseUser1s.getData();
                     if(user.get(0).getAccount()!=null){
-                        EventBus.getDefault().postSticky(user);
+                        EventBus.getDefault().postSticky(user.get(0));
                         SharedPref.write(SharedPref.IDUSER,user.get(0).getId());
                         SharedPref.write(SharedPref.LOGIN,true);
                         RegNotifi(user.get(0).getAccount());

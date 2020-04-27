@@ -84,10 +84,10 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                                 Animatoo.animateZoom(LoginActivity.this);
                                 progressDialog.dismiss();
-                            }else{
-                                Toast.makeText(LoginActivity.this, "tài khoản hoặc mật khẩu không chính xác ", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
                             }
+                        }else{
+                            Toast.makeText(LoginActivity.this, "tài khoản hoặc mật khẩu không chính xác ", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
 
                     }
