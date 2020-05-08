@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
+import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.adapter.FeedbackAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.bills;
+import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.feedback_products;
 import com.example.giaysnaker6789.models.image_products;
 import com.example.giaysnaker6789.models.product_types;
@@ -36,6 +38,7 @@ import com.example.giaysnaker6789.models.vouchers;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
 import com.example.giaysnaker6789.viewModels.ImageProductViewModel;
@@ -53,6 +56,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ProductDetailActivity extends BaseActivity {
@@ -64,11 +68,13 @@ public class ProductDetailActivity extends BaseActivity {
 
     ArrayList<products> listproduct = new ArrayList<>();
     ArrayList<feedback_products> listfeedback = new ArrayList<>();
+
     ProductViewModel productViewModel;
     ImageProductViewModel imageProductViewModel;
     VoucherViewModel voucherViewModel;
     FeedbackViewModel feedbackViewModel;
     BillViewModel billViewModel;
+    BillUserViewModel billUserViewModel;
 
     SpTrangchuAdapterHoz recyclerViewAdapter;
     FeedbackAdapter feedbackAdapter;
@@ -77,8 +83,7 @@ public class ProductDetailActivity extends BaseActivity {
     LinearLayoutManager layoutManagerfeedback;
     products pro;
     user1s user;
-
-
+    billuser billuser;
     ArrayList<Cart> huhu = new ArrayList<>();
 
     @Override
@@ -117,7 +122,7 @@ public class ProductDetailActivity extends BaseActivity {
                     startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
                     Animatoo.animateCard(ProductDetailActivity.this);
                 } else {
-                   Addtocart();
+                    Addtocart();
                 }
             }
         });
@@ -126,34 +131,51 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
     private void Addtocart() {
-            int iduser=user.getId();
-            String nameuser=user.getName();
-            int idproduct=pro.getId();
-            int price= Integer.parseInt(txtpromotion.getText().toString());
-             DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd"); // Format date
-                String date = df1.format(Calendar.getInstance().getTime());
-                String vou=edtvou.getText().toString();
-
-        billViewModel.CreateBill(iduser,nameuser,idproduct,price,1,"b1",vou,date).observe(this, new Observer<Billresponse>() {
-            @Override
-            public void onChanged(Billresponse billresponse) {
-                if(billresponse.getMess().equals("IN")){
-                    Toast.makeText(ProductDetailActivity.this, "đã thêm vào sản phẩm mới", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                }
+        if(user==null){
+            startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
+            Animatoo.animateCard(ProductDetailActivity.this);
+        }
+        int iduser = user.getId();
+        int idproduct = pro.getId();
+        int price = Integer.parseInt(txtpromotion.getText().toString());
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd"); // Format date
+        String date = df1.format(Calendar.getInstance().getTime());
+        String vou = edtvou.getText().toString();
+            if(billuser!=null){
+                billUserViewModel.AddtoExCart( "b1", price, 1, date, idproduct, vou, billuser.getId()).observe(this, new Observer<BillUserResponse>() {
+                    @Override
+                    public void onChanged(BillUserResponse billUserResponse) {
+                        Log.d("TAG", "onChanged: "+billUserResponse);
+                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+                        Animatoo.animateSplit(ProductDetailActivity.this);
+                    }
+                });
+            }else{
+                billUserViewModel.AddtoCart( iduser,  "b1",  price,  1,  date,
+                         "", idproduct,  vou).observe(this, new Observer<BillUserResponse>() {
+                    @Override
+                    public void onChanged(BillUserResponse billUserResponse) {
+                        Log.d("TAG", "onChanged: "+billUserResponse);
+//                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+//                        Animatoo.animateSplit(ProductDetailActivity.this);
+                    }
+                });
             }
-        });
+
+
     }
 
 
     private void initview() {
         SharedPref.init(ProductDetailActivity.this);
+
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         imageProductViewModel = ViewModelProviders.of(this).get(ImageProductViewModel.class);
         voucherViewModel = ViewModelProviders.of(this).get(VoucherViewModel.class);
         billViewModel = ViewModelProviders.of(ProductDetailActivity.this).get(BillViewModel.class);
         feedbackViewModel = ViewModelProviders.of(this).get(FeedbackViewModel.class);
+        billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
+
         txttitle = findViewById(R.id.txttitle);
         txtprice = findViewById(R.id.txtprice);
         txtpromotion = findViewById(R.id.txtprmotion);
@@ -165,6 +187,7 @@ public class ProductDetailActivity extends BaseActivity {
         btncheckvoucher = findViewById(R.id.checkvoucher);
         edtvou = findViewById(R.id.edtvoucher);
         imgslider = findViewById(R.id.imgslide);
+
         String id = getIntent().getStringExtra("noti");
         if (id != null) {
             loadbyid(id);
@@ -188,8 +211,13 @@ public class ProductDetailActivity extends BaseActivity {
         txtprice.setText("" + event.getPrice());
         loadDetail(event.getIdProductType());
         loadImage(event.getId());
-        loadfeedback(event.getId(),1);
+        loadfeedback(event.getId(), 1);
 
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(billuser event) { // get model test
+        billuser = event;
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -237,7 +265,6 @@ public class ProductDetailActivity extends BaseActivity {
                     recyclerViewAdapter = new SpTrangchuAdapterHoz(listproduct, ProductDetailActivity.this);
                     rcsplienquan.setAdapter(recyclerViewAdapter);
                 } else {
-                    Toast.makeText(ProductDetailActivity.this, "không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -256,15 +283,14 @@ public class ProductDetailActivity extends BaseActivity {
                     }
                     imgslider.setImageList(imageList, false);
                 } else {
-                    Toast.makeText(ProductDetailActivity.this, "ko tifm thaasy sarn phaarm", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
     }
 
-    public void loadfeedback(int idproduct,int page){
-        feedbackViewModel.LoadListProductType(idproduct,1).observe(this, new Observer<BaseResponseFeedback>() {
+    public void loadfeedback(int idproduct, int page) {
+        feedbackViewModel.LoadListProductType(idproduct, 1).observe(this, new Observer<BaseResponseFeedback>() {
             @Override
             public void onChanged(BaseResponseFeedback baseResponseFeedback) {
 
@@ -275,7 +301,6 @@ public class ProductDetailActivity extends BaseActivity {
                     feedbackAdapter = new FeedbackAdapter(listfeedback);
                     rclistfeedback.setAdapter(feedbackAdapter);
                 } else {
-                    Toast.makeText(ProductDetailActivity.this, "không tìm thấy bình luận", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -285,7 +310,7 @@ public class ProductDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().postSticky(pro);
-                startActivity(new Intent(ProductDetailActivity.this,CommentActivity.class));
+                startActivity(new Intent(ProductDetailActivity.this, CommentActivity.class));
                 Animatoo.animateSplit(ProductDetailActivity.this);
             }
         });

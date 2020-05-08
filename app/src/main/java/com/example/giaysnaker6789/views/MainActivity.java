@@ -33,12 +33,14 @@ import android.widget.Toast;
 
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
 import com.example.giaysnaker6789.models.banners;
+import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
@@ -48,6 +50,8 @@ import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.service.CheckConnectService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
+import com.example.giaysnaker6789.viewModels.BillUserViewModel;
+import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.tungnuislider.ImageSlider;
@@ -78,7 +82,7 @@ public class MainActivity extends BaseActivity {
     NavigationView navigationView;
     SearchView searchView;
     TextView txtbadge, txttitle;
-    ImageView imgMenu,imgcart;
+    ImageView imgMenu, imgcart;
 
     View headerview;
     TextView txtname;
@@ -95,6 +99,7 @@ public class MainActivity extends BaseActivity {
     ProductViewModel productViewModel;
     ProductTypeViewModel productTypeViewModel;
     private CartViewModel cartViewModel;
+    private BillUserViewModel billUserViewModel;
     private static final String TAG = "tungtung";
 
     ProgressDialog progressDialog;
@@ -110,8 +115,6 @@ public class MainActivity extends BaseActivity {
     ArrayList<product_types> listproducttype = new ArrayList<>();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +124,8 @@ public class MainActivity extends BaseActivity {
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-        productTypeViewModel=ViewModelProviders.of(this).get(ProductTypeViewModel.class);
+        productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
+        billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
         initView();
         setCountButton();
         setupBanner();
@@ -130,13 +134,13 @@ public class MainActivity extends BaseActivity {
         btnloadmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoadMoreActivity.class));
+                startActivity(new Intent(MainActivity.this, LoadMoreActivity.class));
             }
         });
         imgcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CartActivity.class));
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
                 Animatoo.animateZoom(MainActivity.this);
             }
         });
@@ -159,9 +163,9 @@ public class MainActivity extends BaseActivity {
         ItemClickSupport.addTo(recyclerView2).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                product_types pro=listproducttype.get(position);
+                product_types pro = listproducttype.get(position);
                 EventBus.getDefault().postSticky(pro);
-                startActivity(new Intent(MainActivity.this,LoadProductTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, LoadProductTypeActivity.class));
                 Animatoo.animateShrink(MainActivity.this);
             }
         });
@@ -171,7 +175,7 @@ public class MainActivity extends BaseActivity {
         productViewModel.getCount().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                btnloadmore.setText("xem thêm "+s+" sản phẩm");
+                btnloadmore.setText("xem thêm " + s + " sản phẩm");
             }
         });
     }
@@ -193,9 +197,9 @@ public class MainActivity extends BaseActivity {
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                products pro=rowsArrayList.get(position);
+                products pro = rowsArrayList.get(position);
                 EventBus.getDefault().postSticky(pro);
-                startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
+                startActivity(new Intent(MainActivity.this, ProductDetailActivity.class));
             }
         });
 
@@ -217,7 +221,7 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onItemSelected(int position) {
                             EventBus.getDefault().postSticky(banners.get(position));
-                            startActivity(new Intent(MainActivity.this,ProductDetailActivity.class));
+                            startActivity(new Intent(MainActivity.this, ProductDetailActivity.class));
                         }
                     });
                 }
@@ -225,22 +229,23 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     private void initView() {
         imgMenu = findViewById(R.id.imgMenu);
-        imgcart=findViewById(R.id.imgcart);
+        imgcart = findViewById(R.id.imgcart);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
-        btnscan=findViewById(R.id.btnscan);
-        headerview=navigationView.getHeaderView(0);
-         txtname=headerview.findViewById(R.id.txtname);
-        profile_image=headerview.findViewById(R.id.profile_image);
+        btnscan = findViewById(R.id.btnscan);
+        headerview = navigationView.getHeaderView(0);
+        txtname = headerview.findViewById(R.id.txtname);
+        profile_image = headerview.findViewById(R.id.profile_image);
         imgslider = findViewById(R.id.image_slider);
         recyclerView = findViewById(R.id.rcmain);
-        recyclerView2=findViewById(R.id.rclistloaisp);
-        btnloadmore=findViewById(R.id.btnloadmore);
+        recyclerView2 = findViewById(R.id.rclistloaisp);
+        btnloadmore = findViewById(R.id.btnloadmore);
 
         navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -250,13 +255,13 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                       // EventBus.getDefault().postSticky(new test(1, "tungtung", "núi"));
+                        // EventBus.getDefault().postSticky(new test(1, "tungtung", "núi"));
                         Toast.makeText(MainActivity.this, "test nè", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_user:
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(MainActivity.this, OrderDetailActivity.class));
-                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         Animatoo.animateCard(MainActivity.this);
                         break;
                     case R.id.nav_cart:
@@ -280,7 +285,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 EventBus.getDefault().postSticky(query);
-                startActivity(new Intent(MainActivity.this,ResultSearchActivity.class));
+                startActivity(new Intent(MainActivity.this, ResultSearchActivity.class));
                 return false;
             }
 
@@ -293,34 +298,41 @@ public class MainActivity extends BaseActivity {
         btnscan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startActivity(new Intent(MainActivity.this,QRcodeActivity.class));
+                startActivity(new Intent(MainActivity.this, QRcodeActivity.class));
             }
         });
-        cartViewModel.getcount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-               txtbadge.setText(""+integer);
-            }
-        });
+
+
     }
-
-
 
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
-        txtname.setText(""+event.getName());
+        txtname.setText("" + event.getName());
         Picasso.get()
-                .load(""+RetrofitService.basePath+event.getImagefb())
+                .load("" + RetrofitService.basePath + event.getImagefb())
                 .resize(100, 100)
                 // .centerCrop()
                 .into(profile_image);
+
+        billUserViewModel.getcountbill(event.getId(), "b1").observe(this, new Observer<BillUserResponse>() {
+            @Override
+            public void onChanged(BillUserResponse billUserResponse) {
+                if (billUserResponse.getMess().equals("SUCCESS")) {
+                    billuser billuser= billUserResponse.getData().get(0);
+                    EventBus.getDefault().postSticky(billuser);
+                    txtbadge.setText("" + billuser.getCount());
+                } else {
+                    txtbadge.setText("0");
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
         count++;
-        if (count >1) {
+        if (count > 1) {
             finishAffinity();
         } else {
             Toast.makeText(this, "quay lại nhát nữa để thoát khỏi ứng dụng", Toast.LENGTH_SHORT).show();

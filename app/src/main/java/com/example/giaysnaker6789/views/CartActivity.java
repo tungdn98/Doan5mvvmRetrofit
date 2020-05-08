@@ -18,16 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ItemCartAdapter;
 import com.example.giaysnaker6789.config.Progressdialog;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.bills;
+import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
+import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +52,7 @@ public class CartActivity extends BaseActivity {
     ImageView imgclose;
    public static  ArrayList<bills> listcac = new ArrayList<>();
     public static ItemCartAdapter adapterCart;
-    BillViewModel billViewModel;
+    private BillUserViewModel billUserViewModel;
     user1s user;
 
     static int thanhtien=0;
@@ -64,22 +67,22 @@ public class CartActivity extends BaseActivity {
         int id=SharedPref.read(SharedPref.IDUSER,1);
 
 
-        btnpay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressdialog.showDialog("đang đặt hàng ",CartActivity.this);
-                billViewModel.orDerBill(user.getId(),"b1","b2").observe(CartActivity.this, new Observer<Billresponse>() {
-                    @Override
-                    public void onChanged(Billresponse billresponse) {
-                        txttitle.setText("giỏ hàng (0)");
-                        setemtyview();
-                        listcac.clear();
-                        adapterCart.notifyDataSetChanged();
-                        progressdialog.dismissDialog();
-                    }
-                });
-            }
-        });
+//        btnpay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                progressdialog.showDialog("đang đặt hàng ",CartActivity.this);
+//                billViewModel.orDerBill(user.getId(),"b1","b2").observe(CartActivity.this, new Observer<Billresponse>() {
+//                    @Override
+//                    public void onChanged(Billresponse billresponse) {
+//                        txttitle.setText("giỏ hàng (0)");
+//                        setemtyview();
+//                        listcac.clear();
+//                        adapterCart.notifyDataSetChanged();
+//                        progressdialog.dismissDialog();
+//                    }
+//                });
+//            }
+//        });
 
         getcountCart(id);
 
@@ -96,12 +99,11 @@ public class CartActivity extends BaseActivity {
     private void getcountCart(int iduser) {
 
         progressdialog.showDialog("đang load chờ tý",CartActivity.this);
-        billViewModel.getcount(iduser, "b1").observe(this, new Observer<Integer>() {
+        billUserViewModel.getcountbill(iduser,"b1").observe(this, new Observer<BillUserResponse>() {
             @Override
-            public void onChanged(Integer integer) {
-                if (integer > 0) {
-                    txttitle.setText("giỏ hàng (" + integer + ")");
-                    getallcart();
+            public void onChanged(BillUserResponse billUserResponse) {
+                if (billUserResponse.getMess().equals("SUCCESS")) {
+                    txttitle.setText("giỏ hàng (" + billUserResponse.getData().get(0).getCount()+")");
                 } else {
                     txttitle.setText("giỏ hàng (0)");
                     setemtyview();
@@ -114,20 +116,20 @@ public class CartActivity extends BaseActivity {
     }
 
     private void getallcart() {
-        progressdialog.showDialog("đang load chờ tý",CartActivity.this);
-        billViewModel.getBill(user.getId()).observe(this, new Observer<Billresponse>() {
-            @Override
-            public void onChanged(Billresponse billresponse) {
-                listcac.clear();
-                listcac.addAll(billresponse.getData());
-                if (listcac.size() > 0) {
-                    cardView.setVisibility(View.VISIBLE);
-                    adapterCart.notifyDataSetChanged();
-                    tinhtongtien(listcac);
-                    progressdialog.dismissDialog();
-                }
-            }
-        });
+//        progressdialog.showDialog("đang load chờ tý",CartActivity.this);
+//        billViewModel.getBill(user.getId()).observe(this, new Observer<Billresponse>() {
+//            @Override
+//            public void onChanged(Billresponse billresponse) {
+//                listcac.clear();
+//                listcac.addAll(billresponse.getData());
+//                if (listcac.size() > 0) {
+//                    cardView.setVisibility(View.VISIBLE);
+//                    adapterCart.notifyDataSetChanged();
+//                    tinhtongtien(listcac);
+//                    progressdialog.dismissDialog();
+//                }
+//            }
+//        });
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -169,7 +171,7 @@ public class CartActivity extends BaseActivity {
     private void initview() {
         SharedPref.init(getApplicationContext());
         btnpay=findViewById(R.id.btnpay);
-        billViewModel = ViewModelProviders.of(this).get(BillViewModel.class);
+        billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
         lv = findViewById(R.id.lvcart);
         adapterCart = new ItemCartAdapter(listcac, CartActivity.this);
         lv.setAdapter(adapterCart);
@@ -197,4 +199,6 @@ public class CartActivity extends BaseActivity {
             }
         });
     }
+
+
 }
