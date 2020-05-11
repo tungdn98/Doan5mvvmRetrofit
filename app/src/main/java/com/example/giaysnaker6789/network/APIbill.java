@@ -1,4 +1,5 @@
 package com.example.giaysnaker6789.network;
+import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.models.bills;
 
@@ -45,9 +46,15 @@ public interface APIbill {
                              @Field("status") String status);
 
     @FormUrlEncoded
-    @POST("api/orderProduct")
+    @POST("api/Payment")
     Call<Billresponse>orderProduct
-            (@Field("idUser") int iduser,
-             @Field("status") String status,
-             @Field("statusUpdate") String statusUpdate);
+            (@Field("idbill") int idbill,
+             @Field("status") String status );
+
+    @FormUrlEncoded
+    @POST("api/updateCountProduct")
+    Call<BaseResponse>updateCountProduct
+            (@Field("idpro") int idpro,
+             @Field("count") int count );
+
 }

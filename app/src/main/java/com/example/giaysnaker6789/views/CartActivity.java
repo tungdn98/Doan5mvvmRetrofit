@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.R;
@@ -70,22 +71,35 @@ public class CartActivity extends BaseActivity {
         getcountCart(id);
 
 
-//        btnpay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                progressdialog.showDialog("đang đặt hàng ",CartActivity.this);
-//                billViewModel.orDerBill(user.getId(),"b1","b2").observe(CartActivity.this, new Observer<Billresponse>() {
-//                    @Override
-//                    public void onChanged(Billresponse billresponse) {
-//                        txttitle.setText("giỏ hàng (0)");
-//                        setemtyview();
-//                        listcac.clear();
-//                        adapterCart.notifyDataSetChanged();
-//                        progressdialog.dismissDialog();
-//                    }
-//                });
-//            }
-//        });
+        btnpay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listcac!=null){
+                    progressdialog.showDialog("đang tiến hành đặt hàng ",CartActivity.this);
+                    billViewModel.orDerBill(mbilluser.getId(),"b1").observe(CartActivity.this, new Observer<Billresponse>() {
+                        @Override
+                        public void onChanged(Billresponse billresponse) {
+                            if(billresponse.getMess().equals("SUCCESS")){
+                                // update lại product
+                                ArrayList<bills> templist= listcac;
+                               updateproduct(templist);
+
+                                txttitle.setText("giỏ hàng (0)");
+                                setemtyview();
+                                listcac.clear();
+                                adapterCart.notifyDataSetChanged();
+                                progressdialog.dismissDialog();
+                            }
+
+                        }
+                    });
+                }else{
+                    Toast.makeText(CartActivity.this, "giỏ hàng trống !!!!!!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         imgclose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +108,12 @@ public class CartActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void updateproduct(ArrayList<bills> listcac) {
+       for (int i=0;i<listcac.size();i++){
+           billViewModel.updateCountProduct(listcac.get(i).getIdProduct(),listcac.get(i).getCount());
+       }
     }
 
     private void getcountCart(int iduser) {
