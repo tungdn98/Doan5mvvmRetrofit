@@ -1,5 +1,7 @@
 package com.example.giaysnaker6789.viewModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,7 +23,7 @@ public class BillUserViewModel extends ViewModel {
     public MutableLiveData<BillUserResponse> getcountbill(int iduser, String status) {
         MutableLiveData<BillUserResponse> newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIBillUser.class);
-        dataClient.getcountBill(iduser, status).enqueue(new Callback<BillUserResponse>() {
+        dataClient.getcountBill(iduser, "b1").enqueue(new Callback<BillUserResponse>() {
             @Override
             public void onResponse(Call<BillUserResponse> call, Response<BillUserResponse> response) {
                 newsData.setValue(response.body());

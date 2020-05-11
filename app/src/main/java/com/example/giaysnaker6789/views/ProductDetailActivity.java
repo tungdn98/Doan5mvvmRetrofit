@@ -145,7 +145,7 @@ public class ProductDetailActivity extends BaseActivity {
                 billUserViewModel.AddtoExCart( "b1", price, 1, date, idproduct, vou, billuser.getId()).observe(this, new Observer<BillUserResponse>() {
                     @Override
                     public void onChanged(BillUserResponse billUserResponse) {
-                        Log.d("TAG", "onChanged: "+billUserResponse);
+                        Toast.makeText(ProductDetailActivity.this, "add to ex cart", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
                         Animatoo.animateSplit(ProductDetailActivity.this);
                     }
@@ -155,7 +155,7 @@ public class ProductDetailActivity extends BaseActivity {
                          "", idproduct,  vou).observe(this, new Observer<BillUserResponse>() {
                     @Override
                     public void onChanged(BillUserResponse billUserResponse) {
-                        Log.d("TAG", "onChanged: "+billUserResponse);
+                        Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
 //                        Animatoo.animateSplit(ProductDetailActivity.this);
                     }

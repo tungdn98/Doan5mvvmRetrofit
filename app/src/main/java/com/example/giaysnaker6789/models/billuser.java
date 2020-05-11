@@ -21,7 +21,7 @@ public class billuser {
 
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
 
     @SerializedName("orderdate")
     @Expose
@@ -37,7 +37,7 @@ public class billuser {
     @Expose
     private Object updatedAt;
 
-    public billuser(Integer id, Integer idUser, Integer price, Integer count, Integer status, Date orderdate, Date receiveddate) {
+    public billuser(Integer id, Integer idUser, Integer price, Integer count, String status, Date orderdate, Date receiveddate) {
         this.id = id;
         this.idUser = idUser;
         this.price = price;
@@ -79,11 +79,11 @@ public class billuser {
         this.count = count;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

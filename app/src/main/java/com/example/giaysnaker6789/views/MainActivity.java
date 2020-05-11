@@ -315,7 +315,12 @@ public class MainActivity extends BaseActivity {
                 // .centerCrop()
                 .into(profile_image);
 
-        billUserViewModel.getcountbill(event.getId(), "b1").observe(this, new Observer<BillUserResponse>() {
+       getBillUser(event.getId());
+    }
+
+    private void getBillUser(Integer id) {
+        String stt="b1";
+        billUserViewModel.getcountbill(id,stt).observe(this, new Observer<BillUserResponse>() {
             @Override
             public void onChanged(BillUserResponse billUserResponse) {
                 if (billUserResponse.getMess().equals("SUCCESS")) {
