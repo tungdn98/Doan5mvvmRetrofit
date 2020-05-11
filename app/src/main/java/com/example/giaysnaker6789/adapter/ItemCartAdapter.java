@@ -36,7 +36,7 @@ public class ItemCartAdapter extends BaseAdapter {
     ArrayList<bills> list;
     Context context;
 
-    Progressdialog progressdialog=new Progressdialog();
+    Progressdialog progressdialog = new Progressdialog();
 
     private BillViewModel billViewModel;
 
@@ -61,13 +61,13 @@ public class ItemCartAdapter extends BaseAdapter {
         return 0;
     }
 
-    private class viewholder{  // tạo 1 class viewholder đầy đủ các thuộc tính của file dongkhach.xml
+    private class viewholder {  // tạo 1 class viewholder đầy đủ các thuộc tính của file dongkhach.xml
         TextView txttensp;
         TextView txtorigin;
         TextView txtprice;
         TextView txtsoluong;
         TextView txtthanhtien;
-        ImageView imagesp,imgdelete;
+        ImageView imagesp, imgdelete;
         TungNuiButton tungNuiButton;
     }
 
@@ -76,43 +76,37 @@ public class ItemCartAdapter extends BaseAdapter {
     public View getView(int position, View itemView, ViewGroup parent) {
         viewholder holder;  // tạo 1 biến từ class viewholder
 
-        if(itemView == null){
-            holder=new viewholder();
-            LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            itemView=inflater.inflate(R.layout.item_cart,null);
+        if (itemView == null) {
+            holder = new viewholder();
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            itemView = inflater.inflate(R.layout.item_cart, null);
             holder.txttensp = itemView.findViewById(R.id.txttensp);
             holder.txtorigin = itemView.findViewById(R.id.txtorigin);
             holder.txtprice = itemView.findViewById(R.id.txtprice);
             holder.txtsoluong = itemView.findViewById(R.id.txtsoluong);
             holder.txtthanhtien = itemView.findViewById(R.id.txtthanhtien);
-            holder.imgdelete=itemView.findViewById(R.id.imgdelete);
+            holder.imgdelete = itemView.findViewById(R.id.imgdelete);
             holder.imagesp = itemView.findViewById(R.id.imghinhsp);
             holder.tungNuiButton = itemView.findViewById(R.id.number_button);
 
             itemView.setTag(holder);
-        }else{
+        } else {
             holder = (viewholder) itemView.getTag();
         }
 
-        bills currentpro=list.get(position);
-        holder.txttensp.setText(currentpro.getNameproduct());
-        holder.txtorigin.setText(currentpro.getOriginproduct());
-        holder.txtprice.setText(""+format(currentpro.getPrice()));
-        holder.txtthanhtien.setText(""+currentpro.getPrice()*currentpro.getCount());
-        holder.tungNuiButton.setNumber(""+currentpro.getCount());
+        bills currentpro = list.get(position);
+        holder.txttensp.setText(currentpro.getName());
+        holder.txtorigin.setText(currentpro.getOrigin());
+        holder.txtprice.setText("" + format(currentpro.getPrice()));
+        holder.txtthanhtien.setText("" + currentpro.getPrice() * currentpro.getCount());
+        holder.tungNuiButton.setNumber("" + currentpro.getCount());
         Picasso.get()
-                .load(""+ RetrofitService.basePath+currentpro.getImageproduct())
+                .load("" + RetrofitService.basePath + currentpro.getImage())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
                 //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
-
-        holder.imgdelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressdialog.showDialog("đang xóa",context);
-               // delete(currentpro.getIdUser(),currentpro.getIdProduct(),currentpro);
-            }
-        });
 
 //        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
 //            @Override
@@ -132,24 +126,32 @@ public class ItemCartAdapter extends BaseAdapter {
 //              });
 //            }
 //        });
+        holder.imgdelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressdialog.showDialog("đang xóa", context);
+                delete(currentpro.getId(),currentpro.getIdBill(),currentpro);
+            }
+        });
+
         return itemView;
     }
 
-    private void delete(int iduser,int idproduct,bills bill){
-   billViewModel.deleteBill(iduser,idproduct).observe((LifecycleOwner) context, new Observer<Integer>() {
-       @Override
-       public void onChanged(Integer integer) {
-           CartActivity.listcac.remove(bill);
-           CartActivity.adapterCart.notifyDataSetChanged();
-           CartActivity.tinhtongtien(CartActivity.listcac);
-           CartActivity.setcountcart(CartActivity.listcac);
-           progressdialog.dismissDialog();
-       }
-   });
+    private void delete(int id, int idbill, bills bill) {
+        billViewModel.deleteBill(id, idbill).observe((LifecycleOwner) context, new Observer<Billresponse>() {
+            @Override
+            public void onChanged(Billresponse billresponse) {
+                CartActivity.listcac.remove(bill);
+                CartActivity.adapterCart.notifyDataSetChanged();
+                CartActivity.tinhtongtien(CartActivity.listcac);
+                CartActivity.setcountcart(CartActivity.listcac);
+                progressdialog.dismissDialog();
+            }
+        });
 
     }
 
-    public String format(double number){
+    public String format(double number) {
         NumberFormat formatter = new DecimalFormat("#,###,###");
         return formatter.format(number);
     }

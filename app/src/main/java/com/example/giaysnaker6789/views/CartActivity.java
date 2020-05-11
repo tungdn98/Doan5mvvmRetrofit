@@ -50,21 +50,24 @@ public class CartActivity extends BaseActivity {
     static TextView txtthanhtien;
     Button btnpay;
     ImageView imgclose;
-   public static  ArrayList<bills> listcac = new ArrayList<>();
+    public static ArrayList<bills> listcac = new ArrayList<>();
     public static ItemCartAdapter adapterCart;
     private BillUserViewModel billUserViewModel;
+    private BillViewModel billViewModel;
     user1s user;
+    billuser mbilluser;
 
-    static int thanhtien=0;
+    static int thanhtien = 0;
 
-    Progressdialog progressdialog=new Progressdialog();
+    Progressdialog progressdialog = new Progressdialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         initview();
-        int id=SharedPref.read(SharedPref.IDUSER,1);
+        int id = SharedPref.read(SharedPref.IDUSER, 1);
+        getcountCart(id);
 
 
 //        btnpay.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +87,6 @@ public class CartActivity extends BaseActivity {
 //            }
 //        });
 
-        getcountCart(id);
-
         imgclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,57 +94,65 @@ public class CartActivity extends BaseActivity {
             }
         });
 
-
     }
 
     private void getcountCart(int iduser) {
-
-        progressdialog.showDialog("đang load chờ tý",CartActivity.this);
-        billUserViewModel.getcountbill(iduser,"b1").observe(this, new Observer<BillUserResponse>() {
+        progressdialog.showDialog("đang load chờ tý", CartActivity.this);
+        billUserViewModel.getcountbill(iduser, "b1").observe(this, new Observer<BillUserResponse>() {
             @Override
             public void onChanged(BillUserResponse billUserResponse) {
                 if (billUserResponse.getMess().equals("SUCCESS")) {
-                    txttitle.setText("giỏ hàng (" + billUserResponse.getData().get(0).getCount()+")");
+                    txttitle.setText("giỏ hàng (" + billUserResponse.getData().get(0).getCount() + ")");
+                    progressdialog.dismissDialog();
                 } else {
                     txttitle.setText("giỏ hàng (0)");
                     setemtyview();
                     listcac.clear();
                     adapterCart.notifyDataSetChanged();
+                    setemtyview();
                     progressdialog.dismissDialog();
                 }
             }
         });
     }
 
-    private void getallcart() {
-//        progressdialog.showDialog("đang load chờ tý",CartActivity.this);
-//        billViewModel.getBill(user.getId()).observe(this, new Observer<Billresponse>() {
-//            @Override
-//            public void onChanged(Billresponse billresponse) {
-//                listcac.clear();
-//                listcac.addAll(billresponse.getData());
-//                if (listcac.size() > 0) {
-//                    cardView.setVisibility(View.VISIBLE);
-//                    adapterCart.notifyDataSetChanged();
-//                    tinhtongtien(listcac);
-//                    progressdialog.dismissDialog();
-//                }
-//            }
-//        });
+    private void getallcart(int idBill) {
+        progressdialog.showDialog("đang load chờ tý", CartActivity.this);
+        billViewModel.getBill(idBill).observe(this, new Observer<Billresponse>() {
+            @Override
+            public void onChanged(Billresponse billresponse) {
+                listcac.clear();
+                listcac.addAll(billresponse.getData());
+                if (listcac.size() > 0) {
+                    cardView.setVisibility(View.VISIBLE);
+                    adapterCart.notifyDataSetChanged();
+                    tinhtongtien(listcac);
+                    progressdialog.dismissDialog();
+                }else{
+                    setemtyview();
+                    progressdialog.dismissDialog();
+                }
+            }
+        });
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         user = event;
-       // getcountCart(user.getId());
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(billuser event) { // get model test
+        mbilluser = event;
+        getallcart(mbilluser.getId());
     }
 
     public static void tinhtongtien(ArrayList<bills> listcac) {
         int dem = 0;
-        thanhtien =0;
+        thanhtien = 0;
         for (int i = 0; i < listcac.size(); i++) {
             dem += listcac.get(i).getCount() * listcac.get(i).getPrice();
-            thanhtien=dem;
+            thanhtien = dem;
         }
         txtthanhtien.setText("" + format(dem));
     }
@@ -151,13 +160,13 @@ public class CartActivity extends BaseActivity {
     public static void setcountcart(ArrayList<bills> listcac) {
         int dem = 0;
         for (int i = 0; i < listcac.size(); i++) {
-            dem +=1;
+            dem += 1;
         }
-        if(dem>0){
-            txttitle.setText("giỏ hàng ("+dem+")");
-        }else{
-            txttitle.setText("giỏ hàng ("+dem+")");
-           //setemtyview();
+        if (dem > 0) {
+            txttitle.setText("giỏ hàng (" + dem + ")");
+        } else {
+            txttitle.setText("giỏ hàng (" + dem + ")");
+            // setemtyview();
 
         }
 
@@ -170,8 +179,9 @@ public class CartActivity extends BaseActivity {
 
     private void initview() {
         SharedPref.init(getApplicationContext());
-        btnpay=findViewById(R.id.btnpay);
+        btnpay = findViewById(R.id.btnpay);
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
+        billViewModel = ViewModelProviders.of(this).get(BillViewModel.class);
         lv = findViewById(R.id.lvcart);
         adapterCart = new ItemCartAdapter(listcac, CartActivity.this);
         lv.setAdapter(adapterCart);
@@ -184,8 +194,8 @@ public class CartActivity extends BaseActivity {
 
     Button btntieptucmuahang;
 
-    private  void setemtyview() {
-         View view = getLayoutInflater().inflate(R.layout.emty_view, null);
+    private void setemtyview() {
+        View view = getLayoutInflater().inflate(R.layout.emty_view, null);
         ViewGroup viewGroup = (ViewGroup) lv.getParent();
         btntieptucmuahang = view.findViewById(R.id.btntieptucmuahang);
         viewGroup.addView(view);

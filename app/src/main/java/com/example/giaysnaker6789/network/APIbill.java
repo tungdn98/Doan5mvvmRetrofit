@@ -25,17 +25,17 @@ public interface APIbill {
 
 
     @FormUrlEncoded
-    @POST("api/getBill")
-    Call<Billresponse> getBill(@Field("idUser") int iduser,
-                               @Field("status") String status);
+    @POST("api/getBills")
+    Call<Billresponse> getBill(@Field("idbill") int iduser);
+
 
     @FormUrlEncoded
     @POST("api/getCountBill")
     Call<Integer> getCountBill(@Field("idUser") int iduser,@Field("status") String stt);
 
     @FormUrlEncoded
-    @POST("api/deleteBill")
-    Call<Integer> deleteBill(@Field("idUser") int iduser,@Field("idProduct") int idproduct);
+    @POST("api/deletebills")
+    Call<Billresponse> deleteBill(@Field("id") int id,@Field("idbill") int idbill);
 
     @FormUrlEncoded
     @POST("api/updateBill")

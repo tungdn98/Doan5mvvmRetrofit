@@ -156,8 +156,8 @@ public class ProductDetailActivity extends BaseActivity {
                     @Override
                     public void onChanged(BillUserResponse billUserResponse) {
                         Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
-//                        Animatoo.animateSplit(ProductDetailActivity.this);
+                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+                        Animatoo.animateSplit(ProductDetailActivity.this);
                     }
                 });
             }

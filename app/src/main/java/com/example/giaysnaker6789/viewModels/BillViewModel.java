@@ -18,22 +18,6 @@ public class BillViewModel extends ViewModel {
 
     private APIbill dataClient;
 
-    public MutableLiveData<Billresponse> CreateBill(int idUser,String nameuser,int idproduct,int price,int count,String stt,String vou,String billdate){
-        MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
-        dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.pushBill(idUser,nameuser,idproduct,price,count,stt,vou,billdate).enqueue(new Callback<Billresponse>() {
-            @Override
-            public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Billresponse> call, Throwable t) {
-                Log.d("TAG", "onFailure: "+t);
-            }
-        });
-        return newsData;
-    }
 
     public MutableLiveData<Integer> getcount(int iduser,String status){
         MutableLiveData<Integer>  newsData = new MutableLiveData<>();
@@ -52,10 +36,10 @@ public class BillViewModel extends ViewModel {
         return newsData;
     }
 
-    public MutableLiveData<Billresponse> getBill(int iduser){
+    public MutableLiveData<Billresponse> getBill(int idBill){
         MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.getBill(iduser,"b1").enqueue(new Callback<Billresponse>() {
+        dataClient.getBill(idBill).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
                 newsData.setValue(response.body());
@@ -70,17 +54,17 @@ public class BillViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Integer> deleteBill(int iduser,int idproduct){
-        MutableLiveData<Integer>  newsData = new MutableLiveData<>();
+    public MutableLiveData<Billresponse> deleteBill(int id,int idbill){
+        MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.deleteBill(iduser,idproduct).enqueue(new Callback<Integer>() {
+        dataClient.deleteBill(id,idbill).enqueue(new Callback<Billresponse>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
+            public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
                 newsData.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<Billresponse> call, Throwable t) {
 
             }
         });
