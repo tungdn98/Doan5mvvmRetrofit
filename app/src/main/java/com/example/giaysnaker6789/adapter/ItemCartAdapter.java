@@ -108,24 +108,25 @@ public class ItemCartAdapter extends BaseAdapter {
                 // .centerCrop()
                 .into(holder.imagesp);
 
-//        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int number=Integer.parseInt(holder.tungNuiButton.getNumber());
-//                progressdialog.showDialog("đang update",context);
-//              billViewModel.updateBill(currentpro.getIdUser(),currentpro.getIdProduct(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
-//                  @Override
-//                  public void onChanged(Billresponse billresponse) {
-//                      currentpro.setCount(number);
-//                      CartActivity.listcac.set(position,currentpro);
-//                      CartActivity.adapterCart.notifyDataSetChanged();
-//                      CartActivity.tinhtongtien(CartActivity.listcac);
-//                      CartActivity.setcountcart(CartActivity.listcac);
-//                      progressdialog.dismissDialog();
-//                  }
-//              });
-//            }
-//        });
+        holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int number=Integer.parseInt(holder.tungNuiButton.getNumber());
+                progressdialog.showDialog("đang update",context);
+              billViewModel.updateBill(currentpro.getId(),currentpro.getIdBill(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
+                  @Override
+                  public void onChanged(Billresponse billresponse) {
+                      currentpro.setCount(number);
+                      CartActivity.listcac.set(position,currentpro);
+                      CartActivity.adapterCart.notifyDataSetChanged();
+                      CartActivity.tinhtongtien(CartActivity.listcac);
+                      CartActivity.setcountcart(CartActivity.listcac);
+                      progressdialog.dismissDialog();
+                  }
+              });
+            }
+        });
+
         holder.imgdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

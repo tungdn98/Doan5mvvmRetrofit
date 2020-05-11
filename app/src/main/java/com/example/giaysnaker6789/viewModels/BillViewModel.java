@@ -72,10 +72,10 @@ public class BillViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Billresponse> updateBill(int iduser,int idproduct,int count,String status){
+    public MutableLiveData<Billresponse> updateBill(int id,int idbill,int count,String status){
         MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.updateBill(iduser,idproduct,count,status).enqueue(new Callback<Billresponse>() {
+        dataClient.updateBill(id,idbill,count,status).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
                 newsData.setValue(response.body());

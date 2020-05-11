@@ -38,9 +38,9 @@ public interface APIbill {
     Call<Billresponse> deleteBill(@Field("id") int id,@Field("idbill") int idbill);
 
     @FormUrlEncoded
-    @POST("api/updateBill")
-    Call<Billresponse> updateBill(@Field("idUser") int iduser,
-                             @Field("idProduct") int idproduct,
+    @POST("api/Updatebills")
+    Call<Billresponse> updateBill(@Field("id") int iduser,
+                             @Field("idbill") int idproduct,
                              @Field("count") int count,
                              @Field("status") String status);
 
