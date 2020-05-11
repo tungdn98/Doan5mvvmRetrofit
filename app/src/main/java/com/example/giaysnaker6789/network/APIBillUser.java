@@ -2,6 +2,7 @@ package com.example.giaysnaker6789.network;
 
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
+import com.example.giaysnaker6789.BaseResponse.bills2BaseResponse;
 import com.example.giaysnaker6789.models.bills;
 
 import java.util.Date;
@@ -42,5 +43,12 @@ public interface APIBillUser {
                                      @Field("idProduct") int idproduct,
                                      @Field("voucher") String voucher,
                                      @Field("idBill") int idBill);
+
+    @FormUrlEncoded
+    @POST("api/getorder")
+    Call<bills2BaseResponse> getbilldetail(
+            @Field("idUser") int iduser,
+            @Field("status") String status );
+
 
 }

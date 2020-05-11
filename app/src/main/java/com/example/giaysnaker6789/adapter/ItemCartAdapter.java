@@ -74,7 +74,7 @@ public class ItemCartAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View itemView, ViewGroup parent) {
-        viewholder holder;  // tạo 1 biến từ class viewholder
+        viewholder holder;
 
         if (itemView == null) {
             holder = new viewholder();

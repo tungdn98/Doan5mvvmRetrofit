@@ -16,13 +16,13 @@ public class PagerAdapterOrder extends FragmentStatePagerAdapter {
         Fragment frag=null;
         switch (position){
             case 0:
-                frag = new Fragment_danggiao();
+                frag = new Fragment_danggiao("b2");
                 break;
             case 1:
-                frag = new Fragment_danggiao();
+                frag = new Fragment_danggiao("b3");
                 break;
             case 2:
-                frag = new Fragment_danggiao();
+                frag = new Fragment_danggiao("b4");
                 break;
         }
         return frag;
@@ -37,13 +37,13 @@ public class PagerAdapterOrder extends FragmentStatePagerAdapter {
         String title = "";
         switch (position){
             case 0:
-                title = "One";
+                title = "chờ xác nhận";
                 break;
             case 1:
-                title = "Two";
+                title = "đang giao";
                 break;
             case 2:
-                title = "Three";
+                title = "đã giao";
                 break;
         }
         return title;

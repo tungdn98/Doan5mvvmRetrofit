@@ -49,6 +49,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String init){
 

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp" />
     <com.google.android.material.tabs.TabLayout
-        android:background="@color/tim"
+
         android:layout_alignParentTop="true"
         app:tabMode="fixed"
         android:id="@+id/tab_layout"

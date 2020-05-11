@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
+import com.example.giaysnaker6789.BaseResponse.bills2BaseResponse;
 import com.example.giaysnaker6789.network.APIBillUser;
 import com.example.giaysnaker6789.network.RetrofitService;
 
@@ -76,6 +77,24 @@ public class BillUserViewModel extends ViewModel {
                 billUserResponse.setStatus(""+t.getMessage());
                 billUserResponse.setData(null);
                 newsData.setValue(billUserResponse);
+            }
+        });
+        return newsData;
+    }
+
+
+    public MutableLiveData<bills2BaseResponse> getbilldetail( int iduser, String status) {
+        MutableLiveData<bills2BaseResponse> newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIBillUser.class);
+        dataClient.getbilldetail(iduser,status).enqueue(new Callback<bills2BaseResponse>() {
+            @Override
+            public void onResponse(Call<bills2BaseResponse> call, Response<bills2BaseResponse> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<bills2BaseResponse> call, Throwable t) {
+
             }
         });
         return newsData;

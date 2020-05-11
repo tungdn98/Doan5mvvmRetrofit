@@ -268,6 +268,7 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_cateroly:
+                        startActivity(new Intent(MainActivity.this, OrderManagerActivity.class));
                         Toast.makeText(MainActivity.this, "cateroly", Toast.LENGTH_SHORT).show();
                         break;
                 }

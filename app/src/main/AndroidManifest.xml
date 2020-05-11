@@ -17,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".views.OrderDetailActivity"></activity>
         <activity android:name=".views.OrderManagerActivity" />
         <activity android:name=".views.CommentActivity" />
         <activity android:name=".views.LoadProductTypeActivity" />

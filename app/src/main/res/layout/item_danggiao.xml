@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtnameuser1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tên" />
+
+    <TextView
+        android:id="@+id/txtaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="địa chỉ" />
+
+    <TextView
+        android:id="@+id/txtphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="số điện thoại " />
+
+    <TextView
+        android:id="@+id/txtcount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="số lượng " />
+
+    <TextView
+        android:id="@+id/txtprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tổng tiền " />
+
+    <TextView
+        android:id="@+id/txtdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ngày  " />
+
+
+</LinearLayout>
