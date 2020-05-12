@@ -7,4 +7,14 @@
     <string name="emtyview">bạn hiện tại éo có sản phẩm nào trong giỏ hàng</string>
     <string name="title_activity_profile">Profile</string>
     <string name="action_settings">Settings</string>
+
+    <string name="facebook_app_id">243533583357136</string> <string name="fb_login_protocol_scheme">fb243533583357136</string>
+
+    <string name="name">name</string>
+    <string name="id">id</string>
+    <string name="email">email</string>
+    <string name="link">link</string>
+    <string name="fields">fields</string>
+    <string name="fields_name">id,name,link,email</string>
+    <string name="data">data</string>
 </resources>

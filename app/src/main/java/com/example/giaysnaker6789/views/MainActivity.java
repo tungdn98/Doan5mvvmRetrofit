@@ -35,10 +35,12 @@ import android.widget.Toast;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
+import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.product_types;
@@ -52,6 +54,7 @@ import com.example.giaysnaker6789.service.CheckConnectService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
+import com.example.giaysnaker6789.viewModels.LoginViewModel;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.tungnuislider.ImageSlider;
@@ -127,6 +130,8 @@ public class MainActivity extends BaseActivity {
         productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
         initView();
+        getuser();
+
         setCountButton();
         setupBanner();
         setupListSp();
@@ -144,6 +149,30 @@ public class MainActivity extends BaseActivity {
                 Animatoo.animateZoom(MainActivity.this);
             }
         });
+
+    }
+
+    private void getuser() {
+
+        LoginViewModel  loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+     int id = SharedPref.read(SharedPref.IDUSER,0);
+     loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
+         @Override
+         public void onChanged(ResponseUser1s responseUser1s) {
+             user1s user=responseUser1s.getData();
+             EventBus.getDefault().postSticky(user);
+             txtname.setText("" + user.getName());
+             Picasso.get()
+                     .load(""+user.getImagefb())
+                     .resize(100, 100)
+                     // .centerCrop()
+                     .into(profile_image);
+
+             getBillUser(user.getId());
+         }
+     });
+
+
 
     }
 

@@ -52,4 +52,38 @@ public class RegisterViewmodel extends ViewModel {
         return newsData;
     }
 
+    public MutableLiveData<ResponseUser1s> RegisterFacebook(String idfb,String fbname,String imgfb,String address,String phone){
+        MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(ApiUser.class);
+        dataClient.RegisterFacebook(idfb, fbname, imgfb, address, phone).enqueue(new Callback<ResponseUser1s>() {
+            @Override
+            public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser1s> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
+    public MutableLiveData<ResponseUser1s> ConnectWithFacebook(int id,String idfb,String fbname,String imgfb,String address,String phone){
+        MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(ApiUser.class);
+        dataClient.ConnectWithFacebook(id,idfb, fbname, imgfb, address, phone).enqueue(new Callback<ResponseUser1s>() {
+            @Override
+            public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser1s> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
 }

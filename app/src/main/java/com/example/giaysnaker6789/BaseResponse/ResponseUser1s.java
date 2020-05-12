@@ -16,7 +16,7 @@ public class ResponseUser1s {
     private String mess;
     @SerializedName("data")
     @Expose
-    private List<user1s> data = null;
+    private user1s data = null;
 
     public String getStatus() {
         return status;
@@ -34,11 +34,11 @@ public class ResponseUser1s {
         this.mess = mess;
     }
 
-    public List<user1s> getData() {
+    public user1s getData() {
         return data;
     }
 
-    public void setData(List<user1s> data) {
+    public void setData(user1s data) {
         this.data = data;
     }
 }

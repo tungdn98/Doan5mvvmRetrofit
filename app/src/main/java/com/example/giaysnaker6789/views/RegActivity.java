@@ -117,7 +117,7 @@ public class RegActivity extends BaseActivity {
             @Override
             public void onChanged(ResponseUser1s responseUser1s) {
                 if(responseUser1s.getMess().equals("SUCCESS")){
-                    ArrayList<user1s> user= (ArrayList<user1s>) responseUser1s.getData();
+                    user1s user=  responseUser1s.getData();
                         Toast.makeText(RegActivity.this, "đăng kí thành công", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                 }
