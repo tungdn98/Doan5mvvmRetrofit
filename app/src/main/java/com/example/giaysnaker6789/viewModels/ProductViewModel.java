@@ -23,10 +23,10 @@ public class ProductViewModel extends ViewModel {
     private APIProduct dataClient;
     private MutableLiveData<products> mutableLiveData;
 
-    public MutableLiveData<ProductBaseResponse> LoadProduct(int page){
+    public MutableLiveData<ProductBaseResponse> LoadProduct(int page,int type,int originid){
         MutableLiveData<ProductBaseResponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIProduct.class);
-        dataClient.getListProduct(page).enqueue(new Callback<ProductBaseResponse>() {
+        dataClient.getListProduct(page,type,originid).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
                 newsData.setValue(response.body());

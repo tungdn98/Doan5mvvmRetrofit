@@ -14,8 +14,9 @@ public interface APIProduct {
     @POST("api/getProduct")
     Call<List<products>> getProduct();
 
-    @GET("api/getAll1")
-    Call<ProductBaseResponse> getListProduct(@Query("page") int page);
+    @FormUrlEncoded
+    @POST("api/getAll1")
+    Call<ProductBaseResponse> getListProduct(@Query("page") int page,@Field("typesort") int type,@Field("origin") int originid);
 
     @FormUrlEncoded
     @POST("api/getproType")

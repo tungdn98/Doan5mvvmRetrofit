@@ -2,6 +2,8 @@ package com.example.giaysnaker6789.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
+
 public class products {
 
     @SerializedName("id")
@@ -156,4 +158,7 @@ public class products {
     public void setRate(Float rate) {
         this.rate = rate;
     }
+
+
 }
+

@@ -215,12 +215,15 @@ public class MainActivity extends BaseActivity {
         layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         // Khai báo Adapter (mn xem tiếp ví dụ dưới nhé)
-        productViewModel.LoadProduct(1).observe(this, new Observer<ProductBaseResponse>() {
+        productViewModel.LoadProduct(1,0,00).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
-                rowsArrayList = (ArrayList<products>) productBaseResponse.getData();
-                recyclerViewAdapter = new SpTrangchuAdapter(rowsArrayList, MainActivity.this);
-                recyclerView.setAdapter(recyclerViewAdapter);
+                if(productBaseResponse.getData()!=null){
+                    rowsArrayList = (ArrayList<products>) productBaseResponse.getData();
+                    recyclerViewAdapter = new SpTrangchuAdapter(rowsArrayList, MainActivity.this);
+                    recyclerView.setAdapter(recyclerViewAdapter);
+                }
+
             }
         });
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

@@ -22,10 +22,10 @@ public class LoadViewModel extends ViewModel {
     private APIProduct dataClient;
     public LoadViewModel() {
     }
-    public MutableLiveData<ProductBaseResponse> LoadProduct(int page){
+    public MutableLiveData<ProductBaseResponse> LoadProduct(int page,int type,int originid){
         MutableLiveData<ProductBaseResponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIProduct.class);
-        dataClient.getListProduct(page).enqueue(new Callback<ProductBaseResponse>() {
+        dataClient.getListProduct(page,type,originid).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
 
