@@ -20,13 +20,16 @@ import android.widget.Toast;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.LoadMoreAdapter;
+import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.product_types;
+import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class LoadMoreActivity extends BaseActivity {
     RecyclerView recyclerView;
@@ -37,6 +40,7 @@ public class LoadMoreActivity extends BaseActivity {
     GridLayoutManager layoutManager;
     boolean isLoading = false;
     ProductViewModel productViewModel;
+    ProductTypeViewModel productTypeViewModel;
     int page = 1;
     int typesort = 0 ;
     int typeorigin = 00;
@@ -55,6 +59,7 @@ public class LoadMoreActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_more);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         initview();
         setupspinner();
        // populateData();
@@ -81,17 +86,22 @@ public class LoadMoreActivity extends BaseActivity {
         spgia.setAdapter(adp1);
 
         // setup spinner loc theo xuat su
-        // load list product types
-        listxuatsu.add(new product_types(00,"chọn quốc gia",""));
-        listxuatsu.add(new product_types(1,"tung của",""));
-        listxuatsu.add(new product_types(2,"viet nam",""));
-        listxuatsu.add(new product_types(3,"thanh hóa",""));
-        listxuatsu.add(new product_types(5,"giai like",""));
+        // load list product types thực ra chỗ này phải load từ server về
 
-        ArrayAdapter<product_types> adapter =
-                new ArrayAdapter<product_types>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, listxuatsu);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-        spxuatsu.setAdapter(adapter);
+        productTypeViewModel.LoadProductType().observe(this, new Observer<List<product_types>>() {
+            @Override
+            public void onChanged(List<product_types> product_types) {
+                listxuatsu.add(new product_types(00,"chọn quốc gia",""));
+                listxuatsu.addAll(product_types);
+                ArrayAdapter<product_types> adapter =
+                        new ArrayAdapter<product_types>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, listxuatsu);
+                adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                spxuatsu.setAdapter(adapter);
+            }
+        });
+
+
+
 
         spxuatsu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -113,6 +123,8 @@ public class LoadMoreActivity extends BaseActivity {
                 typesort=position;
                 rowsArrayList.clear();
                 populateData();
+
+
             }
 
             @Override
@@ -156,6 +168,8 @@ public class LoadMoreActivity extends BaseActivity {
 
                 loadMoreAdapter = new LoadMoreAdapter(rowsArrayList);
                 recyclerView.setAdapter(loadMoreAdapter);
+                isLoading = false;
+                page=1;
             }
         });
     }
