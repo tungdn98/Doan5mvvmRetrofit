@@ -1,19 +1,12 @@
 package com.example.giaysnaker6789.viewModels;
 
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
-import com.example.giaysnaker6789.models.bills;
-import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.APIbill;
 import com.example.giaysnaker6789.network.RetrofitService;
 
-import java.util.List;
-
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,6 +115,23 @@ public class BillViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+        return newsData;
+    }
+
+    public MutableLiveData<Billresponse> getBillWithID(int idBill){
+        MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(APIbill.class);
+        dataClient.getBillWithID(idBill).enqueue(new Callback<Billresponse>() {
+            @Override
+            public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
+                newsData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Billresponse> call, Throwable t) {
 
             }
         });

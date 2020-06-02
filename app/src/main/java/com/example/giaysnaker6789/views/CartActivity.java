@@ -1,14 +1,7 @@
 package com.example.giaysnaker6789.views;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,31 +11,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ItemCartAdapter;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.config.Progressdialog;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.bills;
 import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.user1s;
-import com.example.giaysnaker6789.network.RetrofitService;
-import com.example.giaysnaker6789.roommodel.Cart;
-import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
-import com.squareup.picasso.Picasso;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class CartActivity extends BaseActivity {
     static ListView lv;
@@ -80,7 +71,7 @@ public class CartActivity extends BaseActivity {
                     billViewModel.orDerBill(mbilluser.getId(),"b1").observe(CartActivity.this, new Observer<Billresponse>() {
                         @Override
                         public void onChanged(Billresponse billresponse) {
-                            if(billresponse.getMess().equals("SUCCESS")){
+                            if(billresponse.getMess().equals(Constant.STATUS_SUCCESS)){
                                 // update lại product
                                 ArrayList<bills> templist= listcac;
                                updateproduct(templist);
@@ -203,7 +194,7 @@ public class CartActivity extends BaseActivity {
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
         billViewModel = ViewModelProviders.of(this).get(BillViewModel.class);
         lv = findViewById(R.id.lvcart);
-        adapterCart = new ItemCartAdapter(listcac, CartActivity.this);
+        adapterCart = new ItemCartAdapter(listcac, CartActivity.this,"");
         lv.setAdapter(adapterCart);
         cardView = findViewById(R.id.carview);
         txttitle = findViewById(R.id.txtsoluong);

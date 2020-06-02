@@ -1,36 +1,16 @@
 package com.example.giaysnaker6789.views;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
@@ -40,6 +20,7 @@ import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapter;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.billuser;
@@ -47,13 +28,10 @@ import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
-import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.CartViewModel;
-import com.example.giaysnaker6789.service.CheckConnectService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
-import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.LoginViewModel;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
@@ -66,18 +44,20 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MainActivity extends BaseActivity {
@@ -129,6 +109,20 @@ public class MainActivity extends BaseActivity {
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
+
+           ArrayList<test> list=new ArrayList<>();
+
+                for (int i=0;i<10;i++) {
+                    list.add(new test("hmm","hihi"));
+                }
+
+        bannerViewModel.testne(list).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG, "onChanged: ");
+            }
+        });
+
         initView();
         getuser();
 
@@ -154,24 +148,23 @@ public class MainActivity extends BaseActivity {
 
     private void getuser() {
 
-        LoginViewModel  loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-     int id = SharedPref.read(SharedPref.IDUSER,0);
-     loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
-         @Override
-         public void onChanged(ResponseUser1s responseUser1s) {
-             user1s user=responseUser1s.getData();
-             EventBus.getDefault().postSticky(user);
-             txtname.setText("" + user.getName());
-             Picasso.get()
-                     .load(""+user.getImagefb())
-                     .resize(100, 100)
-                     // .centerCrop()
-                     .into(profile_image);
+        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        int id = SharedPref.read(SharedPref.IDUSER, 0);
+        loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
+            @Override
+            public void onChanged(ResponseUser1s responseUser1s) {
+                user1s user = responseUser1s.getData();
+                EventBus.getDefault().postSticky(user);
+                txtname.setText("" + user.getName());
+                Picasso.get()
+                        .load("" + user.getImagefb())
+                        .resize(100, 100)
+                        // .centerCrop()
+                        .into(profile_image);
 
-             getBillUser(user.getId());
-         }
-     });
-
+                getBillUser(user.getId());
+            }
+        });
 
 
     }
@@ -215,10 +208,10 @@ public class MainActivity extends BaseActivity {
         layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         // Khai báo Adapter (mn xem tiếp ví dụ dưới nhé)
-        productViewModel.LoadProduct(1,0,00).observe(this, new Observer<ProductBaseResponse>() {
+        productViewModel.LoadProduct(1, 0, 00).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
-                if(productBaseResponse.getData()!=null){
+                if (productBaseResponse.getData() != null) {
                     rowsArrayList = (ArrayList<products>) productBaseResponse.getData();
                     recyclerViewAdapter = new SpTrangchuAdapter(rowsArrayList, MainActivity.this);
                     recyclerView.setAdapter(recyclerViewAdapter);
@@ -348,16 +341,16 @@ public class MainActivity extends BaseActivity {
                 // .centerCrop()
                 .into(profile_image);
 
-       getBillUser(event.getId());
+        getBillUser(event.getId());
     }
 
     private void getBillUser(Integer id) {
-        String stt="b1";
-        billUserViewModel.getcountbill(id,stt).observe(this, new Observer<BillUserResponse>() {
+        String stt = "b1";
+        billUserViewModel.getcountbill(id, stt).observe(this, new Observer<BillUserResponse>() {
             @Override
             public void onChanged(BillUserResponse billUserResponse) {
-                if (billUserResponse.getMess().equals("SUCCESS")) {
-                    billuser billuser= billUserResponse.getData().get(0);
+                if (billUserResponse.getMess().equals(Constant.STATUS_SUCCESS)) {
+                    billuser billuser = billUserResponse.getData().get(0);
                     EventBus.getDefault().postSticky(billuser);
                     txtbadge.setText("" + billuser.getCount());
                 } else {

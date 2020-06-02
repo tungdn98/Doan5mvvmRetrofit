@@ -16,8 +16,7 @@ public class test {
     @Expose
     private String pass;
 
-    public test(Integer id, String user, String pass) {
-        Id = id;
+    public test(String user, String pass) {
         this.user = user;
         this.pass = pass;
     }

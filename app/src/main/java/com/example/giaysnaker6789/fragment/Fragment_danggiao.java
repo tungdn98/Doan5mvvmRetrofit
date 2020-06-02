@@ -1,36 +1,28 @@
 package com.example.giaysnaker6789.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.giaysnaker6789.BaseResponse.bills2BaseResponse;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.billUserAdapter;
+import com.example.giaysnaker6789.config.CustomDialog;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.bills2;
-import com.example.giaysnaker6789.models.billuser;
-import com.example.giaysnaker6789.service.CheckConnectService;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
-import com.example.giaysnaker6789.viewModels.BillViewModel;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class Fragment_danggiao extends Fragment {
     ArrayList<bills2> list = new ArrayList<>();
@@ -59,6 +51,14 @@ public class Fragment_danggiao extends Fragment {
         int us = SharedPref.read(SharedPref.IDUSER, 0);
 
         populatedata(us);
+
+        lvdangigao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CustomDialog cdd=new CustomDialog(getActivity(),list.get(i).getId());
+                cdd.show();
+            }
+        });
 
         return rootView;
     }

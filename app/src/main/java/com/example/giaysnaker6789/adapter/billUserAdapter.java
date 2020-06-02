@@ -7,21 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.Progressdialog;
 import com.example.giaysnaker6789.models.bills2;
-import com.example.giaysnaker6789.models.billuser;
-import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.shuhart.stepview.StepView;
-import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class billUserAdapter extends BaseAdapter {
@@ -84,11 +81,12 @@ public class billUserAdapter extends BaseAdapter {
         }
 
         bills2 currentpro = list.get(position);
-        holder.txtname.setText(""+currentpro.getName());
-        holder.txtaddress.setText(""+currentpro.getAddress());
-        holder.txtphone.setText("" + currentpro.getPhone());
-        holder.txtcount.setText("" + currentpro.getCount());
-        holder.txtprice.setText("" + currentpro.getPrice());
+        holder.txtname.setText("họ tên:"+currentpro.getName());
+        holder.txtaddress.setText("địa chỉ:"+currentpro.getAddress());
+        holder.txtphone.setText("SDT:" + currentpro.getPhone());
+        holder.txtcount.setText("số lượng:" + currentpro.getCount());
+        holder.txtprice.setText("thành tiền" + currentpro.getPrice());
+        holder.txtdate.setText("" + currentpro.getOrderdate());
 
 //        holder.stepview.getState()
 //                .animationType(StepView.ANIMATION_CIRCLE)

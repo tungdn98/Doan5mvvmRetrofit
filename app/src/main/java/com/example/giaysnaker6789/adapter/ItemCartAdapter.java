@@ -7,21 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.config.Progressdialog;
 import com.example.giaysnaker6789.models.bills;
-import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.RetrofitService;
-import com.example.giaysnaker6789.roommodel.Cart;
-import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.views.CartActivity;
 import com.example.tungnuinumberone.TungNuiButton;
@@ -31,6 +23,11 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 
 public class ItemCartAdapter extends BaseAdapter {
     ArrayList<bills> list;
@@ -39,10 +36,11 @@ public class ItemCartAdapter extends BaseAdapter {
     Progressdialog progressdialog = new Progressdialog();
 
     private BillViewModel billViewModel;
-
-    public ItemCartAdapter(ArrayList<bills> list, Context context) {
+    private String type;
+    public ItemCartAdapter(ArrayList<bills> list, Context context , String type) {
         this.list = list;
         this.context = context;
+        this.type=type;
         billViewModel = ViewModelProviders.of((FragmentActivity) context).get(BillViewModel.class);
     }
 
@@ -95,10 +93,11 @@ public class ItemCartAdapter extends BaseAdapter {
         }
 
         bills currentpro = list.get(position);
-        holder.txttensp.setText(currentpro.getName());
-        holder.txtorigin.setText(currentpro.getOrigin());
-        holder.txtprice.setText("" + format(currentpro.getPrice()));
-        holder.txtthanhtien.setText("" + currentpro.getPrice() * currentpro.getCount());
+        holder.txttensp.setText("Tên sp:"+currentpro.getName());
+        holder.txtorigin.setText("Xuất sứ:"+currentpro.getOrigin());
+        holder.txtsoluong.setText("số lượng:"+currentpro.getCount());
+        holder.txtprice.setText("giá:" + format(currentpro.getPrice()));
+        holder.txtthanhtien.setText("Thành tiền" + currentpro.getPrice() * currentpro.getCount());
         holder.tungNuiButton.setNumber("" + currentpro.getCount());
         Picasso.get()
                 .load("" + RetrofitService.basePath + currentpro.getImage())
@@ -107,6 +106,13 @@ public class ItemCartAdapter extends BaseAdapter {
                 //.resize(150, 150)
                 // .centerCrop()
                 .into(holder.imagesp);
+
+        if(type.equals(Constant.ORDER_DETAIL)){
+            holder.tungNuiButton.setVisibility(View.GONE);
+            holder.imgdelete.setVisibility(View.GONE);
+        }
+
+
 
         holder.tungNuiButton.setOnClickListener(new TungNuiButton.OnClickListener() {
             @Override

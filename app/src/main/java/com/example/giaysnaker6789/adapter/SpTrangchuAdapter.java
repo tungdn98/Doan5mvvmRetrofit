@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.network.RetrofitService;
@@ -19,6 +16,9 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.ViewHolder> {
     private List<products> notes;

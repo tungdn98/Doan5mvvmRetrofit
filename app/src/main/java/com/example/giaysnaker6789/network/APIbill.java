@@ -1,16 +1,11 @@
 package com.example.giaysnaker6789.network;
 import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
-import com.example.giaysnaker6789.models.bills;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface APIbill {
     @FormUrlEncoded
@@ -56,5 +51,9 @@ public interface APIbill {
     Call<BaseResponse>updateCountProduct
             (@Field("idpro") int idpro,
              @Field("count") int count );
+
+    @FormUrlEncoded
+    @POST("api/loadDetailBillWithID")
+    Call<Billresponse> getBillWithID(@Field("idBill") int iduser);
 
 }
