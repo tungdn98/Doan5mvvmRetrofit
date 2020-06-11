@@ -280,22 +280,21 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        // EventBus.getDefault().postSticky(new test(1, "tungtung", "núi"));
-                        Toast.makeText(MainActivity.this, "test nè", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_user:
-                        Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(MainActivity.this, OrderDetailActivity.class));
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        Animatoo.animateCard(MainActivity.this);
-                        break;
-                    case R.id.nav_cart:
-                        Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_cateroly:
-                        startActivity(new Intent(MainActivity.this, OrderManagerActivity.class));
-                        Toast.makeText(MainActivity.this, "cateroly", Toast.LENGTH_SHORT).show();
+
                         break;
+                    case R.id.nav_order:
+                        startActivity(new Intent(MainActivity.this, OrderManagerActivity.class));
+                        Animatoo.animateCard(MainActivity.this);
+                        break;
+
+                    case R.id.nav_user:
+//                        startActivity(new Intent(MainActivity.this, UserActivity.class));
+//                        Animatoo.animateCard(MainActivity.this);
+                        Toast.makeText(MainActivity.this, "màn hình user", Toast.LENGTH_SHORT).show();
+                        break;
+
                 }
 
                 return true;

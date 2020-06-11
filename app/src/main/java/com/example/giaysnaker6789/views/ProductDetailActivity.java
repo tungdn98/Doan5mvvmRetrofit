@@ -1,43 +1,31 @@
 package com.example.giaysnaker6789.views;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
-import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
-import com.example.giaysnaker6789.BaseResponse.Billresponse;
-import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
-import com.example.giaysnaker6789.adapter.FeedbackAdapter;
-import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
-import com.example.giaysnaker6789.config.SharedPref;
-import com.example.giaysnaker6789.models.bills;
-import com.example.giaysnaker6789.models.billuser;
-import com.example.giaysnaker6789.models.feedback_products;
-import com.example.giaysnaker6789.models.image_products;
-import com.example.giaysnaker6789.models.product_types;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
+import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
+import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.adapter.FeedbackAdapter;
+import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
+import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.banners;
+import com.example.giaysnaker6789.models.billuser;
+import com.example.giaysnaker6789.models.feedback_products;
+import com.example.giaysnaker6789.models.image_products;
+import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.models.vouchers;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.roommodel.Cart;
-import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
@@ -46,7 +34,6 @@ import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.giaysnaker6789.viewModels.VoucherViewModel;
 import com.example.tungnuislider.ImageSlider;
 import com.example.tungnuislider.models.SlideModel;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,8 +43,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class ProductDetailActivity extends BaseActivity {
     TextView txttitle, txtprice, txtpromotion, txtdescription;
@@ -150,7 +142,7 @@ public class ProductDetailActivity extends BaseActivity {
                         Animatoo.animateSplit(ProductDetailActivity.this);
                     }
                 });
-            }else{
+            }else{ // thêm mới nè
                 billUserViewModel.AddtoCart( iduser,  "b1",  price,  1,  date,
                          "", idproduct,  vou).observe(this, new Observer<BillUserResponse>() {
                     @Override

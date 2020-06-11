@@ -17,12 +17,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductTypeViewModel extends ViewModel {
-    private APIProducttype dataClient;
-    private APIProduct apiProduct;
+    private APIProducttype dataClient = RetrofitService.cteateService(APIProducttype.class);
+    private APIProduct apiProduct = RetrofitService.cteateService(APIProduct.class);
 
     public MutableLiveData<List<product_types>> LoadProductType(){
         MutableLiveData<List<product_types>>  newsData = new MutableLiveData<>();
-        dataClient = RetrofitService.cteateService(APIProducttype.class);
+
         dataClient.getallloaisp().enqueue(new Callback<List<product_types>>() {
             @Override
             public void onResponse(Call<List<product_types>> call, Response<List<product_types>> response) {
@@ -38,7 +38,7 @@ public class ProductTypeViewModel extends ViewModel {
 
     public MutableLiveData<ProductBaseResponse> LoadListProductType(int idproducttype,int page){
         MutableLiveData<ProductBaseResponse>  newsData = new MutableLiveData<>();
-        apiProduct = RetrofitService.cteateService(APIProduct.class);
+
         apiProduct.getSPLQ(idproducttype,page).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {

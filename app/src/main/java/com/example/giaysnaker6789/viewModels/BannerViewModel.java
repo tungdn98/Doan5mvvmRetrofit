@@ -2,6 +2,8 @@ package com.example.giaysnaker6789.viewModels;
 
 import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.test;
+import com.example.giaysnaker6789.network.APIUtils;
+import com.example.giaysnaker6789.network.BaseService;
 import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
 
@@ -14,25 +16,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BannerViewModel extends ViewModel {
-    private DataClient dataClient;
-    private MutableLiveData<banners> mutableLiveData;
-
-    public MutableLiveData<List<banners>> getBanners(){
-        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
-        dataClient = RetrofitService.cteateService(DataClient.class);
-        dataClient.getBanner().enqueue(new Callback<List<banners>>() {
-            @Override
-            public void onResponse(Call<List<banners>> call, Response<List<banners>> response) {
-                newsData.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<banners>> call, Throwable t) {
-
-            }
-        });
-        return newsData;
-    }
+    private DataClient dataClient = APIUtils.getData();;
+//    public MutableLiveData<List<banners>> getBanners(){
+//        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
+//        dataClient = RetrofitService.cteateService(DataClient.class);
+//        dataClient.getBanner().enqueue(new Callback<List<banners>>() {
+//            @Override
+//            public void onResponse(Call<List<banners>> call, Response<List<banners>> response) {
+//                newsData.setValue(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<banners>> call, Throwable t) {
+//
+//            }
+//        });
+//        return newsData;
+//    }
 
     public MutableLiveData<String> testne(List<test>list){
         MutableLiveData<String>  newsData = new MutableLiveData<>();
@@ -51,5 +51,18 @@ public class BannerViewModel extends ViewModel {
         return newsData;
     }
 
+    public MutableLiveData<List<banners>> getBanners(){
+        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
+        dataClient.getBanner().enqueue(new Callback<List<banners>>() {
+            @Override
+            public void onResponse(Call<List<banners>> call, Response<List<banners>> response) {
+                newsData.setValue(response.body());
+            }
+            @Override
+            public void onFailure(Call<List<banners>> call, Throwable t) {
+            }
+        });
+        return newsData;
+    }
 
 }
