@@ -102,26 +102,24 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
 
-           ArrayList<test> list=new ArrayList<>();
-
-                for (int i=0;i<10;i++) {
-                    list.add(new test("hmm","hihi"));
-                }
-
-        bannerViewModel.testne(list).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "onChanged: ");
-            }
-        });
+//           ArrayList<test> list=new ArrayList<>();
+//
+//                for (int i=0;i<10;i++) {
+//                    list.add(new test("hmm","hihi"));
+//                }
+//
+//        bannerViewModel.testne(list).observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                Log.d(TAG, "onChanged: ");
+//            }
+//        });
 
         initView();
         getuser();
@@ -290,8 +288,8 @@ public class MainActivity extends BaseActivity {
                         break;
 
                     case R.id.nav_user:
-//                        startActivity(new Intent(MainActivity.this, UserActivity.class));
-//                        Animatoo.animateCard(MainActivity.this);
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        Animatoo.animateCard(MainActivity.this);
                         Toast.makeText(MainActivity.this, "màn hình user", Toast.LENGTH_SHORT).show();
                         break;
 
@@ -348,12 +346,14 @@ public class MainActivity extends BaseActivity {
         billUserViewModel.getcountbill(id, stt).observe(this, new Observer<BillUserResponse>() {
             @Override
             public void onChanged(BillUserResponse billUserResponse) {
+                if(billUserResponse!= null){
                 if (billUserResponse.getMess().equals(Constant.STATUS_SUCCESS)) {
                     billuser billuser = billUserResponse.getData().get(0);
                     EventBus.getDefault().postSticky(billuser);
                     txtbadge.setText("" + billuser.getCount());
                 } else {
                     txtbadge.setText("0");
+                }
                 }
             }
         });
