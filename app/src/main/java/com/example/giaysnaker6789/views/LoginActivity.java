@@ -25,6 +25,7 @@ import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
+import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.LoginViewModel;
 import com.example.giaysnaker6789.viewModels.RegisterViewmodel;
 import com.facebook.AccessToken;
@@ -42,8 +43,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -281,6 +285,5 @@ public class LoginActivity extends BaseActivity {
 
         }
     }
-
 
 }

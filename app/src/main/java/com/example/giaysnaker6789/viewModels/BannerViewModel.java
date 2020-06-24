@@ -16,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BannerViewModel extends ViewModel {
-    private DataClient dataClient = APIUtils.getData();;
+    private DataClient dataClient = APIUtils.getData();
 //    public MutableLiveData<List<banners>> getBanners(){
 //        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
 //        dataClient = RetrofitService.cteateService(DataClient.class);
@@ -53,6 +53,7 @@ public class BannerViewModel extends ViewModel {
 
     public MutableLiveData<List<banners>> getBanners(){
         MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
+
         dataClient.getBanner().enqueue(new Callback<List<banners>>() {
             @Override
             public void onResponse(Call<List<banners>> call, Response<List<banners>> response) {
