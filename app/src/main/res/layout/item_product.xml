@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+   android:layout_margin="0.5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imghinhsp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/badge_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:id="@+id/txttitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="giày fake 4565"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtdescription"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:ellipsize="end"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:text="mặt hàng mặt hàng mặt hàngmặt hàng mặt hàng "
+            android:textColor="@color/xanhduong"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtgiachinh"
+                android:text="200.000 d"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_dark"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/txtgiagiam"
+                android:text="100.000 d"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/ratingBarproductp"
+            style="?android:ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:isIndicator="true"
+            android:rating="0"
+            android:numStars="5"
+            android:stepSize="0.5" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

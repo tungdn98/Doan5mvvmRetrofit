@@ -13,7 +13,7 @@
         android:src="@drawable/ic_menu" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txttile"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -23,9 +23,15 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        app:defaultQueryHint="@string/gio_hang"
+        app:defaultQueryHint="tìm kiếm"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/btnscan"
+        android:src="@drawable/ic_scan"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"/>
 
 
 
