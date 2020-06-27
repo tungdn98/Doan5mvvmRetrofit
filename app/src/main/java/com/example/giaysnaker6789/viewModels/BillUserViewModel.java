@@ -26,7 +26,10 @@ public class BillUserViewModel extends ViewModel {
         dataClient.getcountBill(iduser, "b1").enqueue(new Callback<BillUserResponse>() {
             @Override
             public void onResponse(Call<BillUserResponse> call, Response<BillUserResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -44,7 +47,10 @@ public class BillUserViewModel extends ViewModel {
                 receiveddate, idProduct, voucher).enqueue(new Callback<BillUserResponse>() {
             @Override
             public void onResponse(Call<BillUserResponse> call, Response<BillUserResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -66,7 +72,10 @@ public class BillUserViewModel extends ViewModel {
                 idProduct, voucher, idBill).enqueue(new Callback<BillUserResponse>() {
             @Override
             public void onResponse(Call<BillUserResponse> call, Response<BillUserResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -88,7 +97,9 @@ public class BillUserViewModel extends ViewModel {
         dataClient.getbilldetail(iduser, status).enqueue(new Callback<bills2BaseResponse>() {
             @Override
             public void onResponse(Call<bills2BaseResponse> call, Response<bills2BaseResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override

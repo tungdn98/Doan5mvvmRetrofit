@@ -39,7 +39,10 @@ public class BillViewModel extends ViewModel {
         dataClient.getBill(idBill).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -57,7 +60,10 @@ public class BillViewModel extends ViewModel {
         dataClient.deleteBill(id,idbill).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -75,7 +81,10 @@ public class BillViewModel extends ViewModel {
         dataClient.updateBill(id,idbill,count,status).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -93,7 +102,10 @@ public class BillViewModel extends ViewModel {
         dataClient.orderProduct(idbill, status).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -110,7 +122,10 @@ public class BillViewModel extends ViewModel {
         dataClient.updateCountProduct(idpro,count).enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override
@@ -127,7 +142,10 @@ public class BillViewModel extends ViewModel {
         dataClient.getBillWithID(idBill).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+
+                }
             }
 
             @Override

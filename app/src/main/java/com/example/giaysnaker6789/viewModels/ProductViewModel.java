@@ -29,7 +29,10 @@ public class ProductViewModel extends ViewModel {
         dataClient.getListProduct(page,type,originid).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
+
             }
 
             @Override

@@ -133,18 +133,21 @@ public class LoadProductTypeActivity extends BaseActivity {
         productTypeViewModel.LoadListProductType(protypes.getId(),page).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
-                if(productBaseResponse.getLastPage()>page){
-                    rowsArrayList.remove(rowsArrayList.size() - 1);
-                    int scrollPosition = rowsArrayList.size();
-                    loadMoreAdapter.notifyItemRemoved(scrollPosition);
-                    rowsArrayList.addAll((ArrayList<products>) productBaseResponse.getData());
-                    loadMoreAdapter.notifyDataSetChanged();
-                    isLoading = false;
-                    dialog.dismiss();
-                }else{
-                    dialog.dismiss();
-                    Toast.makeText(LoadProductTypeActivity.this, "đã hết mặt hàng ", Toast.LENGTH_SHORT).show();
+                if(productBaseResponse!=null){
+                    if(productBaseResponse.getLastPage() > page){
+                        rowsArrayList.remove(rowsArrayList.size() - 1);
+                        int scrollPosition = rowsArrayList.size();
+                        loadMoreAdapter.notifyItemRemoved(scrollPosition);
+                        rowsArrayList.addAll((ArrayList<products>) productBaseResponse.getData());
+                        loadMoreAdapter.notifyDataSetChanged();
+                        isLoading = false;
+                        dialog.dismiss();
+                    }else{
+                        dialog.dismiss();
+                        Toast.makeText(LoadProductTypeActivity.this, "đã hết mặt hàng ", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
     }

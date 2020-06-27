@@ -24,7 +24,9 @@ public class ImageProductViewModel extends ViewModel {
         dataClient.getproImage(id).enqueue(new Callback<List<image_products>>() {
             @Override
             public void onResponse(Call<List<image_products>> call, Response<List<image_products>> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
