@@ -2,8 +2,6 @@ package com.example.giaysnaker6789.viewModels;
 
 import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.test;
-import com.example.giaysnaker6789.network.APIUtils;
-import com.example.giaysnaker6789.network.BaseService;
 import com.example.giaysnaker6789.network.DataClient;
 import com.example.giaysnaker6789.network.RetrofitService;
 
@@ -16,7 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BannerViewModel extends ViewModel {
-    private DataClient dataClient = APIUtils.getData();
+    private DataClient dataClient = RetrofitService.cteateService(DataClient.class);
 //    public MutableLiveData<List<banners>> getBanners(){
 //        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
 //        dataClient = RetrofitService.cteateService(DataClient.class);

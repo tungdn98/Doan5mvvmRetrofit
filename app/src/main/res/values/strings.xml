@@ -4,7 +4,7 @@
     <string name="danh_muc">danh mục</string>
     <string name="theo_doi_gio_hang">theo dõi đơn hàng</string>
     <string name="ca_nhan">cá nhân</string>
-    <string name="emtyview">bạn hiện tại éo có sản phẩm nào trong giỏ hàng</string>
+    <string name="emtyview"> hiện tại không có sản phẩm nào trong giỏ hàng</string>
     <string name="title_activity_profile">Profile</string>
     <string name="action_settings">Settings</string>
 

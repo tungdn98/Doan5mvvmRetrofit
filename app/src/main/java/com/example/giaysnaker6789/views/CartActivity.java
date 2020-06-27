@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -76,6 +78,8 @@ public class CartActivity extends BaseActivity {
                                 ArrayList<bills> templist= listcac;
                                updateproduct(templist);
 
+                                EventBus.getDefault().removeStickyEvent(mbilluser);
+
                                 txttitle.setText("giỏ hàng (0)");
                                 setemtyview();
                                 listcac.clear();
@@ -117,7 +121,7 @@ public class CartActivity extends BaseActivity {
                     progressdialog.dismissDialog();
                 } else {
                     txttitle.setText("giỏ hàng (0)");
-                    setemtyview();
+                    //setemtyview();
                     listcac.clear();
                     adapterCart.notifyDataSetChanged();
                     setemtyview();
@@ -128,7 +132,7 @@ public class CartActivity extends BaseActivity {
     }
 
     private void getallcart(int idBill) {
-        progressdialog.showDialog("đang load chờ tý", CartActivity.this);
+        progressdialog.showDialog("đang load chờ tý", this);
         billViewModel.getBill(idBill).observe(this, new Observer<Billresponse>() {
             @Override
             public void onChanged(Billresponse billresponse) {
@@ -197,6 +201,7 @@ public class CartActivity extends BaseActivity {
         adapterCart = new ItemCartAdapter(listcac, CartActivity.this,"");
         lv.setAdapter(adapterCart);
         cardView = findViewById(R.id.carview);
+
         txttitle = findViewById(R.id.txtsoluong);
         txtthanhtien = findViewById(R.id.txtthanhtien);
         imgclose = findViewById(R.id.imgclose);
@@ -208,10 +213,13 @@ public class CartActivity extends BaseActivity {
     private void setemtyview() {
         View view = getLayoutInflater().inflate(R.layout.emty_view, null);
         ViewGroup viewGroup = (ViewGroup) lv.getParent();
+
+
         btntieptucmuahang = view.findViewById(R.id.btntieptucmuahang);
         viewGroup.addView(view);
         lv.setEmptyView(view);
         cardView.setVisibility(view.GONE);
+
         btntieptucmuahang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

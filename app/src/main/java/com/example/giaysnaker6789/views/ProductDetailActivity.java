@@ -25,7 +25,6 @@ import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.models.vouchers;
 import com.example.giaysnaker6789.network.RetrofitService;
-import com.example.giaysnaker6789.roommodel.Cart;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.BillViewModel;
 import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
@@ -76,7 +75,7 @@ public class ProductDetailActivity extends BaseActivity {
     products pro;
     user1s user;
     billuser billuser;
-    ArrayList<Cart> huhu = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

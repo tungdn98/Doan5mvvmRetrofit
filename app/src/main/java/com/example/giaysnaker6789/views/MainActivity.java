@@ -29,7 +29,6 @@ import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.RetrofitService;
-import com.example.giaysnaker6789.roommodel.CartViewModel;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
 import com.example.giaysnaker6789.viewModels.LoginViewModel;
@@ -81,7 +80,7 @@ public class MainActivity extends BaseActivity {
     BannerViewModel bannerViewModel;
     ProductViewModel productViewModel;
     ProductTypeViewModel productTypeViewModel;
-    private CartViewModel cartViewModel;
+
     private BillUserViewModel billUserViewModel;
     private static final String TAG = "tungtung";
 
@@ -102,7 +101,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+
         bannerViewModel = ViewModelProviders.of(this).get(BannerViewModel.class);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
@@ -122,7 +121,7 @@ public class MainActivity extends BaseActivity {
 //        });
 
         initView();
-        getuser();
+       // getuser();
 
         setCountButton();
         setupBanner();
@@ -144,28 +143,28 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void getuser() {
-
-        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        int id = SharedPref.read(SharedPref.IDUSER, 0);
-        loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
-            @Override
-            public void onChanged(ResponseUser1s responseUser1s) {
-                user1s user = responseUser1s.getData();
-                EventBus.getDefault().postSticky(user);
-                txtname.setText("" + user.getName());
-                Picasso.get()
-                        .load("" + user.getImagefb())
-                        .resize(100, 100)
-                        // .centerCrop()
-                        .into(profile_image);
-
-                getBillUser(user.getId());
-            }
-        });
-
-
-    }
+//    private void getuser() {
+//
+//        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+//        int id = SharedPref.read(SharedPref.IDUSER, 0);
+//        loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
+//            @Override
+//            public void onChanged(ResponseUser1s responseUser1s) {
+//                user1s user = responseUser1s.getData();
+//                EventBus.getDefault().postSticky(user);
+//                txtname.setText("" + user.getName());
+//                Picasso.get()
+//                        .load("" + user.getImagefb())
+//                        .resize(100, 100)
+//                        // .centerCrop()
+//                        .into(profile_image);
+//
+//                getBillUser(user.getId());
+//            }
+//        });
+//
+//
+//    }
 
     private void setuplistLoaiSp() {
         recyclerView2.setHasFixedSize(true);
