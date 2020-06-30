@@ -193,7 +193,7 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(products event) { // get model test
+    public void onMessageEvent(products event) { // get model 
         pro = new products();
         pro = event;
         txttitle.setText("" + event.getName());
@@ -286,6 +286,7 @@ public class ProductDetailActivity extends BaseActivity {
             public void onChanged(BaseResponseFeedback baseResponseFeedback) {
 
                 if (baseResponseFeedback.getData().size() > 0) {
+                    listfeedback.clear();
                     listfeedback.addAll(baseResponseFeedback.getData());
                     layoutManagerfeedback = new LinearLayoutManager(ProductDetailActivity.this);
                     rclistfeedback.setLayoutManager(layoutManagerfeedback);

@@ -42,6 +42,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
     holder.txtnameuser.setText(""+fe.getName());
     holder.txtcontent.setText(""+fe.getContent());
     holder.txtdate.setText(""+fe.getFeedDate());
+    holder.rateingbar.setRating(fe.getRate());
         Picasso.get()
                 .load(""+ RetrofitService.basePath+fe.getImagefb())
                 //.resize(80, 80)

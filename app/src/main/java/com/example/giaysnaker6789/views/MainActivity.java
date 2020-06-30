@@ -204,7 +204,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        // Khai báo Adapter (mn xem tiếp ví dụ dưới nhé)
         productViewModel.LoadProduct(1, 0, 00).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
@@ -287,7 +286,7 @@ public class MainActivity extends BaseActivity {
                         break;
 
                     case R.id.nav_user:
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        startActivity(new Intent(MainActivity.this, UserActivity.class));
                         Animatoo.animateCard(MainActivity.this);
                         Toast.makeText(MainActivity.this, "màn hình user", Toast.LENGTH_SHORT).show();
                         break;

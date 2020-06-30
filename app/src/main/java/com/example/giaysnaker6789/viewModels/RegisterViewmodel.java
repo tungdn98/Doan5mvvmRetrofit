@@ -18,10 +18,10 @@ public class RegisterViewmodel extends ViewModel {
     private ApiUser dataClient;
     private APIimage apiImage;
 
-    public MutableLiveData<ResponseUser1s> RegisterNomal(String tk,String mk,String dc,String phone,String name,String path){
+    public MutableLiveData<ResponseUser1s> RegisterNomal(String tk,String mk,String email,String dc,String phone,String name,String path){
         MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(ApiUser.class);
-        dataClient.RegisternoMal(tk,mk,dc,phone,name,path).enqueue(new Callback<ResponseUser1s>() {
+        dataClient.RegisternoMal(tk,mk,email,dc,phone,name,path).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
                 newsData.setValue(response.body());

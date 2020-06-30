@@ -41,7 +41,6 @@ public class Fragment_danggiao extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_danggiao, container, false);
 
-        Toast.makeText(getActivity(), ""+stt, Toast.LENGTH_SHORT).show();
         billUserViewModel = ViewModelProviders.of(getActivity()).get(BillUserViewModel.class);
         lvdangigao = rootView.findViewById(R.id.lvdangigao);
         billUserAdapter=new billUserAdapter(list,getActivity());

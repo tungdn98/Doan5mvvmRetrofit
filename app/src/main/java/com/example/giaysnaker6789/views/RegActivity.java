@@ -43,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegActivity extends BaseActivity {
-        EditText edttk,edtmk,edtremk,edtaddress,edtname,edtphone;
+        EditText edttk,edtmk,edtremk,edtaddress,edtname,edtphone,edtemail;
         Button btndangky,btnloginface;
         CircleImageView image;
         ImageView imgMenu;
@@ -108,12 +108,13 @@ public class RegActivity extends BaseActivity {
         String dc=edtaddress.getText().toString();
         String phone=edtphone.getText().toString();
         String name=edtname.getText().toString();
+        String email=edtemail.getText().toString();
 
         progressDialog = new ProgressDialog(RegActivity.this);
-        progressDialog.setMessage("đang login chờ tý...");
+        progressDialog.setMessage("đang đăng ký chờ tý...");
         progressDialog.show();
 
-        registerViewmodel.RegisterNomal(tk,mk,dc,phone,name,path).observe(this, new Observer<ResponseUser1s>() {
+        registerViewmodel.RegisterNomal(tk,mk,email,dc,phone,name,path).observe(this, new Observer<ResponseUser1s>() {
             @Override
             public void onChanged(ResponseUser1s responseUser1s) {
                 if(responseUser1s.getMess().equals("SUCCESS")){
@@ -190,5 +191,6 @@ public class RegActivity extends BaseActivity {
         edtphone=findViewById(R.id.edtphone);
         image=findViewById(R.id.profile_image);
         imgMenu = findViewById(R.id.imgback);
+        edtemail=findViewById(R.id.edtemail);
     }
 }

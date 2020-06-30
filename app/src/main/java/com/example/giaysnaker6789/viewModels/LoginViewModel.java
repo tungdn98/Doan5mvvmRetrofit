@@ -56,4 +56,23 @@ public class LoginViewModel extends ViewModel {
 
         return newsData;
     }
+
+    public MutableLiveData<ResponseUser1s> updateData(user1s us){
+        MutableLiveData<ResponseUser1s>  newsData = new MutableLiveData<>();
+        dataClient = RetrofitService.cteateService(ApiUser.class);
+        dataClient.updateUser(us).enqueue(new Callback<ResponseUser1s>() {
+            @Override
+            public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseUser1s> call, Throwable t) {
+
+            }
+        });
+
+        return newsData;
+    }
 }

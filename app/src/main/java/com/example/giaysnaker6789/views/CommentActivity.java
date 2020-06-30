@@ -20,6 +20,7 @@ import com.example.giaysnaker6789.models.feedback_products;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.FeedbackViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -60,10 +61,12 @@ public class CommentActivity extends BaseActivity {
                         rateting.getRating()).observe(CommentActivity.this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        if(integer==1){
+                        if(integer==0){
                             Toast.makeText(CommentActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                            finish();
                         }else{
                             Toast.makeText(CommentActivity.this, "thất bại ", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     }
                 });
@@ -96,7 +99,13 @@ public class CommentActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(products event) { // get model test
         feedback.setIdProduct(event.getId());
+        txttensp.setText(event.getName());
+        Picasso.get()
+                .load(""+ RetrofitService.basePath+event.getImage())
+                .into(imghinhsp);
     }
+
+
 
 
 }

@@ -37,7 +37,7 @@
                 android:hint="tài khoản">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edttk"
-                    android:text="123"
+                    android:text=""
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -53,7 +53,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtpass"
-                    android:text="123"
+                    android:text=""
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -70,7 +70,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtrepass"
-                    android:text="123"
+                    android:text=""
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -94,10 +94,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
+                android:hint="Email">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtemail"
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
                 android:hint="số điện thoại ">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtphone"
-                    android:text="123"
+                    android:text=""
                     android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -109,7 +122,7 @@
                 android:hint="địa chỉ  ">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtaddress"
-                    android:text="123"
+                    android:text=""
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>

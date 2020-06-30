@@ -27,8 +27,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class CustomDialog extends Dialog implements
-        android.view.View.OnClickListener{
+public class CustomDialog extends Dialog{
     public Activity mactivity;
     public Dialog dialog;
     public Button btnok;
@@ -49,10 +48,8 @@ public class CustomDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_detail_cart);
-        btnok=findViewById(R.id.btnok);
         lv=findViewById(R.id.lv_detail_cart);
         mbillViewModel = ViewModelProviders.of((FragmentActivity) mactivity).get(BillViewModel.class);
-        btnok.setOnClickListener(this);
         populatedata(idbill);
         ListviewClick();
     }
@@ -79,18 +76,4 @@ public class CustomDialog extends Dialog implements
         }
     });
     }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnok:
-               // code
-                dismiss();
-                break;
-            default:
-                break;
-        }
-        dismiss();
-    }
-
 }

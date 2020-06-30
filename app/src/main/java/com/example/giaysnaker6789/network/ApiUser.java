@@ -1,9 +1,13 @@
 package com.example.giaysnaker6789.network;
 
 import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
+import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 
+import java.util.List;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -19,6 +23,7 @@ public interface ApiUser {
     @POST("api/RegisterNomal")
     Call<ResponseUser1s> RegisternoMal(@Field("account") String tk,
                                        @Field("password") String password,
+                                       @Field("email") String email,
                                        @Field("address") String address,
                                        @Field("phone") String phone,
                                        @Field("name") String name,
@@ -45,5 +50,6 @@ public interface ApiUser {
     @POST("api/getAccount")
     Call<ResponseUser1s> getAccount(@Field("id") int id);
 
-
+    @POST("api/updateUser")
+    Call<ResponseUser1s> updateUser(@Body user1s user);
 }
