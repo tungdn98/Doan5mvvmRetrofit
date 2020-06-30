@@ -16,24 +16,24 @@ public class myintro extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addSlide(AppIntroFragment.newInstance("man1", // dòng trên
-                "man11", // dòng dưới
+        addSlide(AppIntroFragment.newInstance("chất lượng sản phẩm tuyệt vời", // dòng trên
+                "giá cả phù hợp", // dòng dưới
                 R.drawable.com_facebook_profile_picture_blank_portrait, // hình ảnh ở giữa
                 Color.parseColor("#51e2b7"))); // màu nền
 
-        addSlide(AppIntroFragment.newInstance("man2",
-                "man22",
+        addSlide(AppIntroFragment.newInstance("đi đầu trong nghề bán giày lậu",
+                "giày lậu muôn năm",
                 R.drawable.com_facebook_profile_picture_blank_portrait,
                 Color.parseColor("#51e2b7")));
 
-        addSlide(AppIntroFragment.newInstance("man3",
-                "man33",
+        addSlide(AppIntroFragment.newInstance("",
+                "",
                 R.drawable.com_facebook_profile_picture_blank_portrait,
                 Color.parseColor("#51e2b7")));
 
 
-        addSlide(AppIntroFragment.newInstance("man4",
-                "man44",
+        addSlide(AppIntroFragment.newInstance("",
+                "",
                 R.drawable.com_facebook_profile_picture_blank_portrait,
                 Color.parseColor("#51e2b7")));
 
@@ -50,11 +50,10 @@ public class myintro extends AppIntro {
 
     @Override
     public void onSkipPressed(Fragment currentFragment) { // nhấn nút skip
-        Toast.makeText(this, "skip click", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onSlideChanged() { // khi vuốt slide
-        Toast.makeText(this, "change slide ", Toast.LENGTH_SHORT).show();
     }
 }

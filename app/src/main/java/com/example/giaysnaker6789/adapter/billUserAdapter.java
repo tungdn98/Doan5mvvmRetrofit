@@ -50,7 +50,6 @@ public class billUserAdapter extends BaseAdapter {
     }
 
     private class viewholder {  // tạo 1 class viewholder đầy đủ các thuộc tính của file dongkhach.xml
-        StepView stepview;
         TextView txtname;
         TextView txtaddress;
         TextView txtphone;
@@ -81,35 +80,12 @@ public class billUserAdapter extends BaseAdapter {
         }
 
         bills2 currentpro = list.get(position);
-        holder.txtname.setText("họ tên:"+currentpro.getName());
-        holder.txtaddress.setText("địa chỉ:"+currentpro.getAddress());
-        holder.txtphone.setText("SDT:" + currentpro.getPhone());
-        holder.txtcount.setText("số lượng:" + currentpro.getCount());
-        holder.txtprice.setText("thành tiền" + currentpro.getPrice());
+        holder.txtname.setText("họ tên: "+currentpro.getName());
+        holder.txtaddress.setText("địa chỉ: "+currentpro.getAddress());
+        holder.txtphone.setText("SDT: " + currentpro.getPhone());
+        holder.txtcount.setText("số lượng: " + currentpro.getCount());
+        holder.txtprice.setText("thành tiền: " + format(currentpro.getPrice()));
         holder.txtdate.setText("" + currentpro.getOrderdate());
-
-//        holder.stepview.getState()
-//                .animationType(StepView.ANIMATION_CIRCLE)
-//                .steps(new ArrayList<String>() {{
-//                    add("chờ xác nhận");
-//                    add("đang giao");
-//                    add("đã giao");
-//                }})
-//                .stepsNumber(4)
-//                .animationDuration(2000)
-//                .commit();
-//        String stt = currentpro.getStatus();
-//        switch (stt) {
-//            case "b2":
-//                 holder.stepview.go(0,true);
-//                break;
-//            case "b3":
-//                holder.stepview.go(1,true);
-//                break;
-//            case "b4":
-//                holder.stepview.go(2,true);
-//                break;
-//        }
 
         return itemView;
     }

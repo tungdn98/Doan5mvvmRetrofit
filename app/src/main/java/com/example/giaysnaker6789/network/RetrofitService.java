@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
-    public static String basePath = "http://192.168.1.16:80/snaker6789/public/";
+    public static String basePath = "http://192.168.2.32:80/snaker6789/public/";
 
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()

@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/lvdangigao"
+        android:dividerHeight="10.0sp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

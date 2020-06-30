@@ -28,7 +28,6 @@ public class BillUserViewModel extends ViewModel {
             public void onResponse(Call<BillUserResponse> call, Response<BillUserResponse> response) {
                 if(response.isSuccessful()){
                     newsData.setValue(response.body());
-
                 }
             }
 

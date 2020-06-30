@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
-                        android:text="tufng asdasdasdasd"
+                        android:text=""
                         android:textColor="#1d1d1d"
                         android:textSize="24sp" />
 
@@ -59,7 +59,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
-                            android:text="100k"
+                            android:text=""
                             android:textColor="@android:color/background_dark"
                             android:textSize="24sp" />
 
@@ -68,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
-                            android:text="100k"
+                            android:text=""
                             android:textColor="@android:color/darker_gray"
                             android:textSize="24sp" />
                     </LinearLayout>
@@ -98,7 +98,7 @@
                     <Button
                         android:id="@+id/checkvoucher"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_margin="10dp"
                         android:background="#ff424e"
                         android:text="check voucher"
@@ -123,12 +123,12 @@
                         android:ellipsize="end"
                         android:maxHeight="300dp"
                         android:text="asdasdddddddddddddddddddd"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/btnchonmua"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_margin="10dp"
                         android:background="#ff424e"
                         android:text="chọn mua"
