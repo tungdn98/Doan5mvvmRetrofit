@@ -123,8 +123,6 @@ public class LoadMoreActivity extends BaseActivity {
                 typesort=position;
                 rowsArrayList.clear();
                 populateData();
-
-
             }
 
             @Override

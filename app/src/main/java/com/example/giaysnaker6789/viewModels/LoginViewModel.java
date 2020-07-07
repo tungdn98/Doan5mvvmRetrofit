@@ -29,7 +29,9 @@ public class LoginViewModel extends ViewModel {
         dataClient.login(tk,mk).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
             @Override
             public void onFailure(Call<ResponseUser1s> call, Throwable t) {
@@ -46,7 +48,9 @@ public class LoginViewModel extends ViewModel {
         dataClient.getAccount(id).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
             @Override
             public void onFailure(Call<ResponseUser1s> call, Throwable t) {
