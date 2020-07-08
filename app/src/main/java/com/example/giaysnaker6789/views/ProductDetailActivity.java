@@ -12,6 +12,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BaseResponseFeedback;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.FeedbackAdapter;
 import com.example.giaysnaker6789.adapter.SpTrangchuAdapterHoz;
@@ -39,6 +40,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class ProductDetailActivity extends BaseActivity {
-    TextView txttitle, txtprice, txtpromotion, txtdescription;
+    TextView txttitle, txtprice, txtpromotion, txtdescription,txtSaled;
     RecyclerView rclistfeedback, rcsplienquan;
     Button btnchonmua, btnvietnhanxet, btncheckvoucher;
     EditText edtvou;
@@ -95,7 +98,7 @@ public class ProductDetailActivity extends BaseActivity {
                         public void onChanged(vouchers vouchers) {
                             if (vouchers.getId() != null) {
                                 int promotion = pro.getPromotion() - vouchers.getPromotion();
-                                txtpromotion.setText("" + promotion);
+                                txtpromotion.setText("" + promotion +" đ");
                             } else {
                                 Toast.makeText(ProductDetailActivity.this, "mã giảm giá không đúng", Toast.LENGTH_SHORT).show();
                             }
@@ -118,6 +121,15 @@ public class ProductDetailActivity extends BaseActivity {
             }
         });
 
+        ItemClickSupport.addTo(rcsplienquan).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                products pro = listproduct.get(position);
+                EventBus.getDefault().postSticky(pro);
+                startActivity(new Intent(ProductDetailActivity.this, ProductDetailActivity.class));
+                Animatoo.animateShrink(ProductDetailActivity.this);
+            }
+        });
 
     }
 
@@ -168,6 +180,7 @@ public class ProductDetailActivity extends BaseActivity {
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
 
         txttitle = findViewById(R.id.txttitle);
+        txtSaled=findViewById(R.id.txtSaled);
         txtprice = findViewById(R.id.txtprice);
         txtpromotion = findViewById(R.id.txtprmotion);
         txtdescription = findViewById(R.id.txtdescription);
@@ -198,8 +211,9 @@ public class ProductDetailActivity extends BaseActivity {
         pro = event;
         txttitle.setText("" + event.getName());
         txtdescription.setText("" + event.getDescribe());
-        txtpromotion.setText("" + event.getPromotion());
-        txtprice.setText("" + event.getPrice());
+        txtpromotion.setText("" + format(event.getPromotion())+" đ");
+        txtprice.setText("" + format(event.getPrice())+" đ");
+        txtSaled.setText("Đã bán: "+event.getSaled());
         loadDetail(event.getIdProductType());
         loadImage(event.getId());
         loadfeedback(event.getId(), 1);
@@ -229,8 +243,9 @@ public class ProductDetailActivity extends BaseActivity {
 
                 txttitle.setText("" + products.getName());
                 txtdescription.setText("" + products.getDescribe());
-                txtpromotion.setText("" + products.getPromotion());
-                txtprice.setText("" + products.getPrice());
+                txtpromotion.setText("" + format(products.getPromotion())+" đ");
+                txtprice.setText("" + format(products.getPrice())+" đ");
+                txtSaled.setText("Đã bán: "+products.getSaled());
                 loadDetail(products.getIdProductType());
                 loadImage(products.getId());
             }
@@ -306,6 +321,11 @@ public class ProductDetailActivity extends BaseActivity {
                 Animatoo.animateSplit(ProductDetailActivity.this);
             }
         });
+    }
+
+    public String format(double number) {
+        NumberFormat formatter = new DecimalFormat("#,###,###");
+        return formatter.format(number);
     }
 
 }

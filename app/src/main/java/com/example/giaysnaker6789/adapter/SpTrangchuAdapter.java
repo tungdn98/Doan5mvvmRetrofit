@@ -42,8 +42,9 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
         products currentpro = notes.get(position);
         holder.txttitle.setText(currentpro.getName());
         holder.txtdescription.setText(currentpro.getDescribe());
-        holder.txtgiachinh.setText(format(currentpro.getPrice()));
-        holder.txtgiagiam.setText(format(currentpro.getPromotion()));
+        holder.txtgiachinh.setText(format(currentpro.getPrice())+" vnđ");
+        holder.txtgiagiam.setText(format(currentpro.getPromotion())+" vnđ");
+        holder.txtsaled.setText("Đã bán:   "+currentpro.getSaled());
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
                 //.resize(150, 150)
@@ -62,6 +63,7 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
          TextView txttitle;
          TextView txtgiachinh;
          TextView txtgiagiam;
+         TextView txtsaled;
          ImageView imagesp;
          RatingBar RTbar;
         public ViewHolder(@NonNull View itemView) {
@@ -72,6 +74,7 @@ public class SpTrangchuAdapter extends RecyclerView.Adapter<SpTrangchuAdapter.Vi
             txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
             imagesp = itemView.findViewById(R.id.imghinhsp);
             RTbar=itemView.findViewById(R.id.ratingBarproductp);
+            txtsaled=itemView.findViewById(R.id.txtsaled);
 
         }
     }

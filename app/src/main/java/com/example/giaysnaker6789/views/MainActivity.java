@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.BillUserResponse;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
-import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
@@ -26,12 +24,10 @@ import com.example.giaysnaker6789.models.banners;
 import com.example.giaysnaker6789.models.billuser;
 import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
-import com.example.giaysnaker6789.models.test;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.BannerViewModel;
 import com.example.giaysnaker6789.viewModels.BillUserViewModel;
-import com.example.giaysnaker6789.viewModels.LoginViewModel;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.example.tungnuislider.ImageSlider;
@@ -56,6 +52,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -121,7 +118,7 @@ public class MainActivity extends BaseActivity {
 //        });
 
         initView();
-       // getuser();
+        // getuser();
 
         setCountButton();
         setupBanner();
@@ -142,29 +139,6 @@ public class MainActivity extends BaseActivity {
         });
 
     }
-
-//    private void getuser() {
-//
-//        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-//        int id = SharedPref.read(SharedPref.IDUSER, 0);
-//        loginViewModel.getAccount(id).observe(MainActivity.this, new Observer<ResponseUser1s>() {
-//            @Override
-//            public void onChanged(ResponseUser1s responseUser1s) {
-//                user1s user = responseUser1s.getData();
-//                EventBus.getDefault().postSticky(user);
-//                txtname.setText("" + user.getName());
-//                Picasso.get()
-//                        .load("" + user.getImagefb())
-//                        .resize(100, 100)
-//                        // .centerCrop()
-//                        .into(profile_image);
-//
-//                getBillUser(user.getId());
-//            }
-//        });
-//
-//
-//    }
 
     private void setuplistLoaiSp() {
         recyclerView2.setHasFixedSize(true);
@@ -277,8 +251,11 @@ public class MainActivity extends BaseActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         break;
-                    case R.id.nav_cateroly:
-
+                    case R.id.nav_logout:
+                        SharedPref.remove(SharedPref.USER);//read string in shared preference.
+                        SharedPref.remove(SharedPref.PASS);//read int in shared preference.
+                        SharedPref.remove(SharedPref.IDUSER);//read int in shared preference.
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     case R.id.nav_order:
                         startActivity(new Intent(MainActivity.this, OrderManagerActivity.class));
@@ -288,7 +265,6 @@ public class MainActivity extends BaseActivity {
                     case R.id.nav_user:
                         startActivity(new Intent(MainActivity.this, UserActivity.class));
                         Animatoo.animateCard(MainActivity.this);
-                        Toast.makeText(MainActivity.this, "màn hình user", Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -344,14 +320,14 @@ public class MainActivity extends BaseActivity {
         billUserViewModel.getcountbill(id, stt).observe(this, new Observer<BillUserResponse>() {
             @Override
             public void onChanged(BillUserResponse billUserResponse) {
-                if(billUserResponse!= null){
-                if (billUserResponse.getMess().equals(Constant.STATUS_SUCCESS)) {
-                    billuser billuser = billUserResponse.getData().get(0);
-                    EventBus.getDefault().postSticky(billuser);
-                    txtbadge.setText("" + billuser.getCount());
-                } else {
-                    txtbadge.setText("0");
-                }
+                if (billUserResponse != null) {
+                    if (billUserResponse.getMess().equals(Constant.STATUS_SUCCESS)) {
+                        billuser billuser = billUserResponse.getData().get(0);
+                        EventBus.getDefault().postSticky(billuser);
+                        txtbadge.setText("" + billuser.getCount());
+                    } else {
+                        txtbadge.setText("0");
+                    }
                 }
             }
         });

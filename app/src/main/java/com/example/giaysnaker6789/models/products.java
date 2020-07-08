@@ -40,6 +40,10 @@ public class products {
     @Expose
     private Integer amount;
 
+    @SerializedName("saled")
+    @Expose
+    private Integer saled;
+
     @SerializedName("rate")
     @Expose
     private Float rate;
@@ -159,6 +163,12 @@ public class products {
         this.rate = rate;
     }
 
+    public Integer getSaled() {
+        return saled;
+    }
 
+    public void setSaled(Integer saled) {
+        this.saled = saled;
+    }
 }
 

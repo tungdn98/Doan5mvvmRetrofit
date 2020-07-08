@@ -93,11 +93,11 @@ public class ItemCartAdapter extends BaseAdapter {
         }
 
         bills currentpro = list.get(position);
-        holder.txttensp.setText("Tên sp:"+currentpro.getName());
-        holder.txtorigin.setText("Xuất sứ:"+currentpro.getOrigin());
-        holder.txtsoluong.setText("số lượng:"+currentpro.getCount());
-        holder.txtprice.setText("giá:" + format(currentpro.getPrice()));
-        holder.txtthanhtien.setText("Thành tiền" + currentpro.getPrice() * currentpro.getCount());
+        holder.txttensp.setText("Tên sp: "+currentpro.getName());
+        holder.txtorigin.setText("Xuất sứ: "+currentpro.getOrigin());
+        holder.txtsoluong.setText("số lượng: "+currentpro.getCount());
+        holder.txtprice.setText("giá: " + format(currentpro.getPrice())+" VNĐ");
+        holder.txtthanhtien.setText("Thành tiền: " + currentpro.getPrice() * currentpro.getCount());
         holder.tungNuiButton.setNumber("" + currentpro.getCount());
         Picasso.get()
                 .load("" + RetrofitService.basePath + currentpro.getImage())

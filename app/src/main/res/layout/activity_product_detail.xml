@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gray"
     tools:context=".views.ProductDetailActivity">
     <ScrollView
         android:layout_width="match_parent"
@@ -44,10 +45,10 @@
                         android:id="@+id/txttitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
                         android:text=""
+                        android:padding="8dp"
                         android:textColor="#1d1d1d"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -69,7 +70,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:text=""
-                            android:textColor="@android:color/darker_gray"
+                            android:foreground="@drawable/strike"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/txtSaled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="24dp"
+                            android:text="Đã bán"
+                            android:textColor="@color/cam"
                             android:textSize="24sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -101,7 +112,7 @@
                         android:layout_height="40dp"
                         android:layout_margin="10dp"
                         android:background="#ff424e"
-                        android:text="check voucher"
+                        android:text="Áp dụng voucher"
                         android:textColor="@android:color/background_light" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -115,15 +126,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxHeight="300dp"
+                        android:gravity="center"
+                        android:textColor="@color/cam"
+                        android:text="Thông tin sản phẩm"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/txtdescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="8dp"
                         android:ellipsize="end"
                         android:maxHeight="300dp"
-                        android:text="asdasdddddddddddddddddddd"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="thông tin sản phẩm"
+                        android:textSize="16sp" />
 
                     <Button
                         android:id="@+id/btnchonmua"
@@ -151,8 +173,10 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxHeight="300dp"
+                        android:textColor="@color/cam"
+                        android:gravity="center"
                         android:text="khách hàng nhận xét"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rclistfeedback"
@@ -166,7 +190,7 @@
                         android:layout_margin="10dp"
                         android:background="@drawable/button_border"
                         android:text="Viết Nhận Xét"
-                        android:textColor="@android:color/holo_blue_dark" />
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

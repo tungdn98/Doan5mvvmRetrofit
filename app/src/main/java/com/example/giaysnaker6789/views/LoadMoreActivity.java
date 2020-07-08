@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.LoadMoreAdapter;
 import com.example.giaysnaker6789.adapter.ProductTypeAdapter;
@@ -27,6 +30,8 @@ import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +39,7 @@ import java.util.List;
 public class LoadMoreActivity extends BaseActivity {
     RecyclerView recyclerView;
     FloatingActionButton btnscrolltop;
-    Spinner spgia,spxuatsu;
+    Spinner spgia, spxuatsu;
     LoadMoreAdapter loadMoreAdapter;
     ArrayList<products> rowsArrayList = new ArrayList<>();
     GridLayoutManager layoutManager;
@@ -42,7 +47,7 @@ public class LoadMoreActivity extends BaseActivity {
     ProductViewModel productViewModel;
     ProductTypeViewModel productTypeViewModel;
     int page = 1;
-    int typesort = 0 ;
+    int typesort = 0;
     int typeorigin = 00;
     private ProgressDialog dialog;
 
@@ -62,7 +67,7 @@ public class LoadMoreActivity extends BaseActivity {
         productTypeViewModel = ViewModelProviders.of(this).get(ProductTypeViewModel.class);
         initview();
         setupspinner();
-       // populateData();
+        // populateData();
         initScrollListener();
         imgbackEvent();
         btnscrolltop.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +78,17 @@ public class LoadMoreActivity extends BaseActivity {
                 layoutManager.scrollToPositionWithOffset(0, 0);
             }
         });
+
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                products pro = rowsArrayList.get(position);
+                EventBus.getDefault().postSticky(pro);
+                startActivity(new Intent(LoadMoreActivity.this, ProductDetailActivity.class));
+                Animatoo.animateShrink(LoadMoreActivity.this);
+            }
+        });
+
     }
 
     private void setupspinner() {
@@ -91,22 +107,20 @@ public class LoadMoreActivity extends BaseActivity {
         productTypeViewModel.LoadProductType().observe(this, new Observer<List<product_types>>() {
             @Override
             public void onChanged(List<product_types> product_types) {
-                listxuatsu.add(new product_types(00,"chọn quốc gia",""));
+                listxuatsu.add(new product_types(00, "chọn quốc gia", ""));
                 listxuatsu.addAll(product_types);
                 ArrayAdapter<product_types> adapter =
-                        new ArrayAdapter<product_types>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, listxuatsu);
-                adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                        new ArrayAdapter<product_types>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listxuatsu);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spxuatsu.setAdapter(adapter);
             }
         });
 
 
-
-
         spxuatsu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                typeorigin=listxuatsu.get(position).getId();
+                typeorigin = listxuatsu.get(position).getId();
                 rowsArrayList.clear();
                 populateData();
             }
@@ -120,7 +134,7 @@ public class LoadMoreActivity extends BaseActivity {
         spgia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                typesort=position;
+                typesort = position;
                 rowsArrayList.clear();
                 populateData();
             }
@@ -149,12 +163,12 @@ public class LoadMoreActivity extends BaseActivity {
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
-        spgia=findViewById(R.id.spgia);
-        spxuatsu=findViewById(R.id.spfilter);
+        spgia = findViewById(R.id.spgia);
+        spxuatsu = findViewById(R.id.spfilter);
     }
 
     private void populateData() {
-        productViewModel.LoadProduct(1,typesort,typeorigin).observe(this, new Observer<ProductBaseResponse>() {
+        productViewModel.LoadProduct(1, typesort, typeorigin).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
                 rowsArrayList = (ArrayList<products>) productBaseResponse.getData();
@@ -167,7 +181,7 @@ public class LoadMoreActivity extends BaseActivity {
                 loadMoreAdapter = new LoadMoreAdapter(rowsArrayList);
                 recyclerView.setAdapter(loadMoreAdapter);
                 isLoading = false;
-                page=1;
+                page = 1;
             }
         });
     }
@@ -188,7 +202,7 @@ public class LoadMoreActivity extends BaseActivity {
                         dialog = new ProgressDialog(LoadMoreActivity.this);
                         dialog.setMessage("đang load chờ tý...");
                         dialog.show();
-                        loadMore(typesort,typeorigin);
+                        loadMore(typesort, typeorigin);
                         isLoading = true;
                     }
                 }
@@ -197,11 +211,11 @@ public class LoadMoreActivity extends BaseActivity {
         });
     }
 
-    private void loadMore(int typesort,int typeorigin) {
+    private void loadMore(int typesort, int typeorigin) {
         rowsArrayList.add(null);
         loadMoreAdapter.notifyItemInserted(rowsArrayList.size() - 1);
         page = page + 1;
-        productViewModel.LoadProduct(page,typesort,typeorigin).observe(this, new Observer<ProductBaseResponse>() {
+        productViewModel.LoadProduct(page, typesort, typeorigin).observe(this, new Observer<ProductBaseResponse>() {
             @Override
             public void onChanged(ProductBaseResponse productBaseResponse) {
                 if (productBaseResponse.getLastPage() > page) {
@@ -219,7 +233,6 @@ public class LoadMoreActivity extends BaseActivity {
             }
         });
     }
-
 
 
 }

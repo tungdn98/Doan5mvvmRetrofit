@@ -78,7 +78,7 @@
             <Button
                 android:id="@+id/btnpay"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:background="#ff424e"
                 android:text="tiến hành đặt hàng"

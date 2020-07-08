@@ -169,7 +169,7 @@ public class CartActivity extends BaseActivity {
             dem += listcac.get(i).getCount() * listcac.get(i).getPrice();
             thanhtien = dem;
         }
-        txtthanhtien.setText("" + format(dem));
+        txtthanhtien.setText("" + format(dem)+" đ");
     }
 
     public static void setcountcart(ArrayList<bills> listcac) {

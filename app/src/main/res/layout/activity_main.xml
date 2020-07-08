@@ -44,6 +44,7 @@
 
                     <com.example.tungnuislider.ImageSlider
                         android:id="@+id/image_slider"
+                        android:background="@mipmap/bg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:auto_cycle="true"
@@ -71,10 +72,12 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <TextView
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/background_dark"
+                        android:background="@color/cam"
+                        android:textColor="@android:color/white"
                         android:text="Danh mục Sản phẩm"
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
@@ -85,10 +88,12 @@
                         android:backgroundTint="@color/colorAccent" />
 
                     <TextView
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/background_dark"
+                        android:background="@color/cam"
+                        android:textColor="@android:color/white"
                         android:text="sản phẩm mới"
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 

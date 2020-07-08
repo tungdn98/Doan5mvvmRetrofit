@@ -1,7 +1,6 @@
 package com.example.giaysnaker6789.views;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,24 +8,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.ProductBaseResponse;
+import com.example.giaysnaker6789.ItemClickSupport;
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.LoadMoreAdapter;
 import com.example.giaysnaker6789.models.product_types;
 import com.example.giaysnaker6789.models.products;
-import com.example.giaysnaker6789.models.user1s;
-import com.example.giaysnaker6789.network.RetrofitService;
 import com.example.giaysnaker6789.viewModels.ProductTypeViewModel;
-import com.example.giaysnaker6789.viewModels.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -45,7 +44,7 @@ public class LoadProductTypeActivity extends BaseActivity {
 
     SearchView searchView;
     TextView txtbadge, txttitle;
-    ImageView imgMenu;
+    ImageView imgMenu,imgcart;
 
     product_types protypes;
     @Override
@@ -64,6 +63,19 @@ public class LoadProductTypeActivity extends BaseActivity {
                 layoutManager.scrollToPositionWithOffset(0, 0);
             }
         });
+
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                products pro = rowsArrayList.get(position);
+                EventBus.getDefault().postSticky(pro);
+                startActivity(new Intent(LoadProductTypeActivity.this, ProductDetailActivity.class));
+                Animatoo.animateShrink(LoadProductTypeActivity.this);
+            }
+        });
+
+
+
     }
 
     private void imgbackEvent() {
@@ -71,6 +83,13 @@ public class LoadProductTypeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        imgcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoadProductTypeActivity.this,CartActivity.class));
             }
         });
     }
@@ -82,6 +101,7 @@ public class LoadProductTypeActivity extends BaseActivity {
         txtbadge = findViewById(R.id.text);
         txttitle = findViewById(R.id.txttile);
         searchView = findViewById(R.id.searchView);
+        imgcart=findViewById(R.id.imgcart);
     }
 
     private void populateData(int idtype) {
