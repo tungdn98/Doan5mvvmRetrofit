@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".views.VerifyPhoneActivity"></activity>
         <activity android:name=".views.UserActivity" />
         <activity android:name=".views.OrderManagerActivity" />
         <activity android:name=".views.CommentActivity" />

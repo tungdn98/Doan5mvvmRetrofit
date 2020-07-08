@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.network.APIimage;
 import com.example.giaysnaker6789.network.ApiUser;
@@ -76,25 +77,22 @@ public class RegActivity extends BaseActivity {
         btndangky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String tk=edttk.getText().toString();
+                String mk=edtmk.getText().toString();
+                String dc=edtaddress.getText().toString();
+                String phone=edtphone.getText().toString();
+                String name=edtname.getText().toString();
+                String email=edtemail.getText().toString();
                 if(realpath!=null){
-                    File file = new File(realpath);
-                    String file_path = file.getAbsolutePath();
-                    String[] mangtenfile = file_path.split("\\.");
-                    file_path = mangtenfile[0] + System.currentTimeMillis() + "." + mangtenfile[1];
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    MultipartBody.Part body = MultipartBody.Part.createFormData("image", file_path, requestBody); //image laf field treen sever sẽ đọc
-                    registerViewmodel.UploadImage(body).observe(RegActivity.this, new Observer<String>() {
-                        @Override
-                        public void onChanged(String s) {
-                            if(s!=""){
-                                dangkine(s);
-                            }else{
-                                Toast.makeText(RegActivity.this, "có lỗi xảy ra trong quá trình up ảnh", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    user1s us=new user1s(null,tk,mk,email,dc,phone,name,null,null,null,realpath,null);
+                    Constant.user1s=us;
+                    startActivity(new Intent(RegActivity.this,VerifyPhoneActivity.class));
+
                 }else{
-                    dangkine("");
+                    user1s us=new user1s(null,tk,mk,email,dc,phone,name,null,null,null,null,null);
+                    Constant.user1s=us;
+                    startActivity(new Intent(RegActivity.this,VerifyPhoneActivity.class));
+                   // dangkine("");
                     //Toast.makeText(RegActivity.this, "vui lòng chọn 1 hình ảnh", Toast.LENGTH_SHORT).show();
                 }
 
@@ -102,39 +100,7 @@ public class RegActivity extends BaseActivity {
         });
     }
     ProgressDialog progressDialog;
-    private void dangkine(String path) {
-        String tk=edttk.getText().toString();
-        String mk=edtmk.getText().toString();
-        String dc=edtaddress.getText().toString();
-        String phone=edtphone.getText().toString();
-        String name=edtname.getText().toString();
-        String email=edtemail.getText().toString();
 
-        progressDialog = new ProgressDialog(RegActivity.this);
-        progressDialog.setMessage("đang đăng ký chờ tý...");
-        progressDialog.show();
-
-        registerViewmodel.RegisterNomal(tk,mk,email,dc,phone,name,path).observe(this, new Observer<ResponseUser1s>() {
-            @Override
-            public void onChanged(ResponseUser1s responseUser1s) {
-                if(responseUser1s.getMess().equals("SUCCESS")){
-                    user1s user=  responseUser1s.getData();
-                        Toast.makeText(RegActivity.this, "đăng kí thành công", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                }
-                if(responseUser1s.getMess().equals("EXISTMAIL")){
-                    Toast.makeText(RegActivity.this, "Email đã có người sử dụng vui lòng chọn tài khoản khác", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-                if(responseUser1s.getMess().equals("EXISTACC")){
-                    Toast.makeText(RegActivity.this, "Tài khoản đã có người sử dụng vui lòng chọn tài khoản khác", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-
-                }
-
-            }
-        });
-    }
 
     private void chooseImage() {
         image.setOnClickListener(new View.OnClickListener() {

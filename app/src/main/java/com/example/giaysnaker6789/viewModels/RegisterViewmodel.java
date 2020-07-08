@@ -24,7 +24,9 @@ public class RegisterViewmodel extends ViewModel {
         dataClient.RegisternoMal(tk,mk,email,dc,phone,name,path).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -41,7 +43,9 @@ public class RegisterViewmodel extends ViewModel {
         apiImage.uploadFile(path).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -58,7 +62,9 @@ public class RegisterViewmodel extends ViewModel {
         dataClient.RegisterFacebook(idfb, fbname, imgfb, address, phone).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -75,7 +81,9 @@ public class RegisterViewmodel extends ViewModel {
         dataClient.ConnectWithFacebook(id,idfb, fbname, imgfb, address, phone).enqueue(new Callback<ResponseUser1s>() {
             @Override
             public void onResponse(Call<ResponseUser1s> call, Response<ResponseUser1s> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
