@@ -60,8 +60,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
+                            android:textColor="@android:color/holo_red_dark"
                             android:text=""
-                            android:textColor="@android:color/background_dark"
                             android:textSize="24sp" />
 
                         <TextView
@@ -71,7 +71,7 @@
                             android:layout_marginLeft="24dp"
                             android:text=""
                             android:foreground="@drawable/strike"
-                            android:textColor="@android:color/holo_red_dark"
+                            android:textColor="@android:color/background_dark"
                             android:textSize="24sp" />
 
                         <TextView

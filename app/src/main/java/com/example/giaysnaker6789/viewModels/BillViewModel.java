@@ -54,10 +54,10 @@ public class BillViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Billresponse> deleteBill(int id,int idbill){
+    public MutableLiveData<Billresponse> deleteBill(int id,int idbill,int idproduct,int count){
         MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.deleteBill(id,idbill).enqueue(new Callback<Billresponse>() {
+        dataClient.deleteBill(id,idbill,idproduct,count).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
                 if(response.isSuccessful()){
@@ -75,10 +75,10 @@ public class BillViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Billresponse> updateBill(int id,int idbill,int count,String status){
+    public MutableLiveData<Billresponse> updateBill(int id,int idbill,int count,String status,int idproduct,int saled){
         MutableLiveData<Billresponse>  newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(APIbill.class);
-        dataClient.updateBill(id,idbill,count,status).enqueue(new Callback<Billresponse>() {
+        dataClient.updateBill(id,idbill,count,status,idproduct,saled).enqueue(new Callback<Billresponse>() {
             @Override
             public void onResponse(Call<Billresponse> call, Response<Billresponse> response) {
                 if(response.isSuccessful()){

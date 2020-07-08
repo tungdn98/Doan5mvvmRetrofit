@@ -79,6 +79,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView txttitle;
         TextView txtgiachinh;
         TextView txtgiagiam;
+        TextView txtsaled;
         ImageView imagesp;
         RatingBar rateing;
 
@@ -91,6 +92,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
             imagesp = itemView.findViewById(R.id.imghinhsp);
             rateing =itemView.findViewById(R.id.ratingBarproductp);
+            txtsaled=itemView.findViewById(R.id.txtsaled);
         }
     }
 
@@ -120,6 +122,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                // .centerCrop()
                 .into(viewHolder.imagesp);
         viewHolder.rateing.setRating(currentpro.getRate());
+        viewHolder.txtsaled.setText("Đã bán: "+currentpro.getSaled());
     }
 
     public String format(double number){

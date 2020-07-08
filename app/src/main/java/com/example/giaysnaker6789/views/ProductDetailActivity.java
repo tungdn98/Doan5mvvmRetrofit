@@ -78,6 +78,7 @@ public class ProductDetailActivity extends BaseActivity {
     products pro;
     user1s user;
     billuser billuser;
+    int promotion;
 
 
     @Override
@@ -97,7 +98,7 @@ public class ProductDetailActivity extends BaseActivity {
                         @Override
                         public void onChanged(vouchers vouchers) {
                             if (vouchers.getId() != null) {
-                                int promotion = pro.getPromotion() - vouchers.getPromotion();
+                                 promotion = pro.getPromotion() - vouchers.getPromotion();
                                 txtpromotion.setText("" + promotion +" đ");
                             } else {
                                 Toast.makeText(ProductDetailActivity.this, "mã giảm giá không đúng", Toast.LENGTH_SHORT).show();
@@ -140,7 +141,7 @@ public class ProductDetailActivity extends BaseActivity {
         }
         int iduser = user.getId();
         int idproduct = pro.getId();
-        int price = Integer.parseInt(txtpromotion.getText().toString());
+        int price = promotion;
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd"); // Format date
         String date = df1.format(Calendar.getInstance().getTime());
         String vou = edtvou.getText().toString();
@@ -209,6 +210,7 @@ public class ProductDetailActivity extends BaseActivity {
     public void onMessageEvent(products event) { // get model 
         pro = new products();
         pro = event;
+        promotion=event.getPromotion();
         txttitle.setText("" + event.getName());
         txtdescription.setText("" + event.getDescribe());
         txtpromotion.setText("" + format(event.getPromotion())+" đ");

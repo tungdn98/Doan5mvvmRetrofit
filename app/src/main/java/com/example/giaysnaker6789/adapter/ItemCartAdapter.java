@@ -119,7 +119,13 @@ public class ItemCartAdapter extends BaseAdapter {
             public void onClick(View view) {
                 int number=Integer.parseInt(holder.tungNuiButton.getNumber());
                 progressdialog.showDialog("đang update",context);
-              billViewModel.updateBill(currentpro.getId(),currentpro.getIdBill(),number,"b1").observe((LifecycleOwner) context, new Observer<Billresponse>() {
+                int saled=0;
+                if(number>currentpro.getCount()){
+                    saled=1;
+                }else {
+                    saled=-1;
+                }
+              billViewModel.updateBill(currentpro.getId(),currentpro.getIdBill(),number,"b1",currentpro.getIdProduct(),saled).observe((LifecycleOwner) context, new Observer<Billresponse>() {
                   @Override
                   public void onChanged(Billresponse billresponse) {
                       currentpro.setCount(number);
@@ -145,7 +151,7 @@ public class ItemCartAdapter extends BaseAdapter {
     }
 
     private void delete(int id, int idbill, bills bill) {
-        billViewModel.deleteBill(id, idbill).observe((LifecycleOwner) context, new Observer<Billresponse>() {
+        billViewModel.deleteBill(id, idbill,bill.getIdProduct(),bill.getCount()).observe((LifecycleOwner) context, new Observer<Billresponse>() {
             @Override
             public void onChanged(Billresponse billresponse) {
                 CartActivity.listcac.remove(bill);

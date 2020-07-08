@@ -1,4 +1,5 @@
 package com.example.giaysnaker6789.network;
+
 import com.example.giaysnaker6789.BaseResponse.BaseResponse;
 import com.example.giaysnaker6789.BaseResponse.Billresponse;
 
@@ -11,13 +12,13 @@ public interface APIbill {
     @FormUrlEncoded
     @POST("api/CreateBill")
     Call<Billresponse> pushBill(@Field("idUser") int iduser,
-                                    @Field("nameUser") String nameuser,
-                                    @Field("idProduct") int idproduct,
-                                    @Field("price") int price,
-                                    @Field("count") int count,
-                                    @Field("status") String status,
-                                    @Field("voucher") String voucher,
-                                    @Field("billdate") String billdate );
+                                @Field("nameUser") String nameuser,
+                                @Field("idProduct") int idproduct,
+                                @Field("price") int price,
+                                @Field("count") int count,
+                                @Field("status") String status,
+                                @Field("voucher") String voucher,
+                                @Field("billdate") String billdate);
 
 
     @FormUrlEncoded
@@ -27,30 +28,34 @@ public interface APIbill {
 
     @FormUrlEncoded
     @POST("api/getCountBill")
-    Call<Integer> getCountBill(@Field("idUser") int iduser,@Field("status") String stt);
+    Call<Integer> getCountBill(@Field("idUser") int iduser, @Field("status") String stt);
 
     @FormUrlEncoded
     @POST("api/deletebills")
-    Call<Billresponse> deleteBill(@Field("id") int id,@Field("idbill") int idbill);
+    Call<Billresponse> deleteBill(@Field("id") int id, @Field("idbill") int idbill,
+                                  @Field("idProduct") int idProduct,
+                                  @Field("count") int count);
 
     @FormUrlEncoded
     @POST("api/Updatebills")
     Call<Billresponse> updateBill(@Field("id") int iduser,
-                             @Field("idbill") int idproduct,
-                             @Field("count") int count,
-                             @Field("status") String status);
+                                  @Field("idbill") int idproduct,
+                                  @Field("count") int count,
+                                  @Field("status") String status,
+                                  @Field("idProduct") int idProduct,
+                                  @Field("saled") int saled);
 
     @FormUrlEncoded
     @POST("api/Payment")
-    Call<Billresponse>orderProduct
+    Call<Billresponse> orderProduct
             (@Field("idbill") int idbill,
-             @Field("status") String status );
+             @Field("status") String status);
 
     @FormUrlEncoded
     @POST("api/updateCountProduct")
-    Call<BaseResponse>updateCountProduct
+    Call<BaseResponse> updateCountProduct
             (@Field("idpro") int idpro,
-             @Field("count") int count );
+             @Field("count") int count);
 
     @FormUrlEncoded
     @POST("api/loadDetailBillWithID")
