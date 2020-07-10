@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.giaysnaker6789.R;
@@ -47,6 +48,7 @@ public class searchAdapter extends BaseAdapter {
         TextView txtgiachinh;
         TextView txtgiagiam;
         ImageView imagesp;
+        RatingBar rate;
     }
 
     @Override
@@ -62,6 +64,7 @@ public class searchAdapter extends BaseAdapter {
             holder.txtgiachinh = itemView.findViewById(R.id.txtgiachinh);
             holder.txtgiagiam = itemView.findViewById(R.id.txtgiagiam);
             holder.imagesp = itemView.findViewById(R.id.imghinhsp);
+            holder.rate=itemView.findViewById(R.id.ratingBarproductp);
             itemView.setTag(holder);
         }else{
             holder = (viewholder) itemView.getTag();
@@ -72,6 +75,7 @@ public class searchAdapter extends BaseAdapter {
         holder.txtdescription.setText(currentpro.getDescribe());
         holder.txtgiachinh.setText(format(currentpro.getPrice()));
         holder.txtgiagiam.setText(format(currentpro.getPromotion()));
+        holder.rate.setRating(currentpro.getRate());
         Picasso.get()
                 .load(""+ RetrofitService.basePath+currentpro.getImage())
                 //.resize(150, 150)

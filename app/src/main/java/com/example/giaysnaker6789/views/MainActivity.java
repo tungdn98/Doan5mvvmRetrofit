@@ -306,11 +306,20 @@ public class MainActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         txtname.setText("" + event.getName());
-        Picasso.get()
-                .load("" + RetrofitService.basePath + event.getImagefb())
-                .resize(100, 100)
-                // .centerCrop()
-                .into(profile_image);
+        if (event.getAccount()!=null) {
+            Picasso.get()
+                    .load("" + RetrofitService.basePath + event.getImagefb())
+                    .resize(100, 100)
+                    // .centerCrop()
+                    .into(profile_image);
+        } else {
+            Picasso.get()
+                    .load("" + event.getImagefb())
+                    .resize(100, 100)
+                    // .centerCrop()
+                    .into(profile_image);
+        }
+
 
         getBillUser(event.getId());
     }

@@ -26,7 +26,9 @@ public class ProductTypeViewModel extends ViewModel {
         dataClient.getallloaisp().enqueue(new Callback<List<product_types>>() {
             @Override
             public void onResponse(Call<List<product_types>> call, Response<List<product_types>> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
             @Override
             public void onFailure(Call<List<product_types>> call, Throwable t) {
@@ -42,7 +44,9 @@ public class ProductTypeViewModel extends ViewModel {
         apiProduct.getSPLQ(idproducttype,page).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
-                newsData.setValue(response.body());
+                if(response.isSuccessful()){
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override

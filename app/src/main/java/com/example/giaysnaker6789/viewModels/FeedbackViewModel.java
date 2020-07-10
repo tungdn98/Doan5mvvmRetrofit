@@ -22,7 +22,9 @@ public class FeedbackViewModel extends ViewModel {
         dataClient.getfeedback(idproducttype,page).enqueue(new Callback<BaseResponseFeedback>() {
             @Override
             public void onResponse(Call<BaseResponseFeedback> call, Response<BaseResponseFeedback> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -39,7 +41,9 @@ public class FeedbackViewModel extends ViewModel {
         dataClient.pushFeedback(idproduct,idUser,content,feedate,rate).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override

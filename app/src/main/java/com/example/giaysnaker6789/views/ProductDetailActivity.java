@@ -229,7 +229,7 @@ public class ProductDetailActivity extends BaseActivity {
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(banners event) { // get model test
-
+        loadbyid(event.getIdProduct().toString());
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

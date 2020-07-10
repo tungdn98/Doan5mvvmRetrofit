@@ -69,6 +69,8 @@ public class FCMservice extends FirebaseMessagingService {
                         .setLargeIcon(img)
                         .setContentTitle(title)
                         .setContentText(mess)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(mess))
+                       // .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(img).bigLargeIcon(null))
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent)

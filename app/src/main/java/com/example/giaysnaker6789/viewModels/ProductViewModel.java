@@ -49,7 +49,9 @@ public class ProductViewModel extends ViewModel {
         dataClient.getCount().enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -66,7 +68,9 @@ public class ProductViewModel extends ViewModel {
         dataClient.getproType(id).enqueue(new Callback<ProductBaseResponse>() {
             @Override
             public void onResponse(Call<ProductBaseResponse> call, Response<ProductBaseResponse> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
             @Override
             public void onFailure(Call<ProductBaseResponse> call, Throwable t) {
@@ -83,7 +87,9 @@ public class ProductViewModel extends ViewModel {
         dataClient.searchProduct(name).enqueue(new Callback<List<products>>() {
             @Override
             public void onResponse(Call<List<products>> call, Response<List<products>> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -99,7 +105,9 @@ public class ProductViewModel extends ViewModel {
         dataClient.searchByid(id).enqueue(new Callback<products>() {
             @Override
             public void onResponse(Call<products> call, Response<products> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override

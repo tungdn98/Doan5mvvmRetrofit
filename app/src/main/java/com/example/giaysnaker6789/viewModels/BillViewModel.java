@@ -22,7 +22,9 @@ public class BillViewModel extends ViewModel {
         dataClient.getCountBill(iduser,status).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override

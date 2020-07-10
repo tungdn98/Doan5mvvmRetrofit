@@ -12,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
     public static String basePath = "http://192.168.2.32:80/snaker6789/public/";
 
+   // public static String basePath = "http://3e1c6bdf61c7.ngrok.io/";
+
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .readTimeout(10, TimeUnit.SECONDS) //ngắt kết nối sau 10s nếu sever không trả dữ liệu về

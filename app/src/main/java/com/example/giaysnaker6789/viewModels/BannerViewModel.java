@@ -9,6 +9,7 @@ import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,13 +33,15 @@ public class BannerViewModel extends ViewModel {
 //        return newsData;
 //    }
 
-    public MutableLiveData<String> testne(List<test>list){
-        MutableLiveData<String>  newsData = new MutableLiveData<>();
+    public MutableLiveData<String> testne(List<test> list) {
+        MutableLiveData<String> newsData = new MutableLiveData<>();
         dataClient = RetrofitService.cteateService(DataClient.class);
         dataClient.testphat(list).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
                     newsData.setValue(response.body());
+                }
             }
 
             @Override
@@ -49,14 +52,17 @@ public class BannerViewModel extends ViewModel {
         return newsData;
     }
 
-    public MutableLiveData<List<banners>> getBanners(){
-        MutableLiveData<List<banners>>  newsData = new MutableLiveData<>();
+    public MutableLiveData<List<banners>> getBanners() {
+        MutableLiveData<List<banners>> newsData = new MutableLiveData<>();
 
         dataClient.getBanner().enqueue(new Callback<List<banners>>() {
             @Override
             public void onResponse(Call<List<banners>> call, Response<List<banners>> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
+
             @Override
             public void onFailure(Call<List<banners>> call, Throwable t) {
             }

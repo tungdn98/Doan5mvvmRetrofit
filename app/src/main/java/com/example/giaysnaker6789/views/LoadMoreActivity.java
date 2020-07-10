@@ -107,7 +107,7 @@ public class LoadMoreActivity extends BaseActivity {
         productTypeViewModel.LoadProductType().observe(this, new Observer<List<product_types>>() {
             @Override
             public void onChanged(List<product_types> product_types) {
-                listxuatsu.add(new product_types(00, "chọn quốc gia", ""));
+                listxuatsu.add(new product_types(00, "phân loại", ""));
                 listxuatsu.addAll(product_types);
                 ArrayAdapter<product_types> adapter =
                         new ArrayAdapter<product_types>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listxuatsu);

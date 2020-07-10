@@ -21,7 +21,9 @@ public class VoucherViewModel extends ViewModel {
         dataClient.checkVoucher(voucher,idproduct).enqueue(new Callback<vouchers>() {
             @Override
             public void onResponse(Call<vouchers> call, Response<vouchers> response) {
-                newsData.setValue(response.body());
+                if (response.isSuccessful()) {
+                    newsData.setValue(response.body());
+                }
             }
 
             @Override
