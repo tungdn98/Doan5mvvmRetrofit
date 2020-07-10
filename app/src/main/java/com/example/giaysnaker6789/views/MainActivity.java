@@ -255,6 +255,7 @@ public class MainActivity extends BaseActivity {
                         SharedPref.remove(SharedPref.USER);//read string in shared preference.
                         SharedPref.remove(SharedPref.PASS);//read int in shared preference.
                         SharedPref.remove(SharedPref.IDUSER);//read int in shared preference.
+                        SharedPref.remove(SharedPref.LOGIN);
                         Constant.user1s=null;
                         EventBus.getDefault().removeAllStickyEvents();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
