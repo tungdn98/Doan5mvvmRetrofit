@@ -255,6 +255,8 @@ public class MainActivity extends BaseActivity {
                         SharedPref.remove(SharedPref.USER);//read string in shared preference.
                         SharedPref.remove(SharedPref.PASS);//read int in shared preference.
                         SharedPref.remove(SharedPref.IDUSER);//read int in shared preference.
+                        Constant.user1s=null;
+                        EventBus.getDefault().removeAllStickyEvents();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     case R.id.nav_order:
@@ -281,7 +283,7 @@ public class MainActivity extends BaseActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                EventBus.getDefault().postSticky(query);
+                Constant.QUERY = query;
                 startActivity(new Intent(MainActivity.this, ResultSearchActivity.class));
                 return false;
             }
@@ -306,7 +308,7 @@ public class MainActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(user1s event) { // get model test
         txtname.setText("" + event.getName());
-        if (event.getAccount()!=null) {
+        if (event.getAccount() != null) {
             Picasso.get()
                     .load("" + RetrofitService.basePath + event.getImagefb())
                     .resize(100, 100)

@@ -6,6 +6,6 @@ public class Constant {
     public static final String STATUS_SUCCESS = "SUCCESS";
     public static final String STATUS_FAIL = "FAIL";
     public static final String ORDER_DETAIL = "ORDERDETAIL";
-
+    public static String QUERY = "";
     public static user1s user1s=null;
 }

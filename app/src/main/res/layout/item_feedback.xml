@@ -10,18 +10,17 @@
 
     <LinearLayout
         android:orientation="horizontal"
+        android:paddingVertical="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:src="@drawable/ic_scan"
-            app:civ_border_width="2dp"
-            android:layout_gravity="left"
-            app:civ_border_color="#FF000000"/>
+            android:layout_gravity="left" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,9 +42,11 @@
             <TextView
                 android:id="@+id/txtcontent"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:ellipsize="end"
+                android:singleLine="false"
+                android:maxLines="3"
                 android:text="nội dung bình luận sản phẩm như cứt vậy mua được vài ngày là hỏng " />
 
             <LinearLayout

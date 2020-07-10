@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.giaysnaker6789.R;
 import com.example.giaysnaker6789.adapter.searchAdapter;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.models.products;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.viewModels.ProductViewModel;
@@ -40,7 +41,7 @@ public class ResultSearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_search);
         init();
-
+        populateData(Constant.QUERY);
     }
 
     private void populateData(String name) {
@@ -64,9 +65,5 @@ public class ResultSearchActivity extends BaseActivity {
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(String event) {
-        Toast.makeText(this, ""+event, Toast.LENGTH_SHORT).show();
-        populateData(event);
-    }
+
 }

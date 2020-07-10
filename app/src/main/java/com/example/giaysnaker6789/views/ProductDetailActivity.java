@@ -54,7 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class ProductDetailActivity extends BaseActivity {
-    TextView txttitle, txtprice, txtpromotion, txtdescription,txtSaled;
+    TextView txttitle, txtprice, txtpromotion, txtdescription, txtSaled;
     RecyclerView rclistfeedback, rcsplienquan;
     Button btnchonmua, btnvietnhanxet, btncheckvoucher;
     EditText edtvou;
@@ -98,8 +98,8 @@ public class ProductDetailActivity extends BaseActivity {
                         @Override
                         public void onChanged(vouchers vouchers) {
                             if (vouchers.getId() != null) {
-                                 promotion = pro.getPromotion() - vouchers.getPromotion();
-                                txtpromotion.setText("" + promotion +" đ");
+                                promotion = pro.getPromotion() - vouchers.getPromotion();
+                                txtpromotion.setText("" + promotion + " đ");
                             } else {
                                 Toast.makeText(ProductDetailActivity.this, "mã giảm giá không đúng", Toast.LENGTH_SHORT).show();
                             }
@@ -135,7 +135,7 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
     private void Addtocart() {
-        if(user==null){
+        if (user == null) {
             startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
             Animatoo.animateCard(ProductDetailActivity.this);
         }
@@ -145,26 +145,26 @@ public class ProductDetailActivity extends BaseActivity {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd"); // Format date
         String date = df1.format(Calendar.getInstance().getTime());
         String vou = edtvou.getText().toString();
-            if(billuser!=null){
-                billUserViewModel.AddtoExCart( "b1", price, 1, date, idproduct, vou, billuser.getId()).observe(this, new Observer<BillUserResponse>() {
-                    @Override
-                    public void onChanged(BillUserResponse billUserResponse) {
-                        Toast.makeText(ProductDetailActivity.this, "add to ex cart", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
-                        Animatoo.animateSplit(ProductDetailActivity.this);
-                    }
-                });
-            }else{ // thêm mới nè
-                billUserViewModel.AddtoCart( iduser,  "b1",  price,  1,  date,
-                         "", idproduct,  vou).observe(this, new Observer<BillUserResponse>() {
-                    @Override
-                    public void onChanged(BillUserResponse billUserResponse) {
-                        Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
-                        Animatoo.animateSplit(ProductDetailActivity.this);
-                    }
-                });
-            }
+        if (billuser != null) {
+            billUserViewModel.AddtoExCart("b1", price, 1, date, idproduct, vou, billuser.getId()).observe(this, new Observer<BillUserResponse>() {
+                @Override
+                public void onChanged(BillUserResponse billUserResponse) {
+                    Toast.makeText(ProductDetailActivity.this, "add to ex cart", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+                    Animatoo.animateSplit(ProductDetailActivity.this);
+                }
+            });
+        } else { // thêm mới nè
+            billUserViewModel.AddtoCart(iduser, "b1", price, 1, date,
+                    "", idproduct, vou).observe(this, new Observer<BillUserResponse>() {
+                @Override
+                public void onChanged(BillUserResponse billUserResponse) {
+                    Toast.makeText(ProductDetailActivity.this, "đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+                    Animatoo.animateSplit(ProductDetailActivity.this);
+                }
+            });
+        }
 
 
     }
@@ -181,7 +181,7 @@ public class ProductDetailActivity extends BaseActivity {
         billUserViewModel = ViewModelProviders.of(this).get(BillUserViewModel.class);
 
         txttitle = findViewById(R.id.txttitle);
-        txtSaled=findViewById(R.id.txtSaled);
+        txtSaled = findViewById(R.id.txtSaled);
         txtprice = findViewById(R.id.txtprice);
         txtpromotion = findViewById(R.id.txtprmotion);
         txtdescription = findViewById(R.id.txtdescription);
@@ -210,12 +210,12 @@ public class ProductDetailActivity extends BaseActivity {
     public void onMessageEvent(products event) { // get model 
         pro = new products();
         pro = event;
-        promotion=event.getPromotion();
+        promotion = event.getPromotion();
         txttitle.setText("" + event.getName());
         txtdescription.setText("" + event.getDescribe());
-        txtpromotion.setText("" + format(event.getPromotion())+" đ");
-        txtprice.setText("" + format(event.getPrice())+" đ");
-        txtSaled.setText("Đã bán: "+event.getSaled());
+        txtpromotion.setText("" + format(event.getPromotion()) + " đ");
+        txtprice.setText("" + format(event.getPrice()) + " đ");
+        txtSaled.setText("Đã bán: " + event.getSaled());
         loadDetail(event.getIdProductType());
         loadImage(event.getId());
         loadfeedback(event.getId(), 1);
@@ -235,19 +235,18 @@ public class ProductDetailActivity extends BaseActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
         loadbyid(event);
-
     }
 
     private void loadbyid(String event) {
         productViewModel.searchByid(event).observe(this, new Observer<products>() {
             @Override
             public void onChanged(products products) {
-
+                pro = products;
                 txttitle.setText("" + products.getName());
                 txtdescription.setText("" + products.getDescribe());
-                txtpromotion.setText("" + format(products.getPromotion())+" đ");
-                txtprice.setText("" + format(products.getPrice())+" đ");
-                txtSaled.setText("Đã bán: "+products.getSaled());
+                txtpromotion.setText("" + format(products.getPromotion()) + " đ");
+                txtprice.setText("" + format(products.getPrice()) + " đ");
+                txtSaled.setText("Đã bán: " + products.getSaled());
                 loadDetail(products.getIdProductType());
                 loadImage(products.getId());
             }
