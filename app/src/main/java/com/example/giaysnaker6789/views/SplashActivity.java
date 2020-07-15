@@ -18,6 +18,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.giaysnaker6789.BaseResponse.ResponseUser1s;
 import com.example.giaysnaker6789.R;
+import com.example.giaysnaker6789.config.Constant;
 import com.example.giaysnaker6789.config.SharedPref;
 import com.example.giaysnaker6789.models.user1s;
 import com.example.giaysnaker6789.viewModels.LoginViewModel;
@@ -146,9 +147,11 @@ public class SplashActivity extends BaseActivity {
                                 EventBus.getDefault().postSticky(user);
                                 SharedPref.write(SharedPref.IDUSER, user.getId());
                                 SharedPref.write(SharedPref.LOGIN, true);
+                                Constant.user1s=user;
                                 RegNotifi(user.getAccount());
                             } else {
                                 SharedPref.write(SharedPref.LOGIN, false);
+                                Constant.user1s=null;
                             }
                         }
                     }

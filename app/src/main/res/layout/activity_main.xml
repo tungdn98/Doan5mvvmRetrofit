@@ -76,7 +76,7 @@
                         android:textStyle="bold"
                         android:background="@color/cam"
                         android:textColor="@android:color/white"
-                        android:text="Danh mục Sản phẩm"
+                        android:text="Danh mục"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
@@ -92,7 +92,7 @@
                         android:textStyle="bold"
                         android:background="@color/cam"
                         android:textColor="@android:color/white"
-                        android:text="sản phẩm mới"
+                        android:text="Hàng mới về"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

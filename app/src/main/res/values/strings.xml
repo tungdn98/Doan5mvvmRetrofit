@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">GiaySnaker6789</string>
-    <string name="trang_chu">trang chủ</string>
-    <string name="danh_muc">danh mục</string>
-    <string name="theo_doi_gio_hang">theo dõi đơn hàng</string>
-    <string name="ca_nhan">cá nhân</string>
-    <string name="emtyview"> hiện tại không có sản phẩm nào trong giỏ hàng</string>
+    <string name="trang_chu">Trang chủ</string>
+    <string name="danh_muc">Danh mục</string>
+    <string name="theo_doi_gio_hang">Theo dõi đơn hàng</string>
+    <string name="ca_nhan">Cá nhân</string>
+    <string name="emtyview"> Hiện tại không có sản phẩm nào trong giỏ hàng</string>
     <string name="title_activity_profile">Profile</string>
     <string name="action_settings">Settings</string>
 
